@@ -1,0 +1,28 @@
+.header {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 70px;
+  box-sizing: border-box;
+  outline: 1px solid white;
+}
+
+.header__links-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 705px;
+}
+
+.header__links-auth {
+  display: flex;
+  justify-content: end;
+  gap: 30px;
+}
+
+.header__links-films {
+  display: flex;
+  gap: 16px;
+}
