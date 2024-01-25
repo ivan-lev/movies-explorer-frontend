@@ -1,0 +1,33 @@
+.button {
+  font-size: 12px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button__transparent {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+.button__gray {
+  background: var(--bg-button-gray);
+  border: 0;
+  border-radius: 20px;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.button__green {
+  background: var(--bg-button-green);
+  border: 0;
+  border-radius: 3px;
+  color: var(--color-dark);
+}
