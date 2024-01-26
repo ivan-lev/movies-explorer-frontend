@@ -1,0 +1,38 @@
+.footer {
+  min-height: 172px;
+  padding: 79px 70px 20px;
+}
+
+.footer__info {
+  color: var(--color-secondary);
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 13px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-separator);
+}
+
+.footer__copyright {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.footer__links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer__link {
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 13px;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.footer__current-year {
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 13px;
+}
