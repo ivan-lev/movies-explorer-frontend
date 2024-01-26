@@ -1,0 +1,97 @@
+.about-me {
+  padding: 110px 70px 125px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.about-me__info {
+  margin-top: 66px;
+  display: grid;
+  grid-template-columns: 600px 1fr;
+  grid-template-areas:
+    'name avatar'
+    'job-age avatar'
+    'description avatar'
+    'github-link avatar';
+  grid-auto-flow: column dense;
+}
+
+.about-me__name {
+  grid-area: name;
+  font-size: 50px;
+  letter-spacing: -2px;
+  margin-bottom: 18px;
+  height: fit-content;
+}
+
+.about-me__job-age {
+  grid-area: job-age;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 20px;
+  height: fit-content;
+  margin-bottom: 26px;
+}
+
+.about-me__description {
+  grid-area: description;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 14px;
+  line-height: 22px;
+  height: fit-content;
+  margin-bottom: 99px;
+}
+
+.about-me__github-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  grid-area: github-link;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.about-me__avatar {
+  grid-area: avatar;
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-left: auto;
+}
+
+.about-me__portfolio {
+  color: var(--color-secondary);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 18px;
+  margin-top: 101px;
+  margin-bottom: 50px;
+}
+
+.about-me__link {
+  display: block;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: -1.2px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-me__link:after {
+  /* content: '↗'; */
+  content: url('../../images/icons/link-arrow.svg');
+  font-size: 30px;
+  letter-spacing: -1.2px;
+}
+
+.about-me__separator {
+  height: 1px;
+  background-color: var(--color-separator);
+  margin-top: 19px;
+  margin-bottom: 20px;
+}
