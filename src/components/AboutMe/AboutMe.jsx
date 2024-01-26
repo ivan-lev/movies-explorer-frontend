@@ -6,7 +6,7 @@ import avatar from '../../images/avatar.jpg';
 
 export default function AboutMe() {
   return (
-    <section className="about-me">
+    <section className="about-me" id="student">
       <h2 className="main__title">Студент</h2>
       <div className="about-me__info">
         <p className="about-me__name">Иван</p>
