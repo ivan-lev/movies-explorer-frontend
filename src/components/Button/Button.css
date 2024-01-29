@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .button__transparent {
@@ -26,7 +27,7 @@
 }
 
 .button__green {
-  background: var(--bg-button-green);
+  background: var(--color-green);
   border: 0;
   border-radius: 3px;
   color: var(--color-dark);
