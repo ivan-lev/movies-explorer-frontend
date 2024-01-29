@@ -1,0 +1,18 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 705px;
+}
+
+.navigation__auth {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
+}
+
+.navigation__films {
+  display: flex;
+  gap: 16px;
+}
