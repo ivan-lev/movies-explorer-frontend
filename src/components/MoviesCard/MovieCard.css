@@ -1,0 +1,78 @@
+.movie-card {
+  height: 231px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.movie-card__cover {
+  height: 201px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.movie-card__button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+
+.movie-card__button_not-saved {
+  color: var(--color-primary);
+  background-color: var(--bg-button-gray);
+  display: none;
+}
+
+.movie-card__button_saved {
+  width: 21px;
+  background-image: url('../../images//icons/checked.svg');
+  background-color: var(--bg-button-crimson);
+}
+
+.movie-card__button_shown {
+  display: flex;
+}
+
+.movie-card__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+.movie-card__title {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.movie-card__duration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  font-size: 11px;
+  color: var(--color-secondary);
+  background-color: var(--bg-time-plate);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
