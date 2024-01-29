@@ -15,6 +15,7 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 
+import SearchForm from '../SearchForm/SearchForm';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
@@ -41,7 +42,15 @@ function App() {
               </>
             }
           />
-          <Route path="/movies" element={<Movies />} />
+          <Route
+            path="/movies"
+            element={
+              <>
+                <SearchForm />
+                <Movies />
+              </>
+            }
+          />
           <Route path="/saved-movies" element={<SavedMovies />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signin" element="<div></div>" />
