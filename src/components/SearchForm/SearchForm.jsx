@@ -1,6 +1,7 @@
 import './SearchForm.css';
 
 import React from 'react';
+import FilterCheckBox from '../FilterCheckbox/FilterCheckBox';
 
 export default function SearchForm() {
   return (
@@ -11,7 +12,7 @@ export default function SearchForm() {
           <button type="submit" className="search-form__button"></button>
         </div>
         <div className="search-form__checkbox-line">
-          <input type="checkbox" className="search-form__checkbox"></input>
+          <FilterCheckBox />
           <span className="search-form__short_meter">Короткометражки</span>
         </div>
       </form>
