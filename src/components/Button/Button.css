@@ -9,7 +9,7 @@
   cursor: pointer;
 }
 
-.button__transparent {
+.button_transparent {
   border: 0;
   padding: 0;
   background: none;
@@ -17,7 +17,7 @@
   font-weight: bold;
 }
 
-.button__gray {
+.button_gray {
   background: var(--bg-button-gray);
   border: 0;
   border-radius: 20px;
@@ -26,9 +26,21 @@
   font-weight: bold;
 }
 
-.button__green {
+.button_green {
   background: var(--color-green);
   border: 0;
   border-radius: 3px;
   color: var(--color-dark);
+}
+
+.button_bordered {
+  width: 320px;
+  height: 36px;
+  border: 1px solid var(--color-separator);
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: bold;
+  margin: 78px auto 80px;
 }
