@@ -37,7 +37,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
       )}
       <div className="movie-card__info">
         <span className="movie-card__title">{title}</span>
-        <span className="movie-card__duration">{`${hours}ч ${minutes}м`}</span>
+        <span className="movie-card__duration">{`${hours ? hours + 'ч' : ''} ${minutes}м`}</span>
       </div>
     </div>
   );
