@@ -8,7 +8,7 @@ export const movies = [
   },
   {
     title: 'Киноальманах «100 лет дизайна»',
-    duration: 78,
+    duration: 60,
     cover: '02.jpg',
     preview: '02_preview.jpg',
     isSaved: true
