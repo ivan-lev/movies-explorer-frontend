@@ -14,3 +14,10 @@
   padding-bottom: 23px;
   border-bottom: 1px solid var(--color-primary);
 }
+
+.main__section {
+  width: 100%;
+  padding-left: 70px;
+  padding-right: 70px;
+  box-sizing: border-box;
+}
