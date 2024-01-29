@@ -6,7 +6,7 @@ import { techStack } from '../../variables/techStack';
 
 export default function Techs() {
   return (
-    <section className="techs" id="techs">
+    <section className="main__section techs" id="techs">
       <h2 className="main__title">Технологии</h2>
       <div className="techs__title">7 технологий</div>
       <div className="techs__subtitle">

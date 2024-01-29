@@ -1,7 +1,6 @@
 .about-me {
-  padding: 110px 70px 125px;
-  width: 100%;
-  box-sizing: border-box;
+  padding-top: 110px;
+  padding-bottom: 125px;
 }
 
 .about-me__info {
