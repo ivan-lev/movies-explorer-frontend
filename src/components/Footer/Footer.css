@@ -1,6 +1,10 @@
 .footer {
   min-height: 172px;
   padding: 79px 70px 20px;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .footer__info {
