@@ -21,22 +21,23 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 
+import Register from '../Register/Register';
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div className="App">
-      <Header>
-        <Logo />
-        <Navigation isLoggedIn={isLoggedIn} />
-        <UserButtons isLoggedIn={isLoggedIn} />
-      </Header>
-
       <Routes>
         <Route
           path="/"
           element={
             <>
+              <Header>
+                <Logo />
+                <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
+              </Header>
               <Main>
                 <Promo />
                 <AboutProject />
@@ -51,6 +52,11 @@ function App() {
           path="/movies"
           element={
             <>
+              <Header>
+                <Logo />
+                <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
+              </Header>
               <Main>
                 <SearchForm />
                 <Movies />
@@ -63,6 +69,11 @@ function App() {
           path="/saved-movies"
           element={
             <>
+              <Header>
+                <Logo />
+                <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
+              </Header>
               <Main>
                 <SearchForm />
                 <SavedMovies />
@@ -73,7 +84,7 @@ function App() {
         />
         <Route path="/profile" element={<Profile />} />
         <Route path="/signin" element="<div></div>" />
-        <Route path="/signup" element="<div></div>" />
+        <Route path="/signup" element={<Register />} />
         <Route path="*" element="<div></div>" />
       </Routes>
     </div>
