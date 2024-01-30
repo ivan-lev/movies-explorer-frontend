@@ -5,8 +5,8 @@ import logo from '../../images/icons/logo.svg';
 
 export default function Logo() {
   return (
-    <Link to="/">
-      <img className="logo" alt="logo" src={logo}></img>
+    <Link className="logo" to="/">
+      <img className="logo__image" alt="logo" src={logo}></img>
     </Link>
   );
 }

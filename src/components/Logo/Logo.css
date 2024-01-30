@@ -1,4 +1,8 @@
 .logo {
+  line-height: 0;
+}
+
+.logo__image {
   width: 38px;
   height: 38px;
 }
