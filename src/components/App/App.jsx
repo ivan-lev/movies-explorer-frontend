@@ -9,6 +9,7 @@ import Footer from '../Footer/Footer';
 
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
+import UserButtons from '../UserButtons/UserButtons';
 
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
@@ -21,13 +22,14 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div className="App">
       <Header>
         <Logo />
         <Navigation isLoggedIn={isLoggedIn} />
+        <UserButtons isLoggedIn={isLoggedIn} />
       </Header>
 
       <Routes>
