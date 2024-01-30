@@ -50,3 +50,11 @@
   font-weight: bold;
   margin: 78px auto 80px;
 }
+
+.button_blue {
+  height: 45px;
+  font-size: 14px;
+  color: var(--color-primary);
+  border-radius: 3px;
+  background: var(--bg-button-blue);
+}
