@@ -1,12 +1,9 @@
 import './Navigation.css';
 
 import React from 'react';
-import Button from '../Button/Button';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Navigation({ isLoggedIn }) {
-  const navigate = useNavigate();
-
   return (
     <span>
       {isLoggedIn && (
