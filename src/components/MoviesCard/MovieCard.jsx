@@ -2,6 +2,7 @@ import './MovieCard.css';
 
 import React from 'react';
 import { useState } from 'react';
+import { useMatch } from 'react-router-dom';
 
 export default function MovieCard({ cover, preview, title, duration, isSaved }) {
   const [isShown, setIsShown] = useState(false);
@@ -9,6 +10,8 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
   const image = require(`../../images/movie-covers/${preview}`);
   const hours = Math.trunc(duration / 60);
   const minutes = duration % 60;
+
+  const pathMatchedSavedMovies = useMatch('/saved-movies');
 
   return (
     <div className="movie-card">
@@ -20,6 +23,8 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
         onMouseLeave={() => setIsShown(false)}
       />
       {!isSaved ? (
+        // if the movie not saved - show button for saving film
+        // which appears only on mouse enter the cover image
         <button
           className={`movie-card__button movie-card__button_not-saved ${
             isShown ? 'movie-card__button_shown' : ''
@@ -30,8 +35,13 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
           Cохранить
         </button>
       ) : (
+        // if movie is saved and we are on Saved Movies route - show gray button,
+        // and if we are not on Saved Movies route - change it's style to crimson
         <button
-          className="movie-card__button movie-card__button_saved"
+          className={`movie-card__button movie-card__button_saved-${
+            pathMatchedSavedMovies ? 'gray' : 'crimson'
+          }`}
+          // className="movie-card__button movie-card__button_saved-crimson"
           onClick={() => console.log('remove from saved films callback')}
         ></button>
       )}
