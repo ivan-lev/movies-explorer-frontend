@@ -51,7 +51,15 @@ function App() {
               </>
             }
           />
-          <Route path="/saved-movies" element={<SavedMovies />} />
+          <Route
+            path="/saved-movies"
+            element={
+              <>
+                <SearchForm />
+                <SavedMovies />
+              </>
+            }
+          />
           <Route path="/profile" element={<Profile />} />
           <Route path="/signin" element="<div></div>" />
           <Route path="/signup" element="<div></div>" />
