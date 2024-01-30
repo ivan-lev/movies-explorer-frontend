@@ -1,0 +1,89 @@
+.register {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 396px;
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+
+.register__title {
+  font-size: 24px;
+  font-weight: normal;
+  width: 100%;
+  margin: 40px 0;
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 396px;
+  margin-bottom: 16px;
+}
+
+.register__fieldset {
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.register__fieldset:last-of-type {
+  margin-bottom: 91px;
+}
+
+.register__input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #8b8b8b;
+  font-size: 10px;
+}
+
+.register__input {
+  height: 46px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 8px;
+  background-color: var(--bg-time-plate);
+  font-size: 13px;
+  color: var(--color-primary);
+}
+
+.register__input:focus-visible {
+  outline: 0;
+}
+
+.register__input[type='password'] {
+  color: var(--bg-button-crimson);
+}
+
+.register__input-error {
+  position: absolute;
+  top: 72px;
+  color: #ee3465;
+  font-size: 10px;
+}
+
+.register__already-registered-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.register__already-registered-text {
+  color: var(--color-secondary);
+  font-size: 14px;
+}
+
+.register__login-link {
+  color: var(--bg-button-blue);
+  font-size: 14px;
+  text-decoration: none;
+}
