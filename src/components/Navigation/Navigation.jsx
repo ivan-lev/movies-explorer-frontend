@@ -2,7 +2,7 @@ import './Navigation.css';
 
 import React from 'react';
 import Button from '../Button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 
 export default function Navigation({ isLoggedIn }) {
   const navigate = useNavigate();
@@ -12,13 +12,24 @@ export default function Navigation({ isLoggedIn }) {
       {isLoggedIn ? (
         <>
           <span className="navigation__films">
-            <Button type="transparent" text="Фильмы" onClick={() => navigate('/movies')} />
+            <NavLink
+              className={({ isActive }) =>
+                `navigation__navlink ${isActive ? 'navigation__navlink_active' : ''}`
+              }
+              //className="navigation__navlink"
+              to="/movies"
+            >
+              Фильмы
+            </NavLink>
 
-            <Button
-              type="transparent"
-              text="Сохранённые фильмы"
-              onClick={() => navigate('/saved-movies')}
-            />
+            <NavLink
+              className={({ isActive }) =>
+                `navigation__navlink ${isActive ? 'navigation__navlink_active' : ''}`
+              }
+              to="/saved-movies"
+            >
+              Сохранённые фильмы
+            </NavLink>
           </span>
 
           <Button type="gray" text="Аккаунт" onClick={() => navigate('/profile')} />
