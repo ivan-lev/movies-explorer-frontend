@@ -29,45 +29,51 @@ function App() {
         <Logo />
         <Navigation isLoggedIn={isLoggedIn} />
       </Header>
-      <Main>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
+
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <Main>
                 <Promo />
                 <AboutProject />
                 <Techs />
                 <AboutMe />
-              </>
-            }
-          />
-          <Route
-            path="/movies"
-            element={
-              <>
+              </Main>
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/movies"
+          element={
+            <>
+              <Main>
                 <SearchForm />
                 <Movies />
-              </>
-            }
-          />
-          <Route
-            path="/saved-movies"
-            element={
-              <>
+              </Main>
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/saved-movies"
+          element={
+            <>
+              <Main>
                 <SearchForm />
                 <SavedMovies />
-              </>
-            }
-          />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/signin" element="<div></div>" />
-          <Route path="/signup" element="<div></div>" />
-          <Route path="*" element="<div></div>" />
-        </Routes>
-      </Main>
-
-      <Footer />
+              </Main>
+              <Footer />
+            </>
+          }
+        />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/signin" element="<div></div>" />
+        <Route path="/signup" element="<div></div>" />
+        <Route path="*" element="<div></div>" />
+      </Routes>
     </div>
   );
 }
