@@ -44,6 +44,7 @@
 }
 
 .register__input {
+  font-family: 'Inter', sans-serif;
   height: 46px;
   padding-left: 15px;
   display: flex;
@@ -60,7 +61,7 @@
   outline: 0;
 }
 
-.register__input[type='password'] {
+.register__input_invalid {
   color: var(--bg-button-crimson);
 }
 
@@ -75,6 +76,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
 }
 
 .register__already-registered-text {

@@ -25,9 +25,7 @@ export default function Register({ onSubmit }) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(formValues.name);
     const { name, email, password } = formValues;
-    console.log(name);
     alert('Отправляем форму с параметрами: ' + name + ', ' + email + ', ' + password);
   };
 
@@ -55,7 +53,6 @@ export default function Register({ onSubmit }) {
               onChange={handleChange}
             />
           </label>
-          <span className="register__input-error">Ji</span>
         </fieldset>
 
         <fieldset className="register__fieldset">
@@ -72,7 +69,6 @@ export default function Register({ onSubmit }) {
               onChange={handleChange}
             />
           </label>
-          <span className="register__input-error">dgd</span>
         </fieldset>
 
         <fieldset className="register__fieldset">
@@ -94,7 +90,7 @@ export default function Register({ onSubmit }) {
         <Button type="blue" text="Зарегистрироваться" />
       </form>
       <span className="register__already-registered-wrapper">
-        <span className="register__already-registered-text">Уже зарегистрированы? </span>
+        <span className="register__already-registered-text">Уже зарегистрированы?</span>
         <Link className="register__login-link" to="/signin">
           Войти
         </Link>
