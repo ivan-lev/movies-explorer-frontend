@@ -7,6 +7,7 @@
   --bg-button-blue: #4285f4;
   --bg-time-plate: #2f2f2f;
   --bg-checkbox-unchecked: #ebebeb;
+  --bg-submit-error: #f8f8f8;
 
   --color-primary: #ffffff;
   --color-secondary: #8b8b8b;
@@ -15,4 +16,5 @@
   --color-lightgray: #303030;
   --color-separator: #424242;
   --color-checkbox-unchecked: #f5f5f5;
+  --color-submit-error: #c2c2c2;
 }

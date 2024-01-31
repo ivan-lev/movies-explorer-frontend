@@ -67,8 +67,10 @@
   color: var(--color-primary);
   border-radius: 3px;
   background: var(--bg-button-blue);
+  width: 100%;
+}
 
-  &:hover {
-    opacity: 0.7;
-  }
+.button_errored {
+  color: var(color-submit-error);
+  background-color: var(--bg-submit-error);
 }
