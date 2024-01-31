@@ -84,7 +84,19 @@ function App() {
             </>
           }
         />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <>
+              <Header>
+                <Logo />
+                <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
+              </Header>
+              <Profile />
+            </>
+          }
+        />
         <Route path="/signin" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="*" element={<NotFound />} />
