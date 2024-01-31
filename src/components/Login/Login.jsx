@@ -31,7 +31,7 @@ export default function Login({ onSubmit }) {
   return (
     <section className="login">
       <Logo />
-      <p className="login__title">Добро пожаловать!</p>
+      <p className="login__title">Рады видеть!</p>
       <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">
           <label className="login__input-label">
@@ -67,12 +67,12 @@ export default function Login({ onSubmit }) {
 
         <span className="login__input-error login__input-error_shown">Ошибка логина...</span>
 
-        <Button type="blue" text="Зарегистрироваться" />
+        <Button type="blue" text="Войти" />
       </form>
       <span className="login__already-registered-wrapper">
-        <span className="login__already-registered-text">Уже зарегистрированы?</span>
+        <span className="login__already-registered-text">Ещё не зарегистрированы?</span>
         <Link className="login__register-link" to="/signup">
-          Войти
+          Регистрация
         </Link>
       </span>
     </section>
