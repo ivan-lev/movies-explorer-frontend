@@ -1,3 +1,4 @@
+@import url('../src/vendor/normalize.css');
 @import url('../src/variables/variables.css');
 @import url('../src/variables/fonts.css');
 
@@ -30,4 +31,8 @@ menu {
 
 ul {
   list-style: none;
+}
+
+*:focus-visible {
+  outline: 0;
 }
