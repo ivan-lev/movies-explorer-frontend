@@ -28,6 +28,7 @@
   background-repeat: no-repeat;
   background-position: center;
   cursor: pointer;
+  font-size: 10px;
 }
 
 .movie-card__button_not-saved {
