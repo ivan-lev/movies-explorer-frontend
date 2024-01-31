@@ -17,7 +17,7 @@
 .profile__data {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 6px;
 }
 
 .profile__row {
@@ -25,10 +25,32 @@
   align-items: center;
   justify-content: space-between;
   width: 410px;
+  line-height: 23px;
 }
 
 .profile__field {
   font-size: 11px;
+}
+
+.profile__input-field {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-time-plate);
+  font-size: 11px;
+  color: var(--color-primary);
+  height: 23px;
+  text-align: right;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 5px;
+  background-color: var(--bg-time-plate);
+  padding: 0;
+}
+
+.profile__input-field:focus-visible {
+  outline: 0;
 }
 
 .profile__divider {

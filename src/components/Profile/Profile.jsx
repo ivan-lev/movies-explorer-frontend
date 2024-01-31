@@ -1,34 +1,122 @@
 import './Profile.css';
 
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Button from '../Button/Button';
 
 export default function Profile() {
-  const [userName, setUserName] = useState('Иван');
-  const [email, setEmail] = useState('ivan@mail.com');
+  const [formValues, setFormValues] = useState({
+    name: 'Иван',
+    email: 'fanatos@mail.com'
+  });
+  const [initialFormValues, setInitialFormValues] = useState({
+    name: '',
+    email: ''
+  });
+  const [greetingName, setGreetingname] = useState(formValues.name);
+  const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
+
+  // if esc pressed, hide edit form and set initial name and email values
+  useEffect(() => {
+    const handleKeyDown = event => {
+      const key = event.key;
+      setInitialFormValues(formValues);
+
+      if (key === 'Escape') {
+        setFormValues(initialFormValues);
+        setIsUserDataUpdating(false);
+      }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isUserDataUpdating]);
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    if (!isUserDataUpdating) {
+      setIsUserDataUpdating(true);
+      setInitialFormValues(formValues);
+    }
+
+    if (isUserDataUpdating) {
+      if (
+        initialFormValues.name === formValues.name &&
+        initialFormValues.email === formValues.email
+      ) {
+        alert('Данные не поменялись');
+        setIsUserDataUpdating(false);
+        return;
+      }
+      const { name, email } = formValues;
+      alert('Отправляем имя и мэйл: ' + name + ', ' + email);
+      setGreetingname(formValues.name);
+      setIsUserDataUpdating(false);
+    }
+  };
 
   return (
     <section className="profile">
-      <span className="profile__greeting">Привет, {userName}!</span>
-      <div className="profile__data">
-        <div className="profile__row">
-          <span className="profile__field">Имя</span>
-          <span className="profile__field">{userName}</span>
+      <span className="profile__greeting">Привет, {greetingName}!</span>
+      {!isUserDataUpdating ? (
+        <div className="profile__data">
+          <div className="profile__row">
+            <span className="profile__field">Имя</span>
+            <span className="profile__field">{formValues.name}</span>
+          </div>
+          <div className="profile__divider"></div>
+          <div className="profile__row">
+            <span className="profile__field">E-mail</span>
+            <span className="profile__field">{formValues.email}</span>
+          </div>
         </div>
-        <div className="profile__divider"></div>
-        <div className="profile__row">
-          <span className="profile__field">E-mail</span>
-          <span className="profile__field">{email}</span>
-        </div>
-      </div>
+      ) : (
+        <form className="profile__data" onSubmit={handleSubmit}>
+          <div className="profile__row">
+            <span className="profile__field">Имя</span>
+            <input
+              className="profile__field profile__input-field"
+              name="name"
+              value={formValues.name}
+              onChange={handleChange}
+            ></input>
+          </div>
+          <div className="profile__divider"></div>
+          <div className="profile__row">
+            <span className="profile__field">E-mail</span>
+            <input
+              className="profile__field profile__input-field"
+              name="email"
+              value={formValues.email}
+              onChange={handleChange}
+            ></input>
+          </div>
+        </form>
+      )}
+
       <div className="profile__wrapper">
-        <Button type="transparent button_bigger-font" text="Редактировать"></Button>
+        <Button
+          type="transparent button_bigger-font"
+          text={!isUserDataUpdating ? 'Редактировать' : 'Сохранить'}
+          onClick={handleSubmit}
+        />
         <Button
           type="transparent button_bigger-font button_text-crimson"
           text="Выйти из аккаутна"
-        ></Button>
+        />
       </div>
     </section>
   );
