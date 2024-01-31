@@ -90,4 +90,8 @@
   color: var(--bg-button-blue);
   font-size: 14px;
   text-decoration: none;
+
+  &:hover {
+    opacity: 0.7;
+  }
 }

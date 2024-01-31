@@ -9,6 +9,10 @@
   align-items: center;
   cursor: pointer;
   border: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .button_transparent {
@@ -16,7 +20,12 @@
   background: none;
   color: var(--color-white);
   font-weight: bold;
+
+  &:hover {
+    opacity: 0.7;
+  }
 }
+
 .button_bigger-font {
   height: 13px;
   font-size: 13px;
@@ -58,4 +67,8 @@
   color: var(--color-primary);
   border-radius: 3px;
   background: var(--bg-button-blue);
+
+  &:hover {
+    opacity: 0.7;
+  }
 }

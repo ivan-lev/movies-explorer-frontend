@@ -15,4 +15,8 @@
   font-weight: bold;
   color: var(--color-primary);
   text-decoration: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
