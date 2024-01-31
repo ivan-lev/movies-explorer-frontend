@@ -67,15 +67,23 @@
   color: var(--bg-button-crimson);
 }
 
-.register__input-error {
-  color: #ee3465;
-  font-size: 10px;
+.register__error-wrapper {
+  height: 10px;
   margin-bottom: auto;
-  visibility: hidden;
+  margin-top: 0;
+  padding: 0;
+  line-height: 0;
 }
 
-.register__input-error_shown {
-  visibility: visible;
+.register__error {
+  color: #ee3465;
+  font-size: 10px;
+  line-height: 10px;
+  display: none;
+}
+
+.register__error_shown {
+  display: block;
 }
 
 .register__already-registered-wrapper {

@@ -87,9 +87,9 @@ export default function Register({ onSubmit }) {
           </label>
         </fieldset>
 
-        <span className="register__input-error register__input-error_shown">
-          Что-то пошло не так...
-        </span>
+        <div className="register__error-wrapper">
+          <span className="register__error register__error_shown">Что-то пошло не так...</span>
+        </div>
 
         <Button type="blue" text="Зарегистрироваться" />
       </form>

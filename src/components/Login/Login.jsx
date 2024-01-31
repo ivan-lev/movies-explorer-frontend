@@ -65,7 +65,9 @@ export default function Login({ onSubmit }) {
           </label>
         </fieldset>
 
-        <span className="login__input-error login__input-error_shown">Ошибка логина...</span>
+        <div className="login__error-wrapper">
+          <span className="login__error login__error_shown">Ошибка логина...</span>
+        </div>
 
         <Button type="blue" text="Войти" />
       </form>
