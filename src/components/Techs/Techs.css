@@ -1,4 +1,7 @@
 .techs {
+  display: flex;
+  flex-direction: column;
+  min-height: 625px;
   padding-top: 100px;
   padding-bottom: 100px;
   background-color: var(--bg-secondary);
@@ -6,14 +9,13 @@
 
 .techs__title {
   font-size: 50px;
-  line-height: 58px;
   letter-spacing: -2px;
   margin-top: 90px;
   text-align: center;
 }
 
 .techs__subtitle {
-  width: 440px;
+  width: 460px;
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.56px;
@@ -26,4 +28,5 @@
   gap: 10px;
   align-items: center;
   justify-content: center;
+  margin-top: auto;
 }

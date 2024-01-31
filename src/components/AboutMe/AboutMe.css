@@ -85,7 +85,7 @@
 .about-me__link:after {
   content: url('../../images/icons/link-arrow.svg');
   font-size: 30px;
-  letter-spacing: -1.2px;
+  padding-right: 5px;
 }
 
 .about-me__separator {
