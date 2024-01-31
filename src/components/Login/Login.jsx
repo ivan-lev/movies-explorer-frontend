@@ -35,7 +35,7 @@ export default function Login({ onSubmit }) {
       <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">
           <label className="login__input-label">
-            Имя
+            Email
             <input
               type="text"
               autoComplete="on"
@@ -51,7 +51,7 @@ export default function Login({ onSubmit }) {
 
         <fieldset className="login__fieldset">
           <label className="login__input-label">
-            E-mail
+            Пароль
             <input
               type="email"
               autoComplete="on"
