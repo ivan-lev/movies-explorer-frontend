@@ -30,7 +30,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
             isShown ? 'movie-card__button_shown' : ''
           }`}
           onMouseEnter={() => setIsShown(true)}
-          onClick={() => console.log('save film callback')}
+          onClick={() => alert('Добавить фильм в сохранённые')}
         >
           Cохранить
         </button>
@@ -41,8 +41,25 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
           className={`movie-card__button movie-card__button_saved-${
             pathMatchedSavedMovies ? 'gray' : 'crimson'
           }`}
-          // className="movie-card__button movie-card__button_saved-crimson"
-          onClick={() => console.log('remove from saved films callback')}
+          // when in Movies section change crimson button on gray on mouse hover
+          onMouseEnter={event => {
+            if (event.target.classList.contains('movie-card__button_saved-crimson')) {
+              event.target.classList.replace(
+                'movie-card__button_saved-crimson',
+                'movie-card__button_saved-gray'
+              );
+            }
+          }}
+          //and return the crimson button back when mouse leave
+          onMouseLeave={event => {
+            if (event.target.classList.contains('movie-card__button_saved-gray')) {
+              event.target.classList.replace(
+                'movie-card__button_saved-gray',
+                'movie-card__button_saved-crimson'
+              );
+            }
+          }}
+          onClick={() => alert('Удалить фильм из сохранённых')}
         ></button>
       )}
       <div className="movie-card__info">
