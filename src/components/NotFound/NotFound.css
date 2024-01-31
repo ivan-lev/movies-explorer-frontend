@@ -1,0 +1,31 @@
+.not-found {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 260px;
+  padding-bottom: 60px;
+}
+
+.not-found__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.not-found__title {
+  font-size: 140px;
+  font-weight: normal;
+}
+
+.not-found__subtitle {
+  font-size: 16px;
+}
+
+.not-found__return-link {
+  color: var(--bg-button-blue);
+  font-size: 14px;
+  text-decoration: none;
+}
