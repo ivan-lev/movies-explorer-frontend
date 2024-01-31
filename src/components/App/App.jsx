@@ -20,11 +20,11 @@ import SearchForm from '../SearchForm/SearchForm';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
-
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <div className="App">
@@ -83,7 +83,7 @@ function App() {
           }
         />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/signin" element="<div></div>" />
+        <Route path="/signin" element={<Login />} />
         <Route path="/signup" element={<Register />} />
         <Route path="*" element="<div></div>" />
       </Routes>
