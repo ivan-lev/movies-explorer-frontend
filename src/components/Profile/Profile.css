@@ -1,7 +1,7 @@
 .profile {
   display: flex;
   flex: 1;
-  gap: 123px;
+  gap: 120px;
   flex-direction: column;
   align-items: center;
   padding-top: 74px;
@@ -17,7 +17,7 @@
 .profile__data {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
 }
 
 .profile__row {
