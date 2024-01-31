@@ -85,8 +85,12 @@ export default function Register({ onSubmit }) {
               onChange={handleChange}
             />
           </label>
-          <span className="register__input-error">ddg</span>
         </fieldset>
+
+        <span className="register__input-error register__input-error_shown">
+          Что-то пошло не так...
+        </span>
+
         <Button type="blue" text="Зарегистрироваться" />
       </form>
       <span className="register__already-registered-wrapper">
