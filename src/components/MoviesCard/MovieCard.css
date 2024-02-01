@@ -45,18 +45,18 @@
   background-color: var(--bg-button-gray);
 }
 
-.movie-card__button_saved-crimson {
+.movie-card__button_crimson {
   width: 21px;
   background-image: url('../../images//icons/checked.svg');
   background-color: var(--bg-button-crimson);
 }
 
-.movie-card__button_saved-crimson:hover {
+.movie-card__button_crimson:hover {
   background-image: url('../../images//icons/cross.svg');
   background-color: var(--bg-button-gray);
 }
 
-.movie-card__button_saved-gray {
+.movie-card__button_gray {
   width: 21px;
   background-image: url('../../images//icons/cross.svg');
   background-color: var(--bg-button-gray);

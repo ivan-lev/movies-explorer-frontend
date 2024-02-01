@@ -28,13 +28,16 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
   };
   const crimsonButton = () => {
     return (
-      <button className="movie-card__button movie-card__button_saved-crimson movie-card__button_shown"></button>
+      <button
+        className="movie-card__button movie-card__button_crimson"
+        onClick={handleRemoveFromSavedMovies}
+      ></button>
     );
   };
   const grayButton = () => {
     return (
       <button
-        className="movie-card__button movie-card__button_saved-gray"
+        className="movie-card__button movie-card__button_gray"
         onClick={handleRemoveFromSavedMovies}
       ></button>
     );
