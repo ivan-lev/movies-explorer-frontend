@@ -1,5 +1,9 @@
 .promo {
   padding: 20px 40px 0;
+
+  @media screen and (max-width: 768px) {
+    padding: 20px 20px 0;
+  }
 }
 
 .promo__wrapper {
@@ -14,6 +18,13 @@
   padding-top: 160px;
   padding-bottom: 30px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    min-height: 834px;
+    padding-top: 350px;
+    padding-left: 25px;
+    padding-right: 25px;
+  }
 }
 
 .promo__title {
@@ -21,7 +32,13 @@
   font-size: 50px;
   line-height: 58px;
   letter-spacing: -2px;
-  width: 730px;
+  max-width: 730px;
   font-weight: normal;
   margin: 0;
+
+  @media screen and (max-width: 768px) {
+    font-size: 40px;
+    line-height: 52px;
+    letter-spacing: -1.6px;
+  }
 }

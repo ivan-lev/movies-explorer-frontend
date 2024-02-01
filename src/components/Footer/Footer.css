@@ -6,6 +6,11 @@
   flex-direction: column;
   justify-content: flex-end;
   box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 .footer__info {

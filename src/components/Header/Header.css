@@ -1,12 +1,3 @@
-/* .header {
-  height: 74px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 70px;
-  box-sizing: border-box;
-} */
-
 .header {
   height: 74px;
   display: grid;
@@ -15,6 +6,10 @@
   justify-content: space-between;
   padding: 18px 70px;
   box-sizing: border-box;
+
+  @media screen and (max-width: 768px) {
+    padding: 18px 30px;
+  }
 }
 
 .header__links-panel {

@@ -1,6 +1,11 @@
 .about-me {
   padding-top: 110px;
   padding-bottom: 125px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 90px;
+    padding-bottom: 90px;
+  }
 }
 
 .about-me__info {
@@ -8,12 +13,19 @@
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 50px;
+
   grid-template-areas:
     'name avatar'
     'job-age avatar'
     'description avatar'
     'github-link avatar';
-  grid-auto-flow: column dense;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 64px;
+    column-gap: 50px;
+    row-gap: 12px;
+    grid-template-rows: 46px 22px auto 14px;
+  }
 }
 
 .about-me__name {
@@ -22,6 +34,11 @@
   letter-spacing: -2px;
   margin-bottom: 18px;
   height: fit-content;
+
+  @media screen and (max-width: 768px) {
+    font-size: 40px;
+    margin-bottom: 0;
+  }
 }
 
 .about-me__job-age {
@@ -32,6 +49,12 @@
   line-height: 20px;
   height: fit-content;
   margin-bottom: 26px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+    margin-bottom: 4px;
+    line-height: 18px;
+  }
 }
 
 .about-me__description {
@@ -42,6 +65,13 @@
   height: fit-content;
   margin-bottom: 99px;
   max-width: 600px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 4px;
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 0;
+  }
 }
 
 .about-me__github-link {
@@ -51,6 +81,7 @@
   font-size: 14px;
   font-weight: bold;
   width: fit-content;
+  justify-content: end;
 
   &:hover {
     opacity: 0.7;
@@ -64,18 +95,26 @@
   border-radius: 10px;
   object-fit: cover;
   margin-left: auto;
+
+  @media screen and (max-width: 768px) {
+    width: 255px;
+    height: 307px;
+  }
 }
 
 .about-me__portfolio {
   color: var(--color-secondary);
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 18px;
-  margin-top: 101px;
+  margin-top: 100px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 93px;
+  }
 }
 
 .about-me__link {
-  display: block;
   color: var(--color-primary);
   text-decoration: none;
   font-size: 30px;
@@ -86,6 +125,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+    letter-spacing: -1.12px;
+  }
 }
 
 .about-me__link:after {

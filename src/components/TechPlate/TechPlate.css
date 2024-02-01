@@ -11,4 +11,10 @@
   font-size: 14px;
   letter-spacing: -0.56px;
   line-height: 0;
+
+  @media screen and (max-width: 768px) {
+    width: 84px;
+    height: 57px;
+    font-size: 12px;
+  }
 }
