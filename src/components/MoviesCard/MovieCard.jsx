@@ -7,7 +7,6 @@ import { useMatch } from 'react-router-dom';
 export default function MovieCard({ cover, preview, title, duration, isSaved }) {
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
   const [isMovieSaved, setIsMovieSaved] = useState(isSaved);
-  const [isGrayButtonShowed, setIsGrayButtonShowed] = useState(false);
 
   const image = require(`../../images/movie-covers/${preview}`);
   const hours = Math.trunc(duration / 60);
@@ -29,10 +28,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
   };
   const crimsonButton = () => {
     return (
-      <button
-        className="movie-card__button movie-card__button_saved-crimson movie-card__button_shown"
-        onMouseEnter={() => setIsGrayButtonShowed(true)}
-      ></button>
+      <button className="movie-card__button movie-card__button_saved-crimson movie-card__button_shown"></button>
     );
   };
   const grayButton = () => {
@@ -40,7 +36,6 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
       <button
         className="movie-card__button movie-card__button_saved-gray"
         onClick={handleRemoveFromSavedMovies}
-        onMouseLeave={() => setIsGrayButtonShowed(false)}
       ></button>
     );
   };
@@ -64,16 +59,18 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
         onMouseEnter={() => setIsSaveButtonShown(true)}
         onMouseLeave={() => setIsSaveButtonShown(false)}
       />
-      {!isMovieSaved
-        ? // here are one of the save/unsave buttons rendered
-          // if the movie not saved - show button for saving film
-          // when mouse enter the preview image
-          isSaveButtonShown && saveButton()
-        : // if the movie is saved and we are not on '/saved-movies' route - show crimson button,
-        !isGrayButtonShowed && !pathMatchedSavedMovies
-        ? crimsonButton()
-        : // and if we are on '/saved-movies' route - show gray button
-          grayButton()}
+      {
+        // below are one of the save/unsave buttons rendered
+        !isMovieSaved
+          ? // if the movie is not saved - show button for saving film
+            // when mouse enter the preview image
+            isSaveButtonShown && saveButton()
+          : // if the movie is saved and we are not on '/saved-movies' route - show crimson button,
+          // and if we are on '/saved-movies' route - show gray button
+          !pathMatchedSavedMovies
+          ? crimsonButton()
+          : grayButton()
+      }
 
       <div className="movie-card__info">
         <span className="movie-card__title">{title}</span>

@@ -34,7 +34,6 @@
 .movie-card__button_not-saved {
   color: var(--color-primary);
   background-color: var(--bg-button-gray);
-  /* display: none; */
 }
 
 .movie-card__button_saved-crimson {
@@ -43,15 +42,16 @@
   background-color: var(--bg-button-crimson);
 }
 
+.movie-card__button_saved-crimson:hover {
+  background-image: url('../../images//icons/cross.svg');
+  background-color: var(--bg-button-gray);
+}
+
 .movie-card__button_saved-gray {
   width: 21px;
   background-image: url('../../images//icons/cross.svg');
   background-color: var(--bg-button-gray);
 }
-
-/* .movie-card__button_shown {
-  display: flex;
-} */
 
 .movie-card__info {
   display: flex;
