@@ -3,22 +3,16 @@ import './SearchForm.css';
 import React, { useState } from 'react';
 import FilterCheckBox from '../FilterCheckbox/FilterCheckBox';
 
-export default function SearchForm() {
+export default function SearchForm({ onSearch }) {
   const [inputValue, setInputValue] = useState('');
 
   const handleSetInputValue = event => {
     setInputValue(event.target.value);
   };
 
-  const searchFilm = event => {
-    event.preventDefault();
-    alert('Let`s search movie "' + inputValue + '"');
-    setInputValue('');
-  };
-
   return (
     <section className="main__section search-form">
-      <form className="search-form__form" onSubmit={searchFilm}>
+      <form className="search-form__form" onSubmit={onSearch}>
         <div className="search-form__input-line">
           <input
             className="search-form__input"

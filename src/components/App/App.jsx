@@ -24,9 +24,23 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 
 import NotFound from '../NotFound/NotFound';
+import Preloader from '../Preloader/Preloader';
+
+import { testMovies } from '../../variables/testMovies';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [moviesList, setMoviesList] = useState([]);
+  const [isPreloaderShown, setIsPreloaderShown] = useState(false);
+
+  const handleSearch = event => {
+    event.preventDefault();
+    setIsPreloaderShown(true);
+    setTimeout(() => {
+      setMoviesList(testMovies);
+      setIsPreloaderShown(false);
+    }, 1000);
+  };
 
   return (
     <div className="App">
@@ -60,8 +74,8 @@ function App() {
                 <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
-                <SearchForm />
-                <Movies />
+                <SearchForm onSearch={handleSearch} />
+                {isPreloaderShown ? <Preloader /> : <Movies moviesList={moviesList} />}
               </Main>
               <Footer />
             </>
@@ -77,8 +91,8 @@ function App() {
                 <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
-                <SearchForm />
-                <SavedMovies />
+                <SearchForm onSearch={handleSearch} />
+                {isPreloaderShown ? <Preloader /> : <SavedMovies moviesList={moviesList} />}
               </Main>
               <Footer />
             </>
