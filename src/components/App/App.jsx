@@ -32,9 +32,11 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [moviesList, setMoviesList] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
+  const [showTemporaryMessage, setShowTemporaryMessage] = useState(true);
 
   const handleSearch = event => {
     event.preventDefault();
+    setShowTemporaryMessage(false);
     setIsPreloaderShown(true);
     setTimeout(() => {
       setMoviesList(testMovies);
@@ -75,6 +77,7 @@ function App() {
               </Header>
               <Main>
                 <SearchForm onSearch={handleSearch} />
+                {showTemporaryMessage ? <div style={{ color: 'red' }}>Нажмите на поиск</div> : ''}
                 {isPreloaderShown ? <Preloader /> : <Movies moviesList={moviesList} />}
               </Main>
               <Footer />
