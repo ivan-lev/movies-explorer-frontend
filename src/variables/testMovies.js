@@ -1,4 +1,4 @@
-export const movies = [
+export const testMovies = [
   {
     title: '33 слова о дизайне',
     duration: 77,
