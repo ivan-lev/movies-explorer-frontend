@@ -1,7 +1,11 @@
 .about-project {
-  min-height: 608px;
   padding-top: 110px;
   padding-bottom: 110px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 90px;
+    padding-bottom: 75px;
+  }
 }
 
 .about-project__content {
@@ -14,6 +18,10 @@
   display: flex;
   flex-direction: column;
   gap: 26px;
+
+  @media screen and (max-width: 768px) {
+    gap: 22px;
+  }
 }
 
 .about-project__title {
@@ -25,40 +33,35 @@
 .about-project__text {
   font-size: 14px;
   line-height: 20px;
+
+  @media screen and (max-width: 768px) {
+    font-size: 12px;
+    line-height: 18px;
+  }
 }
 
-.about-project__table {
+.about-project__statistics {
+  display: grid;
+  grid-template-columns: 228px 1fr;
+  grid-template-rows: 36px 46px;
+  align-items: center;
   margin-top: 110px;
   width: 100%;
   box-sizing: border-box;
-  border-spacing: 0;
   font-size: 14px;
   color: var(--color-secondary);
+
+  @media screen and (max-width: 768px) {
+    margin-top: 93px;
+    grid-template-columns: 140px 1fr;
+  }
 }
 
-.about-project__row {
-  height: 36px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-}
-
-.about-project__table tr td {
+.about-project__cell {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-}
-
-.about-project__cell_left {
-  width: 285px;
-  display: block;
-  padding: 0;
-}
-
-.about-project__cell_right {
-  width: 100%;
-  padding: 0;
 }
 
 .about-project__cell_green {

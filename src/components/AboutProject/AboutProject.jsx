@@ -22,20 +22,12 @@ export default function AboutProject() {
           </span>
         </div>
       </div>
-      <table className="about-project__table">
-        <thead>
-          <tr className="about-project__row">
-            <td className="about-project__cell_left about-project__cell_green">1 неделя</td>
-            <td className="about-project__cell_right about-project__cell_gray">4 недели</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr className="about-project__row">
-            <td className="about-project__cell_left about-project__cell">Back-end</td>
-            <td className="about-project__cell_right about-project__cell">Front-end</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="about-project__statistics">
+        <span className="about-project__cell about-project__cell_green">1 неделя</span>
+        <span className="about-project__cell about-project__cell_gray">4 недели</span>
+        <span className="about-project__cell">Back-end</span>
+        <span className="about-project__cell">Front-end</span>
+      </div>
     </section>
   );
 }
