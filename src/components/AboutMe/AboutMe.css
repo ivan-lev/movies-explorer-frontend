@@ -6,7 +6,8 @@
 .about-me__info {
   margin-top: 66px;
   display: grid;
-  grid-template-columns: 600px 1fr;
+  grid-template-columns: auto 1fr;
+  gap: 50px;
   grid-template-areas:
     'name avatar'
     'job-age avatar'
@@ -40,6 +41,7 @@
   line-height: 22px;
   height: fit-content;
   margin-bottom: 99px;
+  max-width: 600px;
 }
 
 .about-me__github-link {
