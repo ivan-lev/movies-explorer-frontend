@@ -12,7 +12,8 @@
   margin-top: 66px;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 50px;
+  grid-template-rows: 80px 45px auto 14px;
+  column-gap: 50px;
 
   grid-template-areas:
     'name avatar'
@@ -32,12 +33,9 @@
   grid-area: name;
   font-size: 50px;
   letter-spacing: -2px;
-  margin-bottom: 18px;
-  height: fit-content;
 
   @media screen and (max-width: 768px) {
     font-size: 40px;
-    margin-bottom: 0;
   }
 }
 
@@ -47,8 +45,6 @@
   font-size: 18px;
   font-weight: bold;
   line-height: 20px;
-  height: fit-content;
-  margin-bottom: 26px;
 
   @media screen and (max-width: 768px) {
     font-size: 12px;
@@ -62,15 +58,12 @@
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 14px;
   line-height: 22px;
-  height: fit-content;
-  margin-bottom: 99px;
   max-width: 600px;
 
   @media screen and (max-width: 768px) {
     padding-top: 4px;
     font-size: 12px;
     line-height: 18px;
-    margin-bottom: 0;
   }
 }
 
@@ -81,7 +74,6 @@
   font-size: 14px;
   font-weight: bold;
   width: fit-content;
-  justify-content: end;
 
   &:hover {
     opacity: 0.7;
@@ -106,7 +98,7 @@
   color: var(--color-secondary);
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 18px;
-  margin-top: 100px;
+  margin-top: 104px;
   margin-bottom: 50px;
 
   @media screen and (max-width: 768px) {

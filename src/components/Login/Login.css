@@ -1,18 +1,17 @@
 .login {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 396px;
+  grid-template-rows: 78px 70px 380px 30px;
   align-self: center;
-  flex: 1;
+  margin-top: auto;
+  margin-bottom: auto;
   width: 396px;
-  padding-top: 70px;
-  padding-bottom: 70px;
 }
 
 .login__title {
   font-size: 24px;
   font-weight: normal;
   width: 100%;
-  margin: 40px 0;
 }
 
 .login__form {
@@ -20,7 +19,10 @@
   flex-direction: column;
   flex: 1;
   width: 396px;
-  margin-bottom: 16px;
+
+  @media screen and (max-width: 768px) {
+    flex: 0;
+  }
 }
 
 .login__fieldset {
@@ -74,7 +76,7 @@
 .login__error {
   color: #ee3465;
   font-size: 10px;
-  margin-bottom: auto;
+  line-height: 10px;
   display: none;
 }
 
@@ -83,6 +85,7 @@
 }
 
 .login__already-registered-wrapper {
+  margin-top: 16px;
   display: flex;
   align-items: center;
   justify-content: center;

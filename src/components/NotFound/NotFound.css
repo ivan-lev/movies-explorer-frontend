@@ -3,9 +3,7 @@
   flex-direction: column;
   flex: 1;
   align-items: center;
-  justify-content: space-between;
-  padding-top: 260px;
-  padding-bottom: 60px;
+  justify-content: space-evenly;
 }
 
 .not-found__content {

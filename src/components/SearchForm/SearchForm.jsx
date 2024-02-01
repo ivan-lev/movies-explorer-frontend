@@ -22,10 +22,7 @@ export default function SearchForm({ onSearch }) {
           ></input>
           <button type="submit" className="search-form__button"></button>
         </div>
-        <div className="search-form__checkbox-line">
-          <FilterCheckBox />
-          <span className="search-form__short_meter">Короткометражки</span>
-        </div>
+        <FilterCheckBox />
       </form>
     </section>
   );

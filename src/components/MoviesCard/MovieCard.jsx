@@ -18,7 +18,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
   const saveButton = () => {
     return (
       <button
-        className="movie-card__button movie-card__button_not-saved"
+        className="movie-card__button movie-card__button_save"
         onMouseEnter={() => setIsSaveButtonShown(true)}
         onClick={handleAddToSavedMovies}
       >

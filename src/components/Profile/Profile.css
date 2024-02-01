@@ -8,6 +8,11 @@
   padding-bottom: 70px;
   width: 410px;
   margin: 0 auto;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 236px;
+    gap: 0;
+  }
 }
 
 .profile__greeting {
@@ -21,6 +26,10 @@
   flex-direction: column;
   gap: 12px;
   flex: 1;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 92px;
+  }
 }
 
 .profile__row {
@@ -68,6 +77,10 @@
   gap: 16px;
   margin-top: auto;
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    margin-top: 207px;
+  }
 }
 
 .profile__updating-error-wrapper {

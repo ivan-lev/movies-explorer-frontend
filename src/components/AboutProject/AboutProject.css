@@ -1,6 +1,6 @@
 .about-project {
   padding-top: 110px;
-  padding-bottom: 110px;
+  padding-bottom: 95px;
 
   @media screen and (max-width: 768px) {
     padding-top: 90px;
@@ -10,8 +10,13 @@
 
 .about-project__content {
   display: flex;
-  gap: 40px;
-  margin-top: 70px;
+  gap: 50px;
+  margin-top: 74px;
+
+  @media screen and (max-width: 768px) {
+    gap: 35px;
+    margin-top: 70px;
+  }
 }
 
 .about-project__column {

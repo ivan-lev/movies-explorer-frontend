@@ -12,13 +12,16 @@ export default function FilterCheckBox() {
   };
 
   return (
-    <label className="filter-checkbox" onClick={toggleIsChecked}>
-      <input type="checkbox" className="filter-checkbox__input"></input>
-      <span
-        className={`filter-checkbox__visible ${
-          isChecked ? 'filter-checkbox__visible_checked' : 'filter-checkbox__visible_unchecked'
-        }`}
-      ></span>
-    </label>
+    <div className="filter-checkbox">
+      <label className="filter-checkbox__label" onClick={toggleIsChecked}>
+        <input type="checkbox" className="filter-checkbox__input"></input>
+        <span
+          className={`filter-checkbox__visible ${
+            isChecked ? 'filter-checkbox__visible_checked' : 'filter-checkbox__visible_unchecked'
+          }`}
+        ></span>
+      </label>
+      <span className="search-form__short_meter">Короткометражки</span>
+    </div>
   );
 }

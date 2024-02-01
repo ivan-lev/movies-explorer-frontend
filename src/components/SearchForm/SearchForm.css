@@ -2,14 +2,24 @@
   min-height: 228px;
   padding-top: 80px;
   padding-bottom: 10px;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
 }
 
 .search-form__form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 31px;
   border-bottom: 1px solid var(--color-separator);
+  padding-bottom: 42px;
+
+  @media screen and (max-width: 768px) {
+    gap: 43px;
+  }
 }
 
 .search-form__input-line {
@@ -26,10 +36,11 @@
   border-radius: 8px;
   border: 0;
   background-color: var(--bg-time-plate);
-  padding-left: 20px;
+  padding: 0 20px;
   color: var(--color-secondary);
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 14px;
+  flex: 1 0;
 }
 
 .search-form__button {
@@ -41,19 +52,4 @@
   border: 0;
   background-color: transparent;
   cursor: pointer;
-}
-
-.search-form__checkbox-line {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 39px;
-}
-
-.search-form__checkbox {
-}
-
-.search-form__short_meter {
-  font-size: 12px;
 }
