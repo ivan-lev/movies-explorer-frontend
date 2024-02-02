@@ -1,15 +1,15 @@
 import './SearchForm.css';
 
-import React, { useState } from 'react';
+import React from 'react';
 import FilterCheckBox from '../FilterCheckbox/FilterCheckBox';
 
-export default function SearchForm({ onSearch }) {
-  const [inputValue, setInputValue] = useState('');
-
-  const handleSetInputValue = event => {
-    setInputValue(event.target.value);
-  };
-
+export default function SearchForm({
+  inputValue,
+  onType,
+  onSearch,
+  isShortMeter,
+  toggleIsShortMeter
+}) {
   return (
     <section className="main__section search-form">
       <form className="search-form__form" onSubmit={onSearch}>
@@ -17,12 +17,12 @@ export default function SearchForm({ onSearch }) {
           <input
             className="search-form__input"
             placeholder="Фильм"
-            onChange={handleSetInputValue}
+            onChange={onType}
             value={inputValue}
           ></input>
           <button type="submit" className="search-form__button"></button>
         </div>
-        <FilterCheckBox />
+        <FilterCheckBox isShortMeter={isShortMeter} toggleIsShortMeter={toggleIsShortMeter} />
       </form>
     </section>
   );

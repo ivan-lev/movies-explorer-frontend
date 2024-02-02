@@ -30,9 +30,9 @@ import { testMovies } from '../../variables/testMovies';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [moviesList, setMoviesList] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
 
+  const [moviesList, setMoviesList] = useState([]);
   const handleLoadAllMoviesList = () => {
     if (moviesList.length === 0) {
       setIsPreloaderShown(true);
@@ -43,7 +43,21 @@ function App() {
     }, 1500);
   };
 
-  const handleSearch = () => {};
+  const [filmToSearch, setFilmToSearch] = useState('');
+  const [isShortMeter, setIsShortMeter] = useState(false);
+  const handleSetFilmToSearch = event => {
+    event.preventDefault();
+    setFilmToSearch(event.target.value);
+  };
+  const handleSearch = event => {
+    event.preventDefault();
+    alert(`Давайте поищем ${isShortMeter ? 'короткометражный ' : ''}фильм ${filmToSearch}`);
+    setFilmToSearch('');
+  };
+  const toggleIsShortMeter = event => {
+    event.preventDefault();
+    setIsShortMeter(!isShortMeter);
+  };
 
   return (
     <div className="App">
@@ -77,7 +91,13 @@ function App() {
                 <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
-                <SearchForm onSearch={handleSearch} />
+                <SearchForm
+                  inputValue={filmToSearch}
+                  onType={handleSetFilmToSearch}
+                  onSearch={handleSearch}
+                  isShortMeter={isShortMeter}
+                  toggleIsShortMeter={toggleIsShortMeter}
+                />
                 {isPreloaderShown && <Preloader />}
                 <Movies onLoad={handleLoadAllMoviesList} moviesList={moviesList} />
               </Main>
@@ -95,7 +115,13 @@ function App() {
                 <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
-                <SearchForm onSearch={handleSearch} />
+                <SearchForm
+                  inputValue={filmToSearch}
+                  onType={handleSetFilmToSearch}
+                  onSearch={handleSearch}
+                  isShortMeter={isShortMeter}
+                  toggleIsShortMeter={toggleIsShortMeter}
+                />
                 {isPreloaderShown && <Preloader />}
                 <SavedMovies onLoad={handleLoadAllMoviesList} moviesList={moviesList} />
               </Main>
