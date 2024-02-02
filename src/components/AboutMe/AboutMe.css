@@ -6,6 +6,11 @@
     padding-top: 90px;
     padding-bottom: 90px;
   }
+
+  @media screen and (max-width: 768px) {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
 }
 
 .about-me__info {
@@ -14,7 +19,6 @@
   grid-template-columns: auto 1fr;
   grid-template-rows: 80px 45px auto 14px;
   column-gap: 50px;
-
   grid-template-areas:
     'name avatar'
     'job-age avatar'
@@ -27,6 +31,18 @@
     row-gap: 12px;
     grid-template-rows: 46px 22px auto 14px;
   }
+
+  @media screen and (max-width: 540px) {
+    margin-top: 60px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      'avatar'
+      'name'
+      'job-age'
+      'description'
+      'github-link';
+  }
 }
 
 .about-me__name {
@@ -36,6 +52,11 @@
 
   @media screen and (max-width: 768px) {
     font-size: 40px;
+  }
+
+  @media screen and (max-width: 320px) {
+    font-size: 30px;
+    letter-spacing: -1.2px;
   }
 }
 
@@ -51,6 +72,12 @@
     margin-bottom: 4px;
     line-height: 18px;
   }
+
+  @media screen and (max-width: 320px) {
+    font-size: 11px;
+    margin-bottom: 0px;
+    line-height: 16px;
+  }
 }
 
 .about-me__description {
@@ -64,6 +91,13 @@
     padding-top: 4px;
     font-size: 12px;
     line-height: 18px;
+  }
+
+  @media screen and (max-width: 320px) {
+    font-size: 11px;
+    padding-top: 0px;
+    margin-bottom: 20px;
+    line-height: 16px;
   }
 }
 
@@ -92,6 +126,13 @@
     width: 255px;
     height: 307px;
   }
+
+  @media screen and (max-width: 540px) {
+    width: 292px;
+    margin: 0 auto;
+    height: 352px;
+    margin-bottom: 20px;
+  }
 }
 
 .about-me__portfolio {
@@ -103,6 +144,12 @@
 
   @media screen and (max-width: 768px) {
     margin-top: 93px;
+  }
+
+  @media screen and (max-width: 320px) {
+    margin-top: 70px;
+    margin-bottom: 40px;
+    font-size: 14px;
   }
 }
 
@@ -121,6 +168,22 @@
   @media screen and (max-width: 768px) {
     font-size: 28px;
     letter-spacing: -1.12px;
+  }
+
+  @media screen and (max-width: 540px) {
+    font-size: 24px;
+    letter-spacing: -1px;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 20px;
+    letter-spacing: -0.85px;
+  }
+
+  @media screen and (max-width: 430px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    line-height: 28px;
   }
 }
 

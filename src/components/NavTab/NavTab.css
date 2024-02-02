@@ -1,7 +1,12 @@
 .nav-tab {
   display: flex;
   gap: 10px;
+
+  @media screen and (max-width: 320px) {
+    gap: 6px;
+  }
 }
+
 .nav-tab__link {
   display: flex;
   align-items: center;
@@ -18,5 +23,12 @@
 
   &:hover {
     opacity: 0.8;
+  }
+
+  @media screen and (max-width: 320px) {
+    font-size: 10px;
+    height: 26px;
+    width: 82px;
+    border-radius: 6px;
   }
 }
