@@ -1,9 +1,8 @@
-.navigation {
+.navigation__movies {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 15px;
-  width: 705px;
 }
 
 .navigation__navlink {
@@ -22,4 +21,17 @@
 
 .navigation__navlink_active {
   font-weight: bold;
+}
+
+.navigation__user-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.navigation__auth-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 30px;
 }
