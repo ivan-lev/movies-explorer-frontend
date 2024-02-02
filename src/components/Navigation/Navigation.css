@@ -3,6 +3,10 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 .navigation__navlink {
@@ -28,6 +32,10 @@
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 }
 
 .navigation__auth-buttons {
