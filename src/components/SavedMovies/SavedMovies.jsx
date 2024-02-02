@@ -1,13 +1,15 @@
 import './SavedMovies.css';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-import { testMovies } from '../../variables/testMovies';
+export default function SavedMovies({ onLoad, moviesList }) {
+  useEffect(() => {
+    onLoad();
+  }, [onLoad]);
 
-export default function SavedMovies({ moviesList }) {
-  const savedMoviesList = testMovies.filter(movie => {
+  const savedMoviesList = moviesList.filter(movie => {
     return movie.isSaved;
   });
 

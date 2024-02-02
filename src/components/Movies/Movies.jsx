@@ -1,11 +1,15 @@
 import './Movies.css';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 
-export default function Movies({ moviesList }) {
+export default function Movies({ onLoad, moviesList }) {
+  useEffect(() => {
+    onLoad();
+  }, [onLoad]);
+
   return (
     <section className="main__section movies">
       <MoviesCardList list={moviesList} />

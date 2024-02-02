@@ -32,17 +32,18 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [moviesList, setMoviesList] = useState([]);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-  const [showTemporaryMessage, setShowTemporaryMessage] = useState(true);
 
-  const handleSearch = event => {
-    event.preventDefault();
-    setShowTemporaryMessage(false);
-    setIsPreloaderShown(true);
+  const handleLoadAllMoviesList = () => {
+    if (moviesList.length === 0) {
+      setIsPreloaderShown(true);
+    }
     setTimeout(() => {
-      setMoviesList(testMovies);
       setIsPreloaderShown(false);
-    }, 1000);
+      setMoviesList(testMovies);
+    }, 1500);
   };
+
+  const handleSearch = () => {};
 
   return (
     <div className="App">
@@ -77,8 +78,8 @@ function App() {
               </Header>
               <Main>
                 <SearchForm onSearch={handleSearch} />
-                {showTemporaryMessage ? <div style={{ color: 'red' }}>Нажмите на поиск</div> : ''}
-                {isPreloaderShown ? <Preloader /> : <Movies moviesList={moviesList} />}
+                {isPreloaderShown && <Preloader />}
+                <Movies onLoad={handleLoadAllMoviesList} moviesList={moviesList} />
               </Main>
               <Footer />
             </>
@@ -95,7 +96,8 @@ function App() {
               </Header>
               <Main>
                 <SearchForm onSearch={handleSearch} />
-                {isPreloaderShown ? <Preloader /> : <SavedMovies moviesList={moviesList} />}
+                {isPreloaderShown && <Preloader />}
+                <SavedMovies onLoad={handleLoadAllMoviesList} moviesList={moviesList} />
               </Main>
               <Footer />
             </>
