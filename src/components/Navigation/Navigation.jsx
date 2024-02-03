@@ -21,32 +21,34 @@ export default function Navigation({ isLoggedIn }) {
   return (
     <>
       {isMenuOpened && <MobileMenu onClose={toggleOpenMenu} />}
-      <div className="MOVIES_DIV">
-        {isLoggedIn ? (
-          <nav className="navigation__movies">
-            <NavLink
-              className={({ isActive }) =>
-                `navigation__navlink ${isActive ? 'navigation__navlink_active' : ''}`
-              }
-              to="/movies"
-            >
-              Фильмы
-            </NavLink>
+      {/* this code renders elemets which will be placed in middle part of header */}
+      <div className="navigation__middle-section">
+        <nav className="navigation__movies">
+          {isLoggedIn && (
+            <>
+              <NavLink
+                className={({ isActive }) =>
+                  `navigation__navlink ${isActive ? 'navigation__navlink_active' : ''}`
+                }
+                to="/movies"
+              >
+                Фильмы
+              </NavLink>
 
-            <NavLink
-              className={({ isActive }) =>
-                `navigation__navlink ${isActive ? 'navigation__navlink_active' : ''}`
-              }
-              to="/saved-movies"
-            >
-              Сохранённые фильмы
-            </NavLink>
-          </nav>
-        ) : (
-          <div></div>
-        )}
+              <NavLink
+                className={({ isActive }) =>
+                  `navigation__navlink ${isActive ? 'navigation__navlink_active' : ''}`
+                }
+                to="/saved-movies"
+              >
+                Сохранённые фильмы
+              </NavLink>
+            </>
+          )}
+        </nav>
       </div>
-      <div className="USER_DIV">
+      {/* this code renders elemets which will be placed in right part of header */}
+      <div className="navigation__right-section">
         {isLoggedIn ? (
           <>
             <div className="navigation__user-button">
