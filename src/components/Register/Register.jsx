@@ -90,15 +90,17 @@ export default function Register({ onSubmit }) {
         <div className="register__error-wrapper">
           <span className="register__error register__error_shown">Что-то пошло не так...</span>
         </div>
-
-        <Button type="blue" text="Зарегистрироваться" />
       </form>
-      <span className="register__already-registered-wrapper">
-        <span className="register__already-registered-text">Уже зарегистрированы?</span>
-        <Link className="register__login-link" to="/signin">
-          Войти
-        </Link>
-      </span>
+
+      <div className="register__bottom">
+        <Button type="blue" text="Зарегистрироваться" />
+        <div className="register__already-registered-wrapper">
+          <span className="register__already-registered-text">Уже зарегистрированы?</span>
+          <Link className="register__login-link" to="/signin">
+            Войти
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

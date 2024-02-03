@@ -68,15 +68,17 @@ export default function Login({ onSubmit }) {
         <div className="login__error-wrapper">
           <span className="login__error login__error_shown">Ошибка логина...</span>
         </div>
-
-        <Button type="blue" text="Войти" />
       </form>
-      <span className="login__already-registered-wrapper">
-        <span className="login__already-registered-text">Ещё не зарегистрированы?</span>
-        <Link className="login__register-link" to="/signup">
-          Регистрация
-        </Link>
-      </span>
+
+      <div className="login__bottom">
+        <Button type="blue" text="Войти" />
+        <div className="login__not-registered-wrapper">
+          <span className="login__not-registered-text">Ещё не зарегистрированы?</span>
+          <Link className="login__register-link" to="/signup">
+            Регистрация
+          </Link>
+        </div>
+      </div>
     </section>
   );
 }

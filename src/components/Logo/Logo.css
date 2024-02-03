@@ -1,5 +1,7 @@
 .logo {
   line-height: 0;
+  height: min-content;
+  width: min-content;
 }
 
 .logo__image {
