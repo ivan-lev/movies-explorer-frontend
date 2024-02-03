@@ -25,7 +25,7 @@ export default function Profile({ user, onSubmit }) {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isUserDataUpdating]);
+  }, [isUserDataUpdating, user]);
 
   useEffect(() => setGreetingName(user.name), [user]);
 
