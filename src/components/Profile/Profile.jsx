@@ -106,27 +106,28 @@ export default function Profile() {
           </div>
         </form>
       )}
-
-      {!isUserDataUpdating ? (
-        <div className="profile__wrapper">
-          <Button
-            type="transparent button_bigger-font"
-            text="Редактировать"
-            onClick={handleSubmit}
-          />
-          <Button
-            type="transparent button_bigger-font button_text-crimson"
-            text="Выйти из аккаутна"
-          />
-        </div>
-      ) : (
-        <div className="profile__wrapper">
-          <div className="profile__updating-error-wrapper">
-            <p className="profile__updating-error">При обновлении профиля произошла ошибка.</p>
-          </div>
-          <Button type="blue" text="Сохранить" onClick={handleSubmit} />
-        </div>
-      )}
+      <div className="profile__buttons-wrapper">
+        {!isUserDataUpdating ? (
+          <>
+            <Button
+              type="transparent button_bigger-font"
+              text="Редактировать"
+              onClick={handleSubmit}
+            />
+            <Button
+              type="transparent button_bigger-font button_text-crimson"
+              text="Выйти из аккаутна"
+            />
+          </>
+        ) : (
+          <>
+            <div className="profile__updating-error-wrapper">
+              <p className="profile__updating-error">При обновлении профиля произошла ошибка.</p>
+            </div>
+            <Button type="blue" text="Сохранить" onClick={handleSubmit} />
+          </>
+        )}
+      </div>
     </section>
   );
 }

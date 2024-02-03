@@ -34,6 +34,10 @@
 .button_bigger-font {
   height: 13px;
   font-size: 13px;
+
+  @media screen and (max-width: 320px) {
+    font-size: 12px;
+  }
 }
 
 .button_text-crimson {
