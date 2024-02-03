@@ -7,7 +7,12 @@
   gap: 14px;
 
   @media screen and (max-width: 768px) {
-    height: 235px;
+    min-height: 235px;
+  }
+
+  @media screen and (max-width: 320px) {
+    min-height: unset;
+    gap: 16px;
   }
 }
 
@@ -19,6 +24,10 @@
 
   @media screen and (max-width: 768px) {
     height: 190px;
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 168px;
   }
 }
 
@@ -74,6 +83,12 @@
     padding-right: 0;
     padding-bottom: 2px;
   }
+
+  @media screen and (max-width: 768px) {
+    padding-bottom: 0;
+    align-items: center;
+    gap: 10px;
+  }
 }
 
 .movie-card__title {
@@ -85,6 +100,15 @@
 
   @media screen and (max-width: 768px) {
     height: 13px;
+  }
+
+  @media screen and (max-width: 320px) {
+    height: unset;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 12px;
   }
 }
 

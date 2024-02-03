@@ -7,6 +7,11 @@
     padding-left: 30px;
     padding-right: 30px;
   }
+
+  @media screen and (max-width: 768px) {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
 }
 
 .search-form__form {
@@ -19,6 +24,10 @@
 
   @media screen and (max-width: 768px) {
     gap: 43px;
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 50px;
   }
 }
 
@@ -41,6 +50,12 @@
   font-feature-settings: 'clig' off, 'liga' off;
   font-size: 14px;
   flex: 1 0;
+
+  @media screen and (max-width: 320px) {
+    height: 44px;
+    padding-left: 13px;
+    padding-right: 13px;
+  }
 }
 
 .search-form__button {
