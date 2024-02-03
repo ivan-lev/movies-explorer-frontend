@@ -1,5 +1,6 @@
 .movie-card {
   width: 100%;
+  max-width: 360px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -26,7 +27,7 @@
     height: 190px;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 320px) {
     height: 168px;
   }
 }
@@ -84,7 +85,7 @@
     padding-bottom: 2px;
   }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 320px) {
     padding-bottom: 0;
     align-items: center;
     gap: 10px;
