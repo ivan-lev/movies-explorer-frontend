@@ -5,26 +5,18 @@ import { useState, useEffect } from 'react';
 
 import Button from '../Button/Button';
 
-export default function Profile() {
-  const [formValues, setFormValues] = useState({
-    name: 'Иван',
-    email: 'fanatos@mail.com'
-  });
-  const [initialFormValues, setInitialFormValues] = useState({
-    name: '',
-    email: ''
-  });
-  const [greetingName, setGreetingname] = useState(formValues.name);
+export default function Profile({ user, onSubmit }) {
+  const [formValues, setFormValues] = useState(user);
+  const [greetingName, setGreetingName] = useState(user.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
 
   // if esc pressed, hide edit form and set initial name and email values
   useEffect(() => {
     const handleKeyDown = event => {
       const key = event.key;
-      setInitialFormValues(formValues);
 
       if (key === 'Escape') {
-        setFormValues(initialFormValues);
+        setFormValues(user);
         setIsUserDataUpdating(false);
       }
     };
@@ -35,6 +27,8 @@ export default function Profile() {
     };
   }, [isUserDataUpdating]);
 
+  useEffect(() => setGreetingName(user.name), [user]);
+
   const handleChange = event => {
     const { name, value } = event.target;
 
@@ -44,28 +38,22 @@ export default function Profile() {
     });
   };
 
-  const handleSubmit = event => {
+  const handleEditData = event => {
     event.preventDefault();
 
     if (!isUserDataUpdating) {
       setIsUserDataUpdating(true);
-      setInitialFormValues(formValues);
     }
+  };
 
-    if (isUserDataUpdating) {
-      if (
-        initialFormValues.name === formValues.name &&
-        initialFormValues.email === formValues.email
-      ) {
-        alert('Данные не поменялись');
-        setIsUserDataUpdating(false);
-        return;
-      }
-      const { name, email } = formValues;
-      alert('Отправляем имя и мэйл: ' + name + ', ' + email);
-      setGreetingname(formValues.name);
+  const handleSubmitData = () => {
+    if (user.name === formValues.name && user.email === formValues.email) {
+      alert('Данные не поменялись');
       setIsUserDataUpdating(false);
+      return;
     }
+    onSubmit(formValues);
+    setIsUserDataUpdating(false);
   };
 
   return (
@@ -75,16 +63,16 @@ export default function Profile() {
         <div className="profile__data">
           <div className="profile__row">
             <span className="profile__field">Имя</span>
-            <span className="profile__field">{formValues.name}</span>
+            <span className="profile__field">{user.name}</span>
           </div>
           <div className="profile__divider"></div>
           <div className="profile__row">
             <span className="profile__field">E-mail</span>
-            <span className="profile__field">{formValues.email}</span>
+            <span className="profile__field">{user.email}</span>
           </div>
         </div>
       ) : (
-        <form className="profile__data" onSubmit={handleSubmit}>
+        <form className="profile__data" onSubmit={onSubmit}>
           <div className="profile__row">
             <span className="profile__field">Имя</span>
             <input
@@ -112,7 +100,7 @@ export default function Profile() {
             <Button
               type="transparent button_bigger-font"
               text="Редактировать"
-              onClick={handleSubmit}
+              onClick={handleEditData}
             />
             <Button
               type="transparent button_bigger-font button_text-crimson"
@@ -124,7 +112,7 @@ export default function Profile() {
             <div className="profile__updating-error-wrapper">
               <p className="profile__updating-error">При обновлении профиля произошла ошибка.</p>
             </div>
-            <Button type="blue" text="Сохранить" onClick={handleSubmit} />
+            <Button type="blue" text="Сохранить" onClick={handleSubmitData} />
           </>
         )}
       </div>

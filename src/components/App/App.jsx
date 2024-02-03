@@ -28,8 +28,14 @@ import Preloader from '../Preloader/Preloader';
 import { testMovies } from '../../variables/testMovies';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
+
+  const [user, setUser] = useState({ name: 'Иван', email: 'ivanlev@mail.com' });
+  const handleSetUserData = data => {
+    alert('Отправляем свежие данные: ' + data.name + ', ' + data.email);
+    setUser(data);
+  };
 
   const [moviesList, setMoviesList] = useState([]);
   const handleLoadAllMoviesList = () => {
@@ -133,7 +139,7 @@ function App() {
                 <Logo />
                 <Navigation isLoggedIn={isLoggedIn} />
               </Header>
-              <Profile />
+              <Profile user={user} onSubmit={handleSetUserData} />
             </>
           }
         />
