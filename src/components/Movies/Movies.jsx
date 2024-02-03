@@ -6,7 +6,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 
 export default function Movies({ onLoad, moviesList }) {
-  let coefficient = 5;
+  const windowInnerWidth = window.innerWidth;
+  let coefficient = 12;
+  if (windowInnerWidth <= 768) {
+    coefficient = 8;
+  }
+  if (windowInnerWidth <= 320) {
+    coefficient = 5;
+  }
   const [showMoviesCount, setShowMoviesCount] = useState(coefficient);
 
   const handleShowMore = () => {
