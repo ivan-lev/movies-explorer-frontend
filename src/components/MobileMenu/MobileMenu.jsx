@@ -18,6 +18,7 @@ export default function MobileMenu({ onClose }) {
             className={({ isActive }) =>
               `mobile-menu__link ${isActive && 'mobile-menu__link_active'}`
             }
+            onClick={onClose}
           >
             Главная
           </NavLink>
@@ -26,6 +27,7 @@ export default function MobileMenu({ onClose }) {
             className={({ isActive }) =>
               `mobile-menu__link ${isActive && 'mobile-menu__link_active'}`
             }
+            onClick={onClose}
           >
             Фильмы
           </NavLink>
@@ -34,11 +36,19 @@ export default function MobileMenu({ onClose }) {
             className={({ isActive }) =>
               `mobile-menu__link ${isActive && 'mobile-menu__link_active'}`
             }
+            onClick={onClose}
           >
             Сохранённые фильмы
           </NavLink>
         </nav>
-        <Button type="gray" text="Аккаунт" onClick={() => navigate('/profile')} />
+        <Button
+          type="gray"
+          text="Аккаунт"
+          onClick={() => {
+            navigate('/profile');
+            onClose();
+          }}
+        />
       </div>
     </div>
   );
