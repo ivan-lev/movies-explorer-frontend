@@ -3,40 +3,33 @@ import './Profile.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
 
+import { useForm } from '../../hooks/useForm';
+
 import Button from '../Button/Button';
 
 export default function Profile({ user, onSubmit }) {
-  const [formValues, setFormValues] = useState(user);
+  const { values, setValues, handleChange } = useForm(user);
   const [greetingName, setGreetingName] = useState(user.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
 
   // if esc pressed, hide edit form and set initial name and email values
   useEffect(() => {
-    const handleKeyDown = event => {
+    const handleCloseEditingByEsc = event => {
       const key = event.key;
 
       if (key === 'Escape') {
-        setFormValues(user);
+        setValues(user);
         setIsUserDataUpdating(false);
       }
     };
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keydown', handleCloseEditingByEsc);
 
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener('keydown', handleCloseEditingByEsc);
     };
   }, [isUserDataUpdating, user]);
 
   useEffect(() => setGreetingName(user.name), [user]);
-
-  const handleChange = event => {
-    const { name, value } = event.target;
-
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
-  };
 
   const handleEditData = event => {
     event.preventDefault();
@@ -47,12 +40,12 @@ export default function Profile({ user, onSubmit }) {
   };
 
   const handleSubmitData = () => {
-    if (user.name === formValues.name && user.email === formValues.email) {
+    if (user.name === values.name && user.email === values.email) {
       alert('Данные не поменялись');
       setIsUserDataUpdating(false);
       return;
     }
-    onSubmit(formValues);
+    onSubmit(values);
     setIsUserDataUpdating(false);
   };
 
@@ -78,7 +71,7 @@ export default function Profile({ user, onSubmit }) {
             <input
               className="profile__field profile__input-field"
               name="name"
-              value={formValues.name}
+              value={values.name}
               onChange={handleChange}
             ></input>
           </div>
@@ -88,7 +81,7 @@ export default function Profile({ user, onSubmit }) {
             <input
               className="profile__field profile__input-field"
               name="email"
-              value={formValues.email}
+              value={values.email}
               onChange={handleChange}
             ></input>
           </div>
