@@ -7,7 +7,7 @@ import { useForm } from '../../hooks/useForm';
 
 import Button from '../Button/Button';
 
-export default function Profile({ user, onSubmit }) {
+export default function Profile({ user, onSubmit, onLogout }) {
   const { values, setValues, handleChange } = useForm(user);
   const [greetingName, setGreetingName] = useState(user.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
@@ -98,6 +98,7 @@ export default function Profile({ user, onSubmit }) {
             <Button
               type="transparent button_bigger-font button_text-crimson"
               text="Выйти из аккаутна"
+              onClick={onLogout}
             />
           </>
         ) : (

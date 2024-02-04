@@ -1,7 +1,7 @@
 import './App.css';
 
 import { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -74,6 +74,13 @@ function App() {
       setMoviesList(testMovies);
     }, 1500);
   }, [isShortMeter, moviesList]);
+
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUser({});
+    navigate('/');
+  };
 
   return (
     <div className="App">
@@ -150,7 +157,7 @@ function App() {
                 <Logo />
                 <Navigation isLoggedIn={isLoggedIn} />
               </Header>
-              <Profile user={user} onSubmit={handleSetUserData} />
+              <Profile user={user} onSubmit={handleSetUserData} onLogout={handleLogout} />
             </>
           }
         />
