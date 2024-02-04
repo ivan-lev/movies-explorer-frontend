@@ -40,14 +40,8 @@ function App() {
 
   const [filmToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
-  const handleSetFilmToSearch = event => {
-    event.preventDefault();
-    setFilmToSearch(event.target.value);
-  };
-  const handleSearch = event => {
-    event.preventDefault();
+  const handleSearch = () => {
     alert(`Давайте поищем ${isShortMeter ? 'короткометражный ' : ''}фильм ${filmToSearch}`);
-    setFilmToSearch('');
   };
   const toggleIsShortMeter = event => {
     event.preventDefault();
@@ -116,7 +110,7 @@ function App() {
               <Main>
                 <SearchForm
                   inputValue={filmToSearch}
-                  onType={handleSetFilmToSearch}
+                  onType={setFilmToSearch}
                   onSearch={handleSearch}
                   isShortMeter={isShortMeter}
                   toggleIsShortMeter={toggleIsShortMeter}
@@ -139,7 +133,7 @@ function App() {
               <Main>
                 <SearchForm
                   inputValue={filmToSearch}
-                  onType={handleSetFilmToSearch}
+                  onType={setFilmToSearch}
                   onSearch={handleSearch}
                   isShortMeter={isShortMeter}
                   toggleIsShortMeter={toggleIsShortMeter}

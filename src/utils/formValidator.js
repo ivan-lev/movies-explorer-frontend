@@ -114,3 +114,13 @@ export const validateRegistration = (name, email, password, setMessage) => {
   setMessage('');
   return true;
 };
+
+export const validateSearch = (value, setMessage) => {
+  if (!value) {
+    setMessage('Нужно что-то написать...');
+    return false;
+  }
+
+  setMessage('Фильм');
+  return true;
+};
