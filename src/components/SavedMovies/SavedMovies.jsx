@@ -1,6 +1,6 @@
 import './SavedMovies.css';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
