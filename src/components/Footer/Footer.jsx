@@ -9,10 +9,20 @@ export default function Footer() {
       <p className="footer__info">Учебный проект Яндекс.Практикум х BeatFilm.</p>
       <div className="footer__copyright">
         <div className="footer__links">
-          <a className="footer__link" target="_blank" href="https://practicum.yandex.ru/">
+          <a
+            className="footer__link"
+            target="_blank"
+            rel="noreferrer"
+            href="https://practicum.yandex.ru/"
+          >
             Яндекс.Практикум
           </a>
-          <a className="footer__link" target="_blank" href="https://github.com/ivan-lev">
+          <a
+            className="footer__link"
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/ivan-lev"
+          >
             Github
           </a>
         </div>
