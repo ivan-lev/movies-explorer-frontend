@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Header from '../Header/Header';
@@ -37,17 +37,6 @@ function App() {
     setUser(data);
   };
 
-  const [moviesList, setMoviesList] = useState([]);
-  const handleLoadAllMoviesList = () => {
-    if (moviesList.length === 0) {
-      setIsPreloaderShown(true);
-    }
-    setTimeout(() => {
-      setIsPreloaderShown(false);
-      setMoviesList(testMovies);
-    }, 1500);
-  };
-
   const [filmToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
   const handleSetFilmToSearch = event => {
@@ -63,6 +52,29 @@ function App() {
     event.preventDefault();
     setIsShortMeter(!isShortMeter);
   };
+
+  const [moviesList, setMoviesList] = useState([]);
+  useEffect(() => {
+    if (moviesList.length === 0) {
+      setIsPreloaderShown(true);
+    }
+    setTimeout(() => {
+      setIsPreloaderShown(false);
+      const allMovies = testMovies;
+      if (isShortMeter) {
+        const shortMovies = [];
+        testMovies.forEach(movie => {
+          if (movie.duration <= 45) {
+            shortMovies.push(movie);
+          }
+        });
+
+        setMoviesList(shortMovies);
+        return;
+      }
+      setMoviesList(allMovies);
+    }, 1500);
+  }, [isShortMeter, moviesList]);
 
   return (
     <div className="App">
@@ -102,7 +114,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <Movies onLoad={handleLoadAllMoviesList} moviesList={moviesList} />
+                <Movies moviesList={moviesList} />
               </Main>
               <Footer />
             </>
@@ -125,7 +137,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <SavedMovies onLoad={handleLoadAllMoviesList} moviesList={moviesList} />
+                <SavedMovies moviesList={moviesList} />
               </Main>
               <Footer />
             </>

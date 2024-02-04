@@ -4,11 +4,7 @@ import React, { useEffect } from 'react';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-export default function SavedMovies({ onLoad, moviesList }) {
-  useEffect(() => {
-    onLoad();
-  }, [onLoad]);
-
+export default function SavedMovies({ moviesList }) {
   const savedMoviesList = moviesList.filter(movie => {
     return movie.isSaved;
   });

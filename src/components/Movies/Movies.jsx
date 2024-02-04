@@ -1,11 +1,11 @@
 import './Movies.css';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 
-export default function Movies({ onLoad, moviesList }) {
+export default function Movies({ moviesList }) {
   const windowInnerWidth = window.innerWidth;
   let coefficient = 12;
   if (windowInnerWidth <= 768) {
@@ -19,10 +19,6 @@ export default function Movies({ onLoad, moviesList }) {
   const handleShowMore = () => {
     setShowMoviesCount(showMoviesCount + coefficient);
   };
-
-  useEffect(() => {
-    onLoad();
-  }, [onLoad]);
 
   return (
     <section className="main__section movies">
