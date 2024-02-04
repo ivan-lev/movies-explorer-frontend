@@ -6,7 +6,7 @@ body {
   background-color: var(--bg-primary);
   margin: 0 auto;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', 'Roboto', 'Helvetica Neue', sans-serif;
   font-weight: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
