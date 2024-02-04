@@ -1,7 +1,19 @@
 # Дипломный проект (фронтенд)
 
 ## Описание
+
 < в разработке >
+
+## Ссылки
+
+- В проекте использовался вариант макета `dark-2` [дипломного проекта](https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82?type=design&t=aV4GkMfB8YLypwQp-6)
+- Ссылка на репозиторий проекта: [https://github.com/ivan-lev/movies-explorer-frontend](https://github.com/ivan-lev/movies-explorer-frontend)
+- Доменный адрес бэкенда: [https://api.moviesearch.nomoredomainsmonster.ru](https://moviesearch.nomoredomainsmonster.ru)
+- Доменный адрес фронтенда (фронтенд пока не загружен): [https://moviesearch.nomoredomainsmonster.ru](https://moviesearch.nomoredomainsmonster.ru)
+
+## Технологии
+
+Приложение написано на React со сборкой в CRA. Основная технология - JSX (расширение языка JavaScript). Стили написаны на CSS.
 
 ## Директории в /src
 
@@ -9,7 +21,6 @@
 `/utils` — папка с дополнительными утилитами
 `/vendor` — папка с ресурсами, созданными сторонними авторами
 
-## Ссылки
+## Вызовы
 
-- Ссылка на репозиторий проекта: [https://github.com/ivan-lev/movies-explorer-frontend](https://github.com/ivan-lev/movies-explorer-frontend)
-- Доменный адрес бэкенда: [https://api.moviesearch.nomoredomainsmonster.ru](https://moviesearch.nomoredomainsmonster.ru)
+Неожиданным вызовом стало верхнее меню. Нужно было реализовать вёрстку так, чтобы центральная часть располагалась строго по центру страницы, в то время как левая и правая части - это, соответственно, логотип и кнопка, у которых разная ширина. Плюс к этому, если пользователь не залогинен, то средняя часть вообще не отображается, а правая кнопка превращается в две кнопки (регистрации и логина). При этом логотип является простой частью хедера, а кнопки и ссылки в среднюю и правую части хедера встраиваются из другого компонента.
