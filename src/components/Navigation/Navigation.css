@@ -42,6 +42,10 @@
   align-items: center;
   justify-content: flex-end;
   gap: 30px;
+
+  @media screen and (max-width: 320px) {
+    gap: 14px;
+  }
 }
 
 .navigation__mobile-menu-button {

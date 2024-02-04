@@ -12,17 +12,19 @@
 
   @media screen and (max-width: 430px) {
     width: 100%;
-  }
-
-  @media screen and (max-width: 430px) {
     align-items: center;
     padding: 56px 30px 30px;
+    gap: 50px;
   }
 }
 
 .register__title {
   font-size: 24px;
   font-weight: normal;
+
+  @media screen and (max-width: 320px) {
+    margin-bottom: 30px;
+  }
 }
 
 .register__form {
@@ -123,17 +125,13 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-
-  @media screen and (max-width: 430px) {
-    margin-top: 14px;
-  }
 }
 
 .register__already-registered-text {
   color: var(--color-secondary);
   font-size: 14px;
 
-  @media screen and (max-width: 420px) {
+  @media screen and (max-width: 430px) {
     font-size: 12px;
   }
 }
@@ -143,7 +141,7 @@
   font-size: 14px;
   text-decoration: none;
 
-  @media screen and (max-width: 420px) {
+  @media screen and (max-width: 430px) {
     font-size: 12px;
   }
 }

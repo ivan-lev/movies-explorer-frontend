@@ -47,6 +47,11 @@
   background-position: center;
   cursor: pointer;
   font-size: 10px;
+
+  @media screen and (max-width: 320px) {
+    top: 10px;
+    right: 10px;
+  }
 }
 
 .movie-card__button_save {
@@ -110,6 +115,7 @@
     text-overflow: ellipsis;
     display: block;
     font-size: 12px;
+    line-height: 1;
   }
 }
 

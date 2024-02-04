@@ -56,6 +56,11 @@
   background: var(--color-green);
   border-radius: 3px;
   color: var(--color-dark);
+
+  @media screen and (max-width: 320px) {
+    height: 26px;
+    padding: 0 12px;
+  }
 }
 
 .button_bordered {
@@ -96,6 +101,7 @@
   background-image: url('../../images/icons/burger.svg');
   background-position: center;
   background-repeat: no-repeat;
+  background-size: 100%;
   display: none;
 
   @media screen and (max-width: 768px) {
@@ -113,4 +119,9 @@
   background-repeat: no-repeat;
   background-size: 20px;
   align-self: flex-end;
+
+  @media screen and (max-width: 320px) {
+    width: 20px;
+    height: 20px;
+  }
 }
