@@ -141,8 +141,8 @@
   @media screen and (max-width: 420px) {
     font-size: 12px;
   }
+}
 
-  &:hover {
-    opacity: 0.7;
-  }
+.login__register-link:hover {
+  opacity: 0.7;
 }

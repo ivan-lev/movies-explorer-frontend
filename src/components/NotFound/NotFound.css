@@ -47,8 +47,8 @@
   font-size: 14px;
   text-decoration: none;
 
-  &:hover {
-    opacity: 0.8;
+  .not-found__return-link:hover {
+    opacity: 0.7;
   }
 
   @media screen and (max-width: 430px) {
