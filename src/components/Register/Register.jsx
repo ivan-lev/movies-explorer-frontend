@@ -1,32 +1,19 @@
 import './Register.css';
 
 import React from 'react';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from '../../hooks/useForm';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
 export default function Register({ onSubmit }) {
-  const [formValues, setFormValues] = useState({
-    email: '',
-    password: '',
-    name: ''
-  });
+  const { values, setValues, handleChange } = useForm({ name: '', email: '', password: '' });
 
-  const handleChange = event => {
-    const { name, value } = event.target;
-
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
-  };
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    const { name, email, password } = formValues;
-    alert('Отправляем форму с параметрами: ' + name + ', ' + email + ', ' + password);
+  const handleSubmit = () => {
+    const { name, email, password } = values;
+    alert('Регистрируем юзера: ' + name + ', ' + email + ', ' + password);
+    setValues({ name: '', email: '', password: '' });
   };
 
   return (
@@ -43,14 +30,18 @@ export default function Register({ onSubmit }) {
           <label className="register__input-label">
             Имя
             <input
-              type="text"
+              type="name"
               autoComplete="on"
               placeholder=""
               id="name"
               name="name"
               className="register__input"
               required
+              value={values.name}
               onChange={handleChange}
+              onKeyDown={event => {
+                event.key === 'Enter' && handleSubmit();
+              }}
             />
           </label>
         </fieldset>
@@ -66,7 +57,11 @@ export default function Register({ onSubmit }) {
               name="email"
               className="register__input"
               required
+              value={values.email}
               onChange={handleChange}
+              onKeyDown={event => {
+                event.key === 'Enter' && handleSubmit();
+              }}
             />
           </label>
         </fieldset>
@@ -82,7 +77,11 @@ export default function Register({ onSubmit }) {
               name="password"
               className="register__input"
               required
+              value={values.password}
               onChange={handleChange}
+              onKeyDown={event => {
+                event.key === 'Enter' && handleSubmit();
+              }}
             />
           </label>
         </fieldset>
@@ -93,7 +92,7 @@ export default function Register({ onSubmit }) {
       </form>
 
       <div className="register__bottom">
-        <Button type="blue" text="Зарегистрироваться" />
+        <Button type="blue" text="Зарегистрироваться" onClick={handleSubmit} />
         <div className="register__already-registered-wrapper">
           <span className="register__already-registered-text">Уже зарегистрированы?</span>
           <Link className="register__login-link" to="/signin">

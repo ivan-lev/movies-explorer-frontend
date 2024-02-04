@@ -1,31 +1,19 @@
 import './Login.css';
 
 import React from 'react';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useForm } from '../../hooks/useForm';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
 export default function Login({ onSubmit }) {
-  const [formValues, setFormValues] = useState({
-    email: '',
-    password: ''
-  });
+  const { values, setValues, handleChange } = useForm({ email: '', password: '' });
 
-  const handleChange = event => {
-    const { name, value } = event.target;
-
-    setFormValues({
-      ...formValues,
-      [name]: value
-    });
-  };
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    const { name, email, password } = formValues;
-    alert('Отправляем форму с параметрами: ' + name + ', ' + email + ', ' + password);
+  const handleSubmit = () => {
+    const { email, password } = values;
+    alert('Отправляем форму с параметрами: ' + email + ', ' + password);
+    setValues({ email: '', password: '' });
   };
 
   return (
@@ -37,14 +25,18 @@ export default function Login({ onSubmit }) {
           <label className="login__input-label">
             Email
             <input
-              type="text"
+              type="email"
               autoComplete="on"
               placeholder=""
-              id="name"
-              name="name"
+              id="email"
+              name="email"
               className="login__input"
               required
+              value={values.email}
               onChange={handleChange}
+              onKeyDown={event => {
+                event.key === 'Enter' && handleSubmit();
+              }}
             />
           </label>
         </fieldset>
@@ -53,14 +45,18 @@ export default function Login({ onSubmit }) {
           <label className="login__input-label">
             Пароль
             <input
-              type="email"
+              type="password"
               autoComplete="on"
               placeholder=""
-              id="email"
-              name="email"
+              id="password"
+              name="password"
               className="login__input"
               required
+              value={values.password}
               onChange={handleChange}
+              onKeyDown={event => {
+                event.key === 'Enter' && handleSubmit();
+              }}
             />
           </label>
         </fieldset>
@@ -71,7 +67,7 @@ export default function Login({ onSubmit }) {
       </form>
 
       <div className="login__bottom">
-        <Button type="blue" text="Войти" />
+        <Button type="blue" text="Войти" onClick={handleSubmit} />
         <div className="login__not-registered-wrapper">
           <span className="login__not-registered-text">Ещё не зарегистрированы?</span>
           <Link className="login__register-link" to="/signup">
