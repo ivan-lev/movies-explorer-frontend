@@ -12,7 +12,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
   const hours = Math.trunc(duration / 60);
   const minutes = duration % 60;
 
-  const pathMatchedSavedMovies = useMatch('/saved-movies');
+  const pathMatchedMovies = useMatch('/movies');
 
   //buttons
   const saveButton = () => {
@@ -38,6 +38,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
     return (
       <button
         className="movie-card__button movie-card__button_gray"
+        onMouseEnter={() => setIsSaveButtonShown(true)}
         onClick={handleRemoveFromSavedMovies}
       ></button>
     );
@@ -68,11 +69,11 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
           ? // if the movie is not saved - show button for saving film
             // when mouse enter the preview image
             isSaveButtonShown && saveButton()
-          : // if the movie is saved and we are not on '/saved-movies' route - show crimson button,
-          // and if we are on '/saved-movies' route - show gray button
-          !pathMatchedSavedMovies
+          : // if the movie is saved and we are on '/movies' route - show crimson button,
+          // and if we are on '/saved-movies' route - show gray button on cover image hover
+          pathMatchedMovies
           ? crimsonButton()
-          : grayButton()
+          : isSaveButtonShown && grayButton()
       }
 
       <div className="movie-card__info">
