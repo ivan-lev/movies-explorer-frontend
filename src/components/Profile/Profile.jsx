@@ -29,7 +29,7 @@ export default function Profile({ user, onSubmit, onLogout }) {
     return () => {
       document.removeEventListener('keydown', handleCloseEditingByEsc);
     };
-  }, [isUserDataUpdating, user]);
+  }, [isUserDataUpdating, user, setValues]);
 
   useEffect(() => setGreetingName(user.name), [user]);
 
