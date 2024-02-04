@@ -1,19 +1,13 @@
 import './Movies.css';
 
 import React, { useState } from 'react';
+import { showMoreCoef } from '../../utils/showMoreCoef';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 
 export default function Movies({ moviesList }) {
-  const windowInnerWidth = window.innerWidth;
-  let coefficient = 12;
-  if (windowInnerWidth <= 768) {
-    coefficient = 8;
-  }
-  if (windowInnerWidth <= 320) {
-    coefficient = 5;
-  }
+  const coefficient = showMoreCoef();
   const [showMoviesCount, setShowMoviesCount] = useState(coefficient);
 
   const handleShowMore = () => {
