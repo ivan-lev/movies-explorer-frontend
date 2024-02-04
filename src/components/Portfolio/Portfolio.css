@@ -1,0 +1,81 @@
+.portfolio {
+  padding-top: 104px;
+  padding-bottom: 125px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 93px;
+    padding-bottom: 90px;
+  }
+
+  @media screen and (max-width: 320px) {
+    padding-top: 75px;
+    padding-bottom: 70px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+.portfolio__title {
+  color: var(--color-secondary);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-size: 18px;
+  margin-bottom: 50px;
+
+  @media screen and (max-width: 320px) {
+    margin-bottom: 45px;
+    font-size: 14px;
+  }
+}
+
+.portfolio__link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 50px;
+  letter-spacing: -1.2px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @media screen and (max-width: 768px) {
+    font-size: 28px;
+    letter-spacing: -1.12px;
+  }
+
+  @media screen and (max-width: 540px) {
+    font-size: 24px;
+    letter-spacing: -1px;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 20px;
+    letter-spacing: -0.85px;
+  }
+
+  @media screen and (max-width: 430px) {
+    font-size: 18px;
+    letter-spacing: -0.72px;
+    line-height: 27px;
+  }
+}
+
+.portfolio__link:after {
+  content: '';
+  background: url('../../images/icons/link-arrow.svg');
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 10px;
+  height: 10px;
+  font-size: 30px;
+  padding-right: 5px;
+}
+
+.portfolio__separator {
+  height: 1px;
+  background-color: var(--color-separator);
+  margin-top: 19px;
+  margin-bottom: 20px;
+}
