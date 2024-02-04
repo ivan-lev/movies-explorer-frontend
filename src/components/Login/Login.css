@@ -76,6 +76,11 @@
   color: var(--color-primary);
 }
 
+.login__input:focus,
+.login__input:focus-visible {
+  outline: 1px solid var(--color-separator);
+}
+
 .login__input_invalid {
   color: var(--bg-button-crimson);
 }
