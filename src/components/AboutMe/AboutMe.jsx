@@ -20,7 +20,7 @@ export default function AboutMe() {
         <a href="https://github.com/ivan-lev" className="about-me__github-link">
           Github
         </a>
-        <img className="about-me__avatar" src={avatar} alt="author"></img>
+        <img className="about-me__avatar" src={avatar} alt="Фото автора"></img>
       </div>
       <p className="about-me__portfolio">Портфолио</p>
       <a className="about-me__link" href="https://ivan-lev.github.io/how-to-learn/">
