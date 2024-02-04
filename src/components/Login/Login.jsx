@@ -1,19 +1,25 @@
 import './Login.css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { useForm } from '../../hooks/useForm';
+import { validateLogin } from '../../utils/formValidator';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
 export default function Login({ onSubmit }) {
   const { values, setValues, handleChange } = useForm({ email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState('Ошибка логина...');
 
   const handleSubmit = () => {
     const { email, password } = values;
-    alert('Отправляем форму с параметрами: ' + email + ', ' + password);
-    setValues({ email: '', password: '' });
+    const isDataValid = validateLogin(email, password, setErrorMessage);
+    if (isDataValid) {
+      alert('Отправляем форму с параметрами: ' + email + ', ' + password);
+      setValues({ email: '', password: '' });
+    }
   };
 
   return (
@@ -62,7 +68,7 @@ export default function Login({ onSubmit }) {
         </fieldset>
 
         <div className="login__error-wrapper">
-          <span className="login__error login__error_shown">Ошибка логина...</span>
+          <span className="login__error login__error_shown">{errorMessage}</span>
         </div>
       </form>
 

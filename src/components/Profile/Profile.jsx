@@ -4,6 +4,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 import { useForm } from '../../hooks/useForm';
+import { validateProfileUpdate } from '../../utils/formValidator';
 
 import Button from '../Button/Button';
 
@@ -11,6 +12,7 @@ export default function Profile({ user, onSubmit, onLogout }) {
   const { values, setValues, handleChange } = useForm(user);
   const [greetingName, setGreetingName] = useState(user.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('При обновлении профиля произошла ошибка');
 
   // if esc pressed, hide edit form and set initial name and email values
   useEffect(() => {
@@ -40,13 +42,17 @@ export default function Profile({ user, onSubmit, onLogout }) {
   };
 
   const handleSubmitData = () => {
-    if (user.name === values.name && user.email === values.email) {
-      alert('Данные не поменялись');
+    const { name, email } = values;
+    if (name === user.name && email === user.email) {
       setIsUserDataUpdating(false);
       return;
     }
-    onSubmit(values);
-    setIsUserDataUpdating(false);
+    const isDataValid = validateProfileUpdate(name, email, setErrorMessage);
+
+    if (isDataValid) {
+      onSubmit(values);
+      setIsUserDataUpdating(false);
+    }
   };
 
   return (
@@ -73,6 +79,8 @@ export default function Profile({ user, onSubmit, onLogout }) {
               name="name"
               value={values.name}
               onChange={handleChange}
+              required
+              validate="true"
             ></input>
           </div>
           <div className="profile__divider"></div>
@@ -83,6 +91,8 @@ export default function Profile({ user, onSubmit, onLogout }) {
               name="email"
               value={values.email}
               onChange={handleChange}
+              required
+              validate="true"
             ></input>
           </div>
         </form>
@@ -104,7 +114,7 @@ export default function Profile({ user, onSubmit, onLogout }) {
         ) : (
           <>
             <div className="profile__updating-error-wrapper">
-              <p className="profile__updating-error">При обновлении профиля произошла ошибка.</p>
+              <p className="profile__updating-error">{errorMessage}</p>
             </div>
             <Button type="blue" text="Сохранить" onClick={handleSubmitData} />
           </>

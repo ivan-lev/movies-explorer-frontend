@@ -1,19 +1,25 @@
 import './Register.css';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { useForm } from '../../hooks/useForm';
+import { validateRegistration } from '../../utils/formValidator';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
 export default function Register({ onSubmit }) {
   const { values, setValues, handleChange } = useForm({ name: '', email: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState('Что-то пошло не так...');
 
   const handleSubmit = () => {
     const { name, email, password } = values;
-    alert('Регистрируем юзера: ' + name + ', ' + email + ', ' + password);
-    setValues({ name: '', email: '', password: '' });
+    const isDataValid = validateRegistration(name, email, password, setErrorMessage);
+    if (isDataValid) {
+      alert('Регистрируем юзера: ' + name + ', ' + email + ', ' + password);
+      setValues({ name: '', email: '', password: '' });
+    }
   };
 
   return (
@@ -87,7 +93,7 @@ export default function Register({ onSubmit }) {
         </fieldset>
 
         <div className="register__error-wrapper">
-          <span className="register__error register__error_shown">Что-то пошло не так...</span>
+          <span className="register__error register__error_shown">{errorMessage}</span>
         </div>
       </form>
 
