@@ -3,16 +3,25 @@ import './MoviesCardList.css';
 import React from 'react';
 import MovieCard from '../MoviesCard/MovieCard';
 
-export default function MoviesCardList({ list }) {
+export default function MoviesCardList({ moviesList, userId }) {
   return (
     <div className="movies-card-list">
-      {list.map(element => (
+      {moviesList.map(movie => (
         <MovieCard
-          key={element.title}
-          preview={element.preview}
-          title={element.title}
-          duration={element.duration}
-          isSaved={element.isSaved}
+          key={movie.movieId}
+          country={movie.country}
+          director={movie.director}
+          duration={movie.duration}
+          year={movie.year}
+          description={movie.description}
+          image={movie.image}
+          trailerLink={movie.trailerLink}
+          thumbnail={movie.thumbnail}
+          owner={movie.owner}
+          movieId={movie.movieId}
+          nameRU={movie.nameRU}
+          nameEN={movie.nameEN}
+          userId={userId}
         />
       ))}
     </div>

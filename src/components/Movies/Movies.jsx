@@ -6,7 +6,7 @@ import { showMoreCoef } from '../../utils/showMoreCoef';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Button from '../Button/Button';
 
-export default function Movies({ moviesList }) {
+export default function Movies({ moviesList, userId }) {
   const coefficient = showMoreCoef();
   const [showMoviesCount, setShowMoviesCount] = useState(coefficient);
 
@@ -16,7 +16,7 @@ export default function Movies({ moviesList }) {
 
   return (
     <section className="main__section movies">
-      <MoviesCardList list={moviesList.slice(0, showMoviesCount)} />
+      <MoviesCardList moviesList={moviesList.slice(0, showMoviesCount)} userId={userId} />
       {moviesList.length !== 0 && moviesList.length > showMoviesCount && (
         <Button type="bordered" text="Ещё" onClick={handleShowMore} />
       )}

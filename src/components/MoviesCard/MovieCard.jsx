@@ -4,11 +4,23 @@ import React from 'react';
 import { useState } from 'react';
 import { useMatch } from 'react-router-dom';
 
-export default function MovieCard({ cover, preview, title, duration, isSaved }) {
+export default function MovieCard({
+  country,
+  director,
+  duration,
+  year,
+  description,
+  image,
+  trailerLink,
+  thumbnail,
+  owner,
+  movieId,
+  nameRU,
+  nameEN,
+  userId
+}) {
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
-  const [isMovieSaved, setIsMovieSaved] = useState(isSaved);
-
-  const image = require(`../../images/movie-covers/${preview}`);
+  const [isMovieSaved, setIsMovieSaved] = useState(userId === owner);
   const hours = Math.trunc(duration / 60);
   const minutes = duration % 60;
 
@@ -58,8 +70,8 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
     <div className="movie-card">
       <img
         className="movie-card__cover"
-        src={image}
-        alt={`${title} movie cover`}
+        src={`/movie-covers/${thumbnail}`}
+        alt={`${nameRU} movie cover`}
         onMouseEnter={() => setIsSaveButtonShown(true)}
         onMouseLeave={() => setIsSaveButtonShown(false)}
       />
@@ -77,7 +89,7 @@ export default function MovieCard({ cover, preview, title, duration, isSaved }) 
       }
 
       <div className="movie-card__info">
-        <span className="movie-card__title">{title}</span>
+        <span className="movie-card__title">{nameRU}</span>
         <span className="movie-card__duration">{`${hours ? hours + 'ч' : ''} ${minutes}м`}</span>
       </div>
     </div>

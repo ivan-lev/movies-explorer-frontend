@@ -31,7 +31,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
 
-  const [user, setUser] = useState({ name: 'Иван', email: 'ivanlev@mail.com' });
+  const [user, setUser] = useState({ name: 'Иван', email: 'ivanlev@mail.com', _id: '12345' });
   const handleSetUserData = data => {
     alert('Отправляем свежие данные: ' + data.name + ', ' + data.email);
     setUser(data);
@@ -60,11 +60,10 @@ function App() {
     }
     setTimeout(() => {
       setIsPreloaderShown(false);
-      const allMovies = testMovies;
       if (isShortMeter) {
         const shortMovies = [];
         testMovies.forEach(movie => {
-          if (movie.duration <= 45) {
+          if (movie.duration <= 50) {
             shortMovies.push(movie);
           }
         });
@@ -72,7 +71,7 @@ function App() {
         setMoviesList(shortMovies);
         return;
       }
-      setMoviesList(allMovies);
+      setMoviesList(testMovies);
     }, 1500);
   }, [isShortMeter, moviesList]);
 
@@ -114,7 +113,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <Movies moviesList={moviesList} />
+                <Movies moviesList={moviesList} userId={user._id} />
               </Main>
               <Footer />
             </>
@@ -137,7 +136,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <SavedMovies moviesList={moviesList} />
+                <SavedMovies moviesList={moviesList} userId={user._id} />
               </Main>
               <Footer />
             </>
