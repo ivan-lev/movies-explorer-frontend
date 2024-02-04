@@ -19,7 +19,7 @@ export default function Login({ onSubmit }) {
   return (
     <section className="login">
       <Logo />
-      <p className="login__title">Рады видеть!</p>
+      <h2 className="login__title">Рады видеть!</h2>
       <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">
           <label className="login__input-label">

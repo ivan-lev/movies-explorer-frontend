@@ -6,7 +6,7 @@ export default function AboutProject() {
   return (
     <section className="main__section about-project" id="project">
       <h2 className="main__title">О проекте</h2>
-      <div className="about-project__content">
+      <article className="about-project__content">
         <div className="about-project__column">
           <span className="about-project__title">Дипломный проект включал 5 этапов</span>
           <span className="about-project__text">
@@ -21,7 +21,7 @@ export default function AboutProject() {
             успешно защититься.
           </span>
         </div>
-      </div>
+      </article>
       <div className="about-project__statistics">
         <span className="about-project__cell about-project__cell_green">1 неделя</span>
         <span className="about-project__cell about-project__cell_gray">4 недели</span>

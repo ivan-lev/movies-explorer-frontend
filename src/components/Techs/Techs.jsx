@@ -8,10 +8,10 @@ export default function Techs() {
   return (
     <section className="main__section techs" id="techs">
       <h2 className="main__title">Технологии</h2>
-      <div className="techs__title">7 технологий</div>
-      <div className="techs__subtitle">
+      <p className="techs__title">7 технологий</p>
+      <p className="techs__subtitle">
         На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
-      </div>
+      </p>
 
       <ul className="techs__list">
         {techStack.map(element => (

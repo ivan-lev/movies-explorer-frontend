@@ -51,7 +51,7 @@ export default function Profile({ user, onSubmit }) {
 
   return (
     <section className="profile">
-      <span className="profile__greeting">Привет, {greetingName}!</span>
+      <h2 className="profile__greeting">Привет, {greetingName}!</h2>
       {!isUserDataUpdating ? (
         <div className="profile__data">
           <div className="profile__row">

@@ -19,7 +19,7 @@ export default function Register({ onSubmit }) {
   return (
     <section className="register">
       <Logo />
-      <p className="register__title">Добро пожаловать!</p>
+      <h2 className="register__title">Добро пожаловать!</h2>
       <form
         id="register__form"
         name="register__form"
