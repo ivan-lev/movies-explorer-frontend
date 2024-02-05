@@ -13,7 +13,7 @@ export default function FilterCheckBox({ isShortMeter, toggleIsShortMeter }) {
           }`}
         ></span>
       </label>
-      <span className="search-form__short_meter">Короткометражки</span>
+      <span className="filter-checkbox__caption">Короткометражки</span>
     </div>
   );
 }
