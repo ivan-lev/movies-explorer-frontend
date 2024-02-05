@@ -1,8 +1,10 @@
-.user-button {
+.user-buttons {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
 
+.user-buttons__account-button {
   @media screen and (max-width: 768px) {
     display: none;
   }
@@ -17,10 +19,4 @@
   @media screen and (max-width: 320px) {
     gap: 14px;
   }
-}
-
-.mobile-menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
 }

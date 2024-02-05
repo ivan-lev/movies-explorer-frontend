@@ -19,15 +19,13 @@ export default function UserButtons({ isLoggedIn }) {
 
   return isLoggedIn ? (
     /* this code renders elemets which will be placed in right part of header */
-    <>
-      <div className="user-button">
+    <div className="user-buttons">
+      <div className="user-buttons__account-button">
         <Button type="gray" text="Аккаунт" onClick={() => navigate('/profile')} />
       </div>
-      <div className="mobile-menu-button">
-        {isMenuOpened && <MobileMenu onClose={toggleOpenMenu} />}
-        <Button type="burger" onClick={toggleOpenMenu}></Button>
-      </div>
-    </>
+      {isMenuOpened && <MobileMenu onClose={toggleOpenMenu} />}
+      <Button type="burger" onClick={toggleOpenMenu}></Button>
+    </div>
   ) : (
     <div className="auth-buttons">
       <Button type="transparent" text="Регистрация" onClick={() => navigate('/signup')} />
