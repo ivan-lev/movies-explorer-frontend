@@ -5,7 +5,7 @@
     padding: 20px 20px 0;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 540px) {
     padding: 14px 14px 0;
   }
 }
@@ -30,9 +30,9 @@
     padding-right: 25px;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 540px) {
     min-height: 586px;
-    padding: 220px 0 17px;
+    padding: 220px 10px 17px;
   }
 }
 
@@ -51,7 +51,7 @@
     letter-spacing: -1.6px;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 540px) {
     font-size: 29px;
     line-height: 37px;
     letter-spacing: -1.16px;

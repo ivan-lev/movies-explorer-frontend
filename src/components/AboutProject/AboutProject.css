@@ -23,7 +23,7 @@
     margin-top: 70px;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 540px) {
     margin-top: 60px;
     flex-direction: column;
     gap: 56px;
@@ -87,7 +87,7 @@
     grid-template-columns: 140px 1fr;
   }
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 540px) {
     margin-top: 60px;
     grid-template-columns: 100px 1fr;
     grid-template-rows: 40px 40px;
