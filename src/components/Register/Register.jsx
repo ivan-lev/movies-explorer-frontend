@@ -23,9 +23,9 @@ export default function Register({ onSubmit }) {
   };
 
   return (
-    <section className="register">
+    <main className="register">
       <Logo />
-      <h2 className="register__title">Добро пожаловать!</h2>
+      <h1 className="register__title">Добро пожаловать!</h1>
       <form
         id="register__form"
         name="register__form"
@@ -106,6 +106,6 @@ export default function Register({ onSubmit }) {
           </Link>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

@@ -23,9 +23,9 @@ export default function Login({ onSubmit }) {
   };
 
   return (
-    <section className="login">
+    <main className="login">
       <Logo />
-      <h2 className="login__title">Рады видеть!</h2>
+      <h1 className="login__title">Рады видеть!</h1>
       <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
         <fieldset className="login__fieldset">
           <label className="login__input-label">
@@ -81,6 +81,6 @@ export default function Login({ onSubmit }) {
           </Link>
         </div>
       </div>
-    </section>
+    </main>
   );
 }

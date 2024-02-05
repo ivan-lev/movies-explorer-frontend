@@ -56,8 +56,8 @@ export default function Profile({ user, onSubmit, onLogout }) {
   };
 
   return (
-    <section className="profile">
-      <h2 className="profile__greeting">Привет, {greetingName}!</h2>
+    <main className="profile">
+      <h1 className="profile__greeting">Привет, {greetingName}!</h1>
       {!isUserDataUpdating ? (
         <div className="profile__data">
           <div className="profile__row">
@@ -120,6 +120,6 @@ export default function Profile({ user, onSubmit, onLogout }) {
           </>
         )}
       </div>
-    </section>
+    </main>
   );
 }
