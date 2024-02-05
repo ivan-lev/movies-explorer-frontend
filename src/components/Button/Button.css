@@ -89,7 +89,7 @@
 }
 
 .button_errored {
-  color: var(color-submit-error);
+  color: var(--color-submit-error);
   background-color: var(--bg-submit-error);
 }
 
