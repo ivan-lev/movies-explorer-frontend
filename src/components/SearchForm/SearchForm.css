@@ -58,6 +58,11 @@
   }
 }
 
+.search-form__input:focus,
+.search-form__input:focus-visible {
+  outline: 1px solid var(--color-secondary);
+}
+
 .search-form__button {
   height: 44px;
   width: 44px;
