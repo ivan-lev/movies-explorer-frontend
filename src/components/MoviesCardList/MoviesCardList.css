@@ -13,3 +13,7 @@
     gap: 36px;
   }
 }
+
+.movies-card-list__item {
+  width: 100%;
+}
