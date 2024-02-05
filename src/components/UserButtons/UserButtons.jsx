@@ -17,10 +17,8 @@ export default function UserButtons({ isLoggedIn }) {
     document.body.style.overflow = `${isMenuOpened ? 'hidden' : ''}`;
   }, [isMenuOpened]);
 
-  {
-    /* this code renders elemets which will be placed in right part of header */
-  }
   return isLoggedIn ? (
+    /* this code renders elemets which will be placed in right part of header */
     <>
       <div className="user-button">
         <Button type="gray" text="Аккаунт" onClick={() => navigate('/profile')} />
