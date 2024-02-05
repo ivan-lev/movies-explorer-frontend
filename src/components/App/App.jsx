@@ -9,6 +9,7 @@ import Footer from '../Footer/Footer';
 
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
+import UserButtons from '../UserButtons/UserButtons';
 
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
@@ -87,6 +88,7 @@ function App() {
               <Header>
                 <Logo />
                 <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
                 <Promo />
@@ -106,6 +108,7 @@ function App() {
               <Header>
                 <Logo />
                 <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
                 <SearchForm
@@ -129,6 +132,7 @@ function App() {
               <Header>
                 <Logo />
                 <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Main>
                 <SearchForm
@@ -152,6 +156,7 @@ function App() {
               <Header>
                 <Logo />
                 <Navigation isLoggedIn={isLoggedIn} />
+                <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
               <Profile user={user} onSubmit={handleSetUserData} onLogout={handleLogout} />
             </>

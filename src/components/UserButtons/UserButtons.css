@@ -1,0 +1,26 @@
+.user-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+
+  @media screen and (max-width: 320px) {
+    gap: 14px;
+  }
+}
+
+.mobile-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

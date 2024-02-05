@@ -26,30 +26,3 @@
 .navigation__navlink_active {
   font-weight: bold;
 }
-
-.navigation__user-button {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-}
-
-.navigation__auth-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 30px;
-
-  @media screen and (max-width: 320px) {
-    gap: 14px;
-  }
-}
-
-.navigation__mobile-menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
