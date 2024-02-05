@@ -32,6 +32,8 @@ export default function SearchForm({
         <div className="search-form__input-line">
           <input
             className="search-form__input"
+            type="text"
+            name="movie"
             placeholder={searchPlaceholder}
             onChange={handleSetFilmToSearch}
             value={inputValue}

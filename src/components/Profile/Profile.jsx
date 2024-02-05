@@ -77,7 +77,9 @@ export default function Profile({ user, onSubmit, onLogout }) {
               <span className="profile__field">Имя</span>
               <input
                 className="profile__field profile__input-field"
+                type="text"
                 name="name"
+                placeholder="Введите имя"
                 value={values.name}
                 onChange={handleChange}
                 required
@@ -89,7 +91,9 @@ export default function Profile({ user, onSubmit, onLogout }) {
               <span className="profile__field">E-mail</span>
               <input
                 className="profile__field profile__input-field"
+                type="text"
                 name="email"
+                placeholder="Введите email"
                 value={values.email}
                 onChange={handleChange}
                 required

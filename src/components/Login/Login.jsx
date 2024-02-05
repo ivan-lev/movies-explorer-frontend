@@ -32,12 +32,12 @@ export default function Login({ onSubmit }) {
             <label className="login__input-label">
               Email
               <input
-                type="email"
-                autoComplete="on"
-                placeholder=""
-                id="email"
-                name="email"
                 className="login__input"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Введите email"
+                autoComplete="on"
                 required
                 value={values.email}
                 onChange={handleChange}
@@ -52,12 +52,12 @@ export default function Login({ onSubmit }) {
             <label className="login__input-label">
               Пароль
               <input
-                type="password"
-                autoComplete="on"
-                placeholder=""
-                id="password"
-                name="password"
                 className="login__input"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Введите пароль"
+                autoComplete="on"
                 required
                 value={values.password}
                 onChange={handleChange}

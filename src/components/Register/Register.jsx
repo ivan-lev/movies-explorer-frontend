@@ -37,12 +37,12 @@ export default function Register({ onSubmit }) {
             <label className="register__input-label">
               Имя
               <input
-                type="name"
-                autoComplete="on"
-                placeholder=""
-                id="name"
-                name="name"
                 className="register__input"
+                type="text"
+                name="name"
+                id="name"
+                placeholder="Введите имя"
+                autoComplete="on"
                 required
                 value={values.name}
                 onChange={handleChange}
@@ -57,12 +57,12 @@ export default function Register({ onSubmit }) {
             <label className="register__input-label">
               E-mail
               <input
-                type="email"
-                autoComplete="on"
-                placeholder=""
-                id="email"
-                name="email"
                 className="register__input"
+                type="email"
+                name="email"
+                id="email"
+                placeholder="Введите email"
+                autoComplete="on"
                 required
                 value={values.email}
                 onChange={handleChange}
@@ -77,12 +77,12 @@ export default function Register({ onSubmit }) {
             <label className="register__input-label">
               Пароль
               <input
-                type="password"
-                autoComplete="on"
-                placeholder=""
-                id="password"
-                name="password"
                 className="register__input"
+                type="password"
+                name="password"
+                id="password"
+                placeholder="Введите пароль"
+                autoComplete="on"
                 required
                 value={values.password}
                 onChange={handleChange}
