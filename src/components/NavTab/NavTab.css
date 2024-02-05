@@ -1,4 +1,7 @@
 .nav-tab {
+}
+
+.nav-tab__list {
   display: flex;
   gap: 10px;
 
@@ -21,7 +24,7 @@
   color: var(--color-primary);
   text-decoration: none;
 
-  @media screen and (max-width: 320px) {
+  @media screen and (max-width: 540px) {
     font-size: 10px;
     height: 26px;
     width: 82px;
