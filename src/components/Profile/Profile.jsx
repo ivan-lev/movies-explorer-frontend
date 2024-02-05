@@ -56,70 +56,72 @@ export default function Profile({ user, onSubmit, onLogout }) {
   };
 
   return (
-    <main className="profile">
-      <h1 className="profile__greeting">Привет, {greetingName}!</h1>
-      {!isUserDataUpdating ? (
-        <div className="profile__data">
-          <div className="profile__row">
-            <span className="profile__field">Имя</span>
-            <span className="profile__field">{user.name}</span>
-          </div>
-          <div className="profile__divider"></div>
-          <div className="profile__row">
-            <span className="profile__field">E-mail</span>
-            <span className="profile__field">{user.email}</span>
-          </div>
-        </div>
-      ) : (
-        <form className="profile__data" onSubmit={onSubmit}>
-          <div className="profile__row">
-            <span className="profile__field">Имя</span>
-            <input
-              className="profile__field profile__input-field"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              required
-              validate="true"
-            ></input>
-          </div>
-          <div className="profile__divider"></div>
-          <div className="profile__row">
-            <span className="profile__field">E-mail</span>
-            <input
-              className="profile__field profile__input-field"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              required
-              validate="true"
-            ></input>
-          </div>
-        </form>
-      )}
-      <div className="profile__buttons-wrapper">
+    <main className="main">
+      <section className="profile">
+        <h1 className="profile__greeting">Привет, {greetingName}!</h1>
         {!isUserDataUpdating ? (
-          <>
-            <Button
-              type="transparent button_bigger-font"
-              text="Редактировать"
-              onClick={handleEditData}
-            />
-            <Button
-              type="transparent button_bigger-font button_text-crimson"
-              text="Выйти из аккаутна"
-              onClick={onLogout}
-            />
-          </>
-        ) : (
-          <>
-            <div className="profile__updating-error-wrapper">
-              <p className="profile__updating-error">{errorMessage}</p>
+          <div className="profile__data">
+            <div className="profile__row">
+              <span className="profile__field">Имя</span>
+              <span className="profile__field">{user.name}</span>
             </div>
-            <Button type="blue" text="Сохранить" onClick={handleSubmitData} />
-          </>
+            <div className="profile__divider"></div>
+            <div className="profile__row">
+              <span className="profile__field">E-mail</span>
+              <span className="profile__field">{user.email}</span>
+            </div>
+          </div>
+        ) : (
+          <form className="profile__data" onSubmit={onSubmit}>
+            <div className="profile__row">
+              <span className="profile__field">Имя</span>
+              <input
+                className="profile__field profile__input-field"
+                name="name"
+                value={values.name}
+                onChange={handleChange}
+                required
+                validate="true"
+              ></input>
+            </div>
+            <div className="profile__divider"></div>
+            <div className="profile__row">
+              <span className="profile__field">E-mail</span>
+              <input
+                className="profile__field profile__input-field"
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+                required
+                validate="true"
+              ></input>
+            </div>
+          </form>
         )}
-      </div>
+        <div className="profile__buttons-wrapper">
+          {!isUserDataUpdating ? (
+            <>
+              <Button
+                type="transparent button_bigger-font"
+                text="Редактировать"
+                onClick={handleEditData}
+              />
+              <Button
+                type="transparent button_bigger-font button_text-crimson"
+                text="Выйти из аккаутна"
+                onClick={onLogout}
+              />
+            </>
+          ) : (
+            <>
+              <div className="profile__updating-error-wrapper">
+                <p className="profile__updating-error">{errorMessage}</p>
+              </div>
+              <Button type="blue" text="Сохранить" onClick={handleSubmitData} />
+            </>
+          )}
+        </div>
+      </section>
     </main>
   );
 }

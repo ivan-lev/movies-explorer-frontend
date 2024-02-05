@@ -23,64 +23,66 @@ export default function Login({ onSubmit }) {
   };
 
   return (
-    <main className="login">
-      <Logo />
-      <h1 className="login__title">Рады видеть!</h1>
-      <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
-        <fieldset className="login__fieldset">
-          <label className="login__input-label">
-            Email
-            <input
-              type="email"
-              autoComplete="on"
-              placeholder=""
-              id="email"
-              name="email"
-              className="login__input"
-              required
-              value={values.email}
-              onChange={handleChange}
-              onKeyDown={event => {
-                event.key === 'Enter' && handleSubmit();
-              }}
-            />
-          </label>
-        </fieldset>
+    <main className="main">
+      <section className="login">
+        <Logo />
+        <h1 className="login__title">Рады видеть!</h1>
+        <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
+          <fieldset className="login__fieldset">
+            <label className="login__input-label">
+              Email
+              <input
+                type="email"
+                autoComplete="on"
+                placeholder=""
+                id="email"
+                name="email"
+                className="login__input"
+                required
+                value={values.email}
+                onChange={handleChange}
+                onKeyDown={event => {
+                  event.key === 'Enter' && handleSubmit();
+                }}
+              />
+            </label>
+          </fieldset>
 
-        <fieldset className="login__fieldset">
-          <label className="login__input-label">
-            Пароль
-            <input
-              type="password"
-              autoComplete="on"
-              placeholder=""
-              id="password"
-              name="password"
-              className="login__input"
-              required
-              value={values.password}
-              onChange={handleChange}
-              onKeyDown={event => {
-                event.key === 'Enter' && handleSubmit();
-              }}
-            />
-          </label>
-        </fieldset>
+          <fieldset className="login__fieldset">
+            <label className="login__input-label">
+              Пароль
+              <input
+                type="password"
+                autoComplete="on"
+                placeholder=""
+                id="password"
+                name="password"
+                className="login__input"
+                required
+                value={values.password}
+                onChange={handleChange}
+                onKeyDown={event => {
+                  event.key === 'Enter' && handleSubmit();
+                }}
+              />
+            </label>
+          </fieldset>
 
-        <div className="login__error-wrapper">
-          <span className="login__error login__error_shown">{errorMessage}</span>
+          <div className="login__error-wrapper">
+            <span className="login__error login__error_shown">{errorMessage}</span>
+          </div>
+        </form>
+
+        <div className="login__bottom">
+          <Button type="blue" text="Войти" onClick={handleSubmit} />
+          <div className="login__not-registered-wrapper">
+            <span className="login__not-registered-text">Ещё не зарегистрированы?</span>
+            <Link className="login__register-link" to="/signup">
+              Регистрация
+            </Link>
+          </div>
         </div>
-      </form>
-
-      <div className="login__bottom">
-        <Button type="blue" text="Войти" onClick={handleSubmit} />
-        <div className="login__not-registered-wrapper">
-          <span className="login__not-registered-text">Ещё не зарегистрированы?</span>
-          <Link className="login__register-link" to="/signup">
-            Регистрация
-          </Link>
-        </div>
-      </div>
+      </section>
     </main>
   );
 }

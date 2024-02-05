@@ -23,89 +23,91 @@ export default function Register({ onSubmit }) {
   };
 
   return (
-    <main className="register">
-      <Logo />
-      <h1 className="register__title">Добро пожаловать!</h1>
-      <form
-        id="register__form"
-        name="register__form"
-        className="register__form"
-        onSubmit={handleSubmit}
-      >
-        <fieldset className="register__fieldset">
-          <label className="register__input-label">
-            Имя
-            <input
-              type="name"
-              autoComplete="on"
-              placeholder=""
-              id="name"
-              name="name"
-              className="register__input"
-              required
-              value={values.name}
-              onChange={handleChange}
-              onKeyDown={event => {
-                event.key === 'Enter' && handleSubmit();
-              }}
-            />
-          </label>
-        </fieldset>
+    <main className="main">
+      <section className="register">
+        <Logo />
+        <h1 className="register__title">Добро пожаловать!</h1>
+        <form
+          id="register__form"
+          name="register__form"
+          className="register__form"
+          onSubmit={handleSubmit}
+        >
+          <fieldset className="register__fieldset">
+            <label className="register__input-label">
+              Имя
+              <input
+                type="name"
+                autoComplete="on"
+                placeholder=""
+                id="name"
+                name="name"
+                className="register__input"
+                required
+                value={values.name}
+                onChange={handleChange}
+                onKeyDown={event => {
+                  event.key === 'Enter' && handleSubmit();
+                }}
+              />
+            </label>
+          </fieldset>
 
-        <fieldset className="register__fieldset">
-          <label className="register__input-label">
-            E-mail
-            <input
-              type="email"
-              autoComplete="on"
-              placeholder=""
-              id="email"
-              name="email"
-              className="register__input"
-              required
-              value={values.email}
-              onChange={handleChange}
-              onKeyDown={event => {
-                event.key === 'Enter' && handleSubmit();
-              }}
-            />
-          </label>
-        </fieldset>
+          <fieldset className="register__fieldset">
+            <label className="register__input-label">
+              E-mail
+              <input
+                type="email"
+                autoComplete="on"
+                placeholder=""
+                id="email"
+                name="email"
+                className="register__input"
+                required
+                value={values.email}
+                onChange={handleChange}
+                onKeyDown={event => {
+                  event.key === 'Enter' && handleSubmit();
+                }}
+              />
+            </label>
+          </fieldset>
 
-        <fieldset className="register__fieldset">
-          <label className="register__input-label">
-            Пароль
-            <input
-              type="password"
-              autoComplete="on"
-              placeholder=""
-              id="password"
-              name="password"
-              className="register__input"
-              required
-              value={values.password}
-              onChange={handleChange}
-              onKeyDown={event => {
-                event.key === 'Enter' && handleSubmit();
-              }}
-            />
-          </label>
-        </fieldset>
+          <fieldset className="register__fieldset">
+            <label className="register__input-label">
+              Пароль
+              <input
+                type="password"
+                autoComplete="on"
+                placeholder=""
+                id="password"
+                name="password"
+                className="register__input"
+                required
+                value={values.password}
+                onChange={handleChange}
+                onKeyDown={event => {
+                  event.key === 'Enter' && handleSubmit();
+                }}
+              />
+            </label>
+          </fieldset>
 
-        <div className="register__error-wrapper">
-          <span className="register__error register__error_shown">{errorMessage}</span>
+          <div className="register__error-wrapper">
+            <span className="register__error register__error_shown">{errorMessage}</span>
+          </div>
+        </form>
+
+        <div className="register__bottom">
+          <Button type="blue" text="Зарегистрироваться" onClick={handleSubmit} />
+          <div className="register__already-registered-wrapper">
+            <span className="register__already-registered-text">Уже зарегистрированы?</span>
+            <Link className="register__login-link" to="/signin">
+              Войти
+            </Link>
+          </div>
         </div>
-      </form>
-
-      <div className="register__bottom">
-        <Button type="blue" text="Зарегистрироваться" onClick={handleSubmit} />
-        <div className="register__already-registered-wrapper">
-          <span className="register__already-registered-text">Уже зарегистрированы?</span>
-          <Link className="register__login-link" to="/signin">
-            Войти
-          </Link>
-        </div>
-      </div>
+      </section>
     </main>
   );
 }
