@@ -17,7 +17,12 @@ export default function AboutMe() {
           начал кодить и настолько загорелся этим делом, что прошёл курс по веб-разработке в
           Практикуме, дошел до и пишу дипломную.
         </p>
-        <a href="https://github.com/ivan-lev" className="about-me__github-link">
+        <a
+          className="about-me__github-link"
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/ivan-lev"
+        >
           Github
         </a>
         <img className="about-me__avatar" src={avatar} alt="Фото автора"></img>
