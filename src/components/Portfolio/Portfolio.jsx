@@ -4,7 +4,7 @@ import React from 'react';
 
 export default function Portfolio() {
   return (
-    <section className="main__section portfolio" id="student">
+    <section className="main__section portfolio">
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__list">
         <li className="portfolio__list-item">
