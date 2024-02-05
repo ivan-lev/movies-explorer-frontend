@@ -65,7 +65,6 @@
   text-decoration: none;
   font-size: 30px;
   font-weight: 400;
-  /* line-height: 50px; */
   letter-spacing: -1.2px;
   width: 100%;
   display: flex;
@@ -90,8 +89,11 @@
   @media screen and (max-width: 430px) {
     font-size: 18px;
     letter-spacing: -0.72px;
-    /* line-height: 27px; */
   }
+}
+
+.portfolio__link:hover {
+  opacity: 0.7;
 }
 
 .portfolio__link:after {
