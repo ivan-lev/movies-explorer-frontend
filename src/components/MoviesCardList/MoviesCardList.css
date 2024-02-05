@@ -16,4 +16,6 @@
 
 .movies-card-list__item {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
