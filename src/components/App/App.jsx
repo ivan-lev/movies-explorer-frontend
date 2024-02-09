@@ -47,8 +47,8 @@ function App() {
   };
 
   const handleSearch = () => {
-    setSearchResults([]);
     setIsPreloaderShown(true);
+    setSearchResults([]);
 
     movieApi
       .getMovies()
@@ -129,8 +129,11 @@ function App() {
                   isShortMeter={isShortMeter}
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
-                {isPreloaderShown && <Preloader />}
-                <Movies moviesList={filteredResults} userId={user._id} />
+                <Movies
+                  moviesList={filteredResults}
+                  isPreloaderShown={isPreloaderShown}
+                  userId={user._id}
+                />
               </Main>
               <Footer />
             </>
