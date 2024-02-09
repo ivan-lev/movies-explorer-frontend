@@ -10,10 +10,10 @@ export const showMoreCoef = () => {
     coefficient = 12;
   }
 
-  if (windowInnerWidth > 320 && windowInnerWidth <= 768) {
+  if (windowInnerWidth > 540 && windowInnerWidth <= 768) {
     coefficient = 8;
   }
-  if (windowInnerWidth <= 320) {
+  if (windowInnerWidth <= 540) {
     coefficient = 5;
   }
   return coefficient;
