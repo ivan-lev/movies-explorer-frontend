@@ -4,14 +4,14 @@ import React, { useState } from 'react';
 
 import MovieCard from '../MoviesCard/MovieCard';
 import Button from '../Button/Button';
-import { showMoreCoef } from '../../utils/showMoreCoef';
+import { displayCardsAmount } from '../../utils/displayCardsAmount';
 
 export default function MoviesCardList({ moviesList, userId }) {
-  const coefficient = showMoreCoef();
-  const [showMoviesCount, setShowMoviesCount] = useState(coefficient);
+  const displayParameters = displayCardsAmount();
+  const [showMoviesCount, setShowMoviesCount] = useState(displayParameters.initialAmount);
 
   const handleShowMore = () => {
-    setShowMoviesCount(showMoviesCount + coefficient);
+    setShowMoviesCount(showMoviesCount + displayParameters.count);
   };
 
   return (
