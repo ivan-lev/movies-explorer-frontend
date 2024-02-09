@@ -1,0 +1,132 @@
+.button {
+  font-family: 'Inter';
+  font-size: 12px;
+  height: 32px;
+  box-sizing: border-box;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  line-height: 0;
+
+  @media screen and (max-width: 320px) {
+    font-size: 10px;
+  }
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.button_transparent {
+  padding: 0;
+  background: none;
+  color: var(--color-white);
+  font-weight: bold;
+}
+
+.button_transparent:hover {
+  opacity: 0.7;
+}
+
+.button_bigger-font {
+  height: 13px;
+  font-size: 13px;
+
+  @media screen and (max-width: 320px) {
+    font-size: 12px;
+  }
+}
+
+.button_text-crimson {
+  color: var(--bg-button-crimson);
+}
+
+.button_gray {
+  background: var(--bg-button-gray);
+  border-radius: 20px;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.button_green {
+  background: var(--color-green);
+  border-radius: 3px;
+  color: var(--color-dark);
+
+  @media screen and (max-width: 320px) {
+    height: 26px;
+    padding: 0 12px;
+  }
+}
+
+.button_bordered {
+  width: 320px;
+  height: 36px;
+  border: 1px solid var(--color-separator);
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: bold;
+  margin: 60px auto 80px;
+
+  @media screen and (max-width: 540px) {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  @media screen and (max-width: 320px) {
+    width: 240px;
+  }
+}
+
+.button_blue {
+  height: 45px;
+  font-size: 14px;
+  color: var(--color-primary);
+  border-radius: 3px;
+  background: var(--bg-button-blue);
+  width: 100%;
+}
+
+.button_errored {
+  color: var(--color-submit-error);
+  background-color: var(--bg-submit-error);
+}
+
+.button_burger {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background-color: var(--bg-primary);
+  background-image: url('../../images/icons/burger.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: none;
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
+}
+
+.button_cross {
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  background-color: var(--bg-primary);
+  background-image: url('../../images/icons/cross.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  align-self: flex-end;
+
+  @media screen and (max-width: 320px) {
+    width: 20px;
+    height: 20px;
+  }
+}

@@ -1,0 +1,28 @@
+.navigation__movies {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+
+.navigation__navlink {
+  border: 0;
+  padding: 0;
+  background: none;
+  color: var(--color-white);
+  font-size: 13px;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.navigation__navlink:hover {
+  opacity: 0.7;
+}
+
+.navigation__navlink_active {
+  font-weight: bold;
+}

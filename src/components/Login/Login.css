@@ -1,0 +1,151 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 40px;
+  margin: 0 auto;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  width: 396px;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+    align-items: center;
+    padding: 56px 30px 30px;
+    gap: 50px;
+  }
+}
+
+.login__title {
+  font-size: 24px;
+  font-weight: normal;
+
+  @media screen and (max-width: 320px) {
+    margin-bottom: 30px;
+  }
+}
+
+.login__form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+
+  @media screen and (max-width: 768px) {
+    flex: 0;
+  }
+
+  @media screen and (max-width: 540px) {
+    width: 100%;
+  }
+}
+
+.login__fieldset {
+  display: flex;
+  flex-direction: column;
+  border: 0;
+  margin: 0 0 20px 0;
+  padding: 0;
+  position: relative;
+  line-height: 1;
+}
+
+.login__fieldset:last-of-type {
+  margin-bottom: 12px;
+}
+
+.login__input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #8b8b8b;
+  font-size: 10px;
+}
+
+.login__input {
+  font-family: 'Inter', sans-serif;
+  height: 46px;
+  padding-left: 15px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 8px;
+  background-color: var(--bg-time-plate);
+  font-size: 13px;
+  color: var(--color-primary);
+}
+
+.login__input:focus,
+.login__input:focus-visible {
+  outline: 1px solid var(--color-separator);
+}
+
+.login__input_invalid {
+  color: var(--bg-button-crimson);
+}
+
+.login__error-wrapper {
+  height: 10px;
+  margin-bottom: auto;
+  margin-top: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.login__error {
+  color: #ee3465;
+  font-size: 10px;
+  line-height: 10px;
+  display: none;
+}
+
+.login__error_shown {
+  display: block;
+}
+
+.login__bottom {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+
+  @media screen and (max-width: 430px) {
+    gap: 14px;
+  }
+}
+
+.login__not-registered-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.login__not-registered-text {
+  color: var(--color-secondary);
+  font-size: 14px;
+
+  @media screen and (max-width: 430px) {
+    font-size: 12px;
+  }
+}
+
+.login__register-link {
+  color: var(--bg-button-blue);
+  font-size: 14px;
+  text-decoration: none;
+
+  @media screen and (max-width: 430px) {
+    font-size: 12px;
+  }
+}
+
+.login__register-link:hover {
+  opacity: 0.7;
+}

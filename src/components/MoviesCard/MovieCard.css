@@ -1,0 +1,134 @@
+.movie-card {
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+
+  @media screen and (max-width: 768px) {
+    min-height: 235px;
+  }
+
+  @media screen and (max-width: 320px) {
+    min-height: unset;
+    gap: 16px;
+  }
+}
+
+.movie-card__cover {
+  height: 201px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+
+  @media screen and (max-width: 768px) {
+    height: 190px;
+  }
+
+  @media screen and (max-width: 320px) {
+    height: 168px;
+  }
+}
+
+.movie-card__button {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  font-size: 10px;
+
+  @media screen and (max-width: 320px) {
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.movie-card__button_save {
+  padding: 0 10px;
+  color: var(--color-primary);
+  background-color: var(--bg-button-gray);
+}
+
+.movie-card__button_crimson {
+  width: 21px;
+  background-image: url('../../images//icons/checked.svg');
+  background-color: var(--bg-button-crimson);
+}
+
+.movie-card__button_crimson:hover {
+  background-image: url('../../images//icons/cross.svg');
+  background-color: var(--bg-button-gray);
+}
+
+.movie-card__button_gray {
+  width: 21px;
+  background-image: url('../../images//icons/cross.svg');
+  background-color: var(--bg-button-gray);
+}
+
+.movie-card__info {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: 14px;
+  padding-right: 14px;
+
+  @media screen and (max-width: 768px) {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 2px;
+  }
+
+  @media screen and (max-width: 320px) {
+    padding-bottom: 0;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+.movie-card__title {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  height: 32px;
+
+  @media screen and (max-width: 768px) {
+    height: 13px;
+  }
+
+  @media screen and (max-width: 320px) {
+    height: unset;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    font-size: 12px;
+    line-height: 1;
+  }
+}
+
+.movie-card__duration {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  box-sizing: border-box;
+  padding: 0 10px;
+  font-size: 11px;
+  color: var(--color-secondary);
+  background-color: var(--bg-time-plate);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
