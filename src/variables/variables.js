@@ -4,5 +4,8 @@ export const emailRegExp =
 export const nameRegexp = /^[a-zа-я ,.'-]+$/i;
 
 export const movieListUrl = 'https://api.nomoreparties.co/beatfilm-movies';
+export const movieImageUrl = 'https://api.nomoreparties.co';
 
 export const baseUrl = 'https://moviesearch.nomoredomainsmonster.ru/';
+
+export const shortMeterDuration = 40;

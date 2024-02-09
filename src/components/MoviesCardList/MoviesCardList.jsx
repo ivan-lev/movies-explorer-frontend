@@ -18,14 +18,14 @@ export default function MoviesCardList({ moviesList, userId }) {
     <>
       <ul className="movies-card-list">
         {moviesList.slice(0, showMoviesCount).map(movie => (
-          <li className="movies-card-list__item" key={movie.movieId}>
+          <li className="movies-card-list__item" key={movie.id}>
             <MovieCard
               country={movie.country}
               director={movie.director}
               duration={movie.duration}
               year={movie.year}
               description={movie.description}
-              image={movie.image}
+              image={movie.image.url}
               trailerLink={movie.trailerLink}
               thumbnail={movie.thumbnail}
               owner={movie.owner}

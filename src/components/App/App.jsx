@@ -27,7 +27,8 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
 
-import { testMovies } from '../../variables/testMovies';
+import { movieApi } from '../../utils/MovieApi';
+import { shortMeterDuration } from '../../variables/variables';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -51,24 +52,26 @@ function App() {
 
   const [moviesList, setMoviesList] = useState([]);
   useEffect(() => {
+    setIsPreloaderShown(true);
     if (moviesList.length === 0) {
       setIsPreloaderShown(true);
     }
-    setTimeout(() => {
-      setIsPreloaderShown(false);
+
+    movieApi.getMovies().then(result => {
       if (isShortMeter) {
-        const shortMovies = [];
-        testMovies.forEach(movie => {
-          if (movie.duration <= 50) {
-            shortMovies.push(movie);
+        const shortMoviesList = [];
+        result.forEach(movie => {
+          if (movie.duration <= shortMeterDuration) {
+            shortMoviesList.push(movie);
           }
         });
-
-        setMoviesList(shortMovies);
-        return;
+        console.log(shortMoviesList);
+        setMoviesList(shortMoviesList);
+      } else {
+        setMoviesList(result);
       }
-      setMoviesList(testMovies);
-    }, 1500);
+    });
+    setIsPreloaderShown(false);
   }, [isShortMeter, moviesList]);
 
   const navigate = useNavigate();

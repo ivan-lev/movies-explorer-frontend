@@ -70,7 +70,7 @@ export default function MovieCard({
     <div className="movie-card">
       <img
         className="movie-card__cover"
-        src={`/movie-covers/${thumbnail}`}
+        src={image}
         alt={`${nameRU} movie cover`}
         onMouseEnter={() => setIsSaveButtonShown(true)}
         onMouseLeave={() => setIsSaveButtonShown(false)}
