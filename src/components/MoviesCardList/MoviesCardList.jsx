@@ -1,30 +1,45 @@
 import './MoviesCardList.css';
 
-import React from 'react';
+import React, { useState } from 'react';
+
 import MovieCard from '../MoviesCard/MovieCard';
+import Button from '../Button/Button';
+import { showMoreCoef } from '../../utils/showMoreCoef';
 
 export default function MoviesCardList({ moviesList, userId }) {
+  const coefficient = showMoreCoef();
+  const [showMoviesCount, setShowMoviesCount] = useState(coefficient);
+
+  const handleShowMore = () => {
+    setShowMoviesCount(showMoviesCount + coefficient);
+  };
+
   return (
-    <ul className="movies-card-list">
-      {moviesList.map(movie => (
-        <li className="movies-card-list__item" key={movie.movieId}>
-          <MovieCard
-            country={movie.country}
-            director={movie.director}
-            duration={movie.duration}
-            year={movie.year}
-            description={movie.description}
-            image={movie.image}
-            trailerLink={movie.trailerLink}
-            thumbnail={movie.thumbnail}
-            owner={movie.owner}
-            movieId={movie.movieId}
-            nameRU={movie.nameRU}
-            nameEN={movie.nameEN}
-            userId={userId}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul className="movies-card-list">
+        {moviesList.slice(0, showMoviesCount).map(movie => (
+          <li className="movies-card-list__item" key={movie.movieId}>
+            <MovieCard
+              country={movie.country}
+              director={movie.director}
+              duration={movie.duration}
+              year={movie.year}
+              description={movie.description}
+              image={movie.image}
+              trailerLink={movie.trailerLink}
+              thumbnail={movie.thumbnail}
+              owner={movie.owner}
+              movieId={movie.movieId}
+              nameRU={movie.nameRU}
+              nameEN={movie.nameEN}
+              userId={userId}
+            />
+          </li>
+        ))}
+      </ul>
+      {moviesList.length !== 0 && moviesList.length > showMoviesCount && (
+        <Button type="bordered" text="Ещё" onClick={handleShowMore} />
+      )}
+    </>
   );
 }
