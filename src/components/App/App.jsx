@@ -31,50 +31,58 @@ import { movieApi } from '../../utils/MovieApi';
 import { shortMeterDuration } from '../../variables/variables';
 
 function App() {
+  const navigate = useNavigate();
+
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-
   const [user, setUser] = useState({ name: 'Иван', email: 'ivanlev@mail.com', _id: '12345' });
+  const [searchResults, setSearchResults] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [filmToSearch, setFilmToSearch] = useState('');
+  const [isShortMeter, setIsShortMeter] = useState(false);
+
   const handleSetUserData = data => {
     alert('Отправляем свежие данные: ' + data.name + ', ' + data.email);
     setUser(data);
   };
 
-  const [filmToSearch, setFilmToSearch] = useState('');
-  const [isShortMeter, setIsShortMeter] = useState(false);
   const handleSearch = () => {
-    alert(`Давайте поищем ${isShortMeter ? 'короткометражный ' : ''}фильм ${filmToSearch}`);
+    setSearchResults([]);
+    setIsPreloaderShown(true);
+
+    movieApi
+      .getMovies()
+      .then(result => {
+        setSearchResults(result);
+      })
+      .catch(error => console.log(error));
   };
+
+  const handleMoviesToShow = list => {
+    if (isShortMeter) {
+      const shortMoviesList = [];
+      list.forEach(movie => {
+        if (movie.duration <= shortMeterDuration) {
+          shortMoviesList.push(movie);
+        }
+      });
+      setFilteredResults(shortMoviesList);
+    } else {
+      setFilteredResults(list);
+    }
+    setIsPreloaderShown(false);
+  };
+
+  // check if something ready to be displayed in MoviesList
+  useEffect(() => {
+    handleMoviesToShow(searchResults);
+  }, [searchResults, isShortMeter]);
+
   const toggleIsShortMeter = event => {
     event.preventDefault();
     setIsShortMeter(!isShortMeter);
   };
 
-  const [moviesList, setMoviesList] = useState([]);
-  useEffect(() => {
-    setIsPreloaderShown(true);
-    if (moviesList.length === 0) {
-      setIsPreloaderShown(true);
-    }
-
-    movieApi.getMovies().then(result => {
-      if (isShortMeter) {
-        const shortMoviesList = [];
-        result.forEach(movie => {
-          if (movie.duration <= shortMeterDuration) {
-            shortMoviesList.push(movie);
-          }
-        });
-        console.log(shortMoviesList);
-        setMoviesList(shortMoviesList);
-      } else {
-        setMoviesList(result);
-      }
-    });
-    setIsPreloaderShown(false);
-  }, [isShortMeter, moviesList]);
-
-  const navigate = useNavigate();
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUser({});
@@ -122,7 +130,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <Movies moviesList={moviesList} userId={user._id} />
+                <Movies moviesList={filteredResults} userId={user._id} />
               </Main>
               <Footer />
             </>
@@ -146,7 +154,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <SavedMovies moviesList={moviesList} userId={user._id} />
+                <SavedMovies filteredResults={filteredResults} userId={user._id} />
               </Main>
               <Footer />
             </>
