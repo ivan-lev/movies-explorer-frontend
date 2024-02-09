@@ -36,8 +36,12 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [user, setUser] = useState({ name: 'Иван', email: 'ivanlev@mail.com', _id: '12345' });
+
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
+  const [isSearchSuccessful, setIsSearchSuccessful] = useState(true);
+  const [isNothingFound, setIsNothingFound] = useState(false);
+
   const [filmToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
 
@@ -54,8 +58,17 @@ function App() {
       .getMovies()
       .then(result => {
         setSearchResults(result);
+        setIsSearchSuccessful(true);
+        if (result.length === 0) {
+          setIsNothingFound(true);
+        } else {
+          setIsNothingFound(false);
+        }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        setIsSearchSuccessful(false);
+      });
   };
 
   const handleMoviesToShow = list => {
@@ -70,6 +83,7 @@ function App() {
     } else {
       setFilteredResults(list);
     }
+
     setIsPreloaderShown(false);
   };
 
@@ -132,6 +146,8 @@ function App() {
                 <Movies
                   moviesList={filteredResults}
                   isPreloaderShown={isPreloaderShown}
+                  isSearchSuccessful={isSearchSuccessful}
+                  isNothingFound={isNothingFound}
                   userId={user._id}
                 />
               </Main>
