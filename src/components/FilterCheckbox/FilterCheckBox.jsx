@@ -9,7 +9,7 @@ export default function FilterCheckBox({ isShortMeter, toggleIsShortMeter }) {
         <input type="checkbox" className="filter-checkbox__input"></input>
         <span
           className={`filter-checkbox__visible ${
-            isShortMeter ? 'filter-checkbox__visible_checked' : 'filter-checkbox__visible_unchecked'
+            isShortMeter ? 'filter-checkbox__visible_checked' : ''
           }`}
         ></span>
       </label>
