@@ -33,7 +33,8 @@ const authorize = (email, password) => {
 
 const checkResponseStatus = res => {
   if (!res.ok) {
-    return Promise.reject(`Ошибка: ${res.status}`);
+    console.log(`Ошибка: ${res.status}`);
+    return Promise.reject(res);
   }
   return res.json();
 };
