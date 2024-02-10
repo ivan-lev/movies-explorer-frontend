@@ -6,30 +6,52 @@ import { useState, useEffect } from 'react';
 import { useForm } from '../../hooks/useForm';
 import { validateProfileUpdate } from '../../utils/formValidator';
 
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import { validators } from '../../utils/formValidator';
+
 import Button from '../Button/Button';
 
 export default function Profile({ currentUser, onSubmit, onLogout }) {
-  const { values, setValues, handleChange } = useForm(currentUser);
+  //const { values, setValues, handleChange } = useForm(currentUser);
+  const valuesFields = { name: currentUser.name, email: currentUser.email };
+  const errorsFields = { name: null, email: null };
+  const { values, errors, handleChange, isValid, resetForm } = useFormWithValidation(
+    valuesFields,
+    errorsFields,
+    validators
+  );
   const [greetingName, setGreetingName] = useState(currentUser.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
+
+  const [validationErrors, setValidationErrors] = useState('');
   const [errorMessage, setErrorMessage] = useState('При обновлении профиля произошла ошибка');
 
-  // if esc pressed, hide edit form and set initial name and email values
   useEffect(() => {
-    const handleCloseEditingByEsc = event => {
-      const key = event.key;
+    let errorsList = Object.values(errors);
+    errorsList = errorsList
+      .filter(error => {
+        return error !== null && error !== '';
+      })
+      .join(', ');
+    setValidationErrors(errorsList);
+  }, [errors]);
 
-      if (key === 'Escape') {
-        setValues(currentUser);
-        setIsUserDataUpdating(false);
-      }
-    };
-    document.addEventListener('keydown', handleCloseEditingByEsc);
+  // if esc pressed, hide edit form and set initial name and email values
+  // useEffect(() => {
+  //   const handleCloseEditingByEsc = event => {
+  //     const key = event.key;
 
-    return () => {
-      document.removeEventListener('keydown', handleCloseEditingByEsc);
-    };
-  }, [isUserDataUpdating, currentUser, setValues]);
+  //     if (key === 'Escape') {
+  //       setValues(currentUser);
+  //       setIsUserDataUpdating(false);
+  //     }
+  //   };
+  //   document.addEventListener('keydown', handleCloseEditingByEsc);
+
+  //   return () => {
+  //     document.removeEventListener('keydown', handleCloseEditingByEsc);
+  //   };
+  // }, [isUserDataUpdating, currentUser, setValues]);
 
   useEffect(() => setGreetingName(currentUser.name), [currentUser]);
 
@@ -44,15 +66,13 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
   const handleSubmitData = () => {
     const { name, email } = values;
     if (name === currentUser.name && email === currentUser.email) {
+      alert('Данные совпадают');
       setIsUserDataUpdating(false);
       return;
     }
-    const isDataValid = validateProfileUpdate(name, email, setErrorMessage);
 
-    if (isDataValid) {
-      onSubmit(values);
-      setIsUserDataUpdating(false);
-    }
+    onSubmit(values);
+    setIsUserDataUpdating(false);
   };
 
   return (
@@ -119,9 +139,13 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
           ) : (
             <>
               <div className="profile__updating-error-wrapper">
-                <p className="profile__updating-error">{errorMessage}</p>
+                <p className="profile__updating-error">{validationErrors}</p>
               </div>
-              <Button type="blue" text="Сохранить" onClick={handleSubmitData} />
+              <Button
+                type={`blue ${!isValid ? 'button_disabled' : ''}`}
+                text="Сохранить"
+                onClick={handleSubmitData}
+              />
             </>
           )}
         </div>

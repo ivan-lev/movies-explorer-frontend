@@ -104,4 +104,12 @@
   color: var(--bg-button-crimson);
   font-size: 11px;
   line-height: 11px;
+  text-transform: lowercase;
+  display: block;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.profile__updating-error::first-letter {
+  text-transform: uppercase;
 }

@@ -11,9 +11,11 @@ import Button from '../Button/Button';
 import { errorMessages } from '../../variables/errorMessages';
 
 export default function Register({ onSubmit, onRegister }) {
-  const fields = { name: null, email: null, password: null };
+  const valuesFields = { name: null, email: null, password: null };
+  const errorsFields = { name: null, email: null, password: null };
   const { values, errors, handleChange, isValid, resetForm } = useFormWithValidation(
-    fields,
+    valuesFields,
+    errorsFields,
     validators
   );
   const [validationErrors, setValidationErrors] = useState('');
