@@ -28,6 +28,7 @@ import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
 
 import { movieApi } from '../../utils/MovieApi';
+import { mainApi } from '../../utils/MainApi';
 import { shortMeterDuration } from '../../variables/variables';
 
 function App() {
@@ -193,7 +194,7 @@ function App() {
           }
         />
         <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Register />} />
+        <Route path="/signup" element={<Register onSubmit={mainApi.createUser} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
