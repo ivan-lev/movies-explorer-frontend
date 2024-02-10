@@ -1,5 +1,5 @@
 import { nameRegexp, emailRegExp } from '../variables/variables';
-import { errors } from '../variables/errors';
+import { errorMessages } from '../variables/errorMessages';
 
 const nameValidator = name => {
   if (!name) {
@@ -118,10 +118,12 @@ export const validateRegistration = (name, email, password, setMessage) => {
 
 export const validateSearch = (value, setMessage) => {
   if (!value) {
-    setMessage(errors.emptySearchInput);
+    setMessage(errorMessages.emptySearchInput);
     return false;
   }
 
   setMessage('Фильм');
   return true;
 };
+
+export const validators = { nameValidator, emailValidator, passwordValidator };

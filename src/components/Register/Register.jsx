@@ -1,25 +1,53 @@
 import './Register.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useForm } from '../../hooks/useForm';
-import { validateRegistration } from '../../utils/formValidator';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import { validators } from '../../utils/formValidator';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import { errorMessages } from '../../variables/errorMessages';
 
 export default function Register({ onSubmit }) {
-  const { values, setValues, handleChange } = useForm({ name: '', email: '', password: '' });
-  const [errorMessage, setErrorMessage] = useState('Что-то пошло не так...');
+  const fields = { name: null, email: null, password: null };
+  const { values, errors, handleChange, isValid, resetForm } = useFormWithValidation(
+    fields,
+    validators
+  );
+  const [validationErrors, setValidationErrors] = useState('');
+  const [registrationError, setRegistrationError] = useState('');
+
+  useEffect(() => {
+    let errorsList = Object.values(errors);
+    errorsList = errorsList
+      .filter(error => {
+        return error !== null && error !== '';
+      })
+      .join(', ');
+    setValidationErrors(errorsList);
+  }, [errors]);
 
   const handleSubmit = () => {
     const { name, email, password } = values;
-    const isDataValid = validateRegistration(name, email, password, setErrorMessage);
-    if (isDataValid) {
-      alert('Регистрируем юзера: ' + name + ', ' + email + ', ' + password);
-      setValues({ name: '', email: '', password: '' });
-    }
+    onSubmit(name, email, password)
+      .then(response => {
+        if (registrationError) {
+          setRegistrationError('');
+          resetForm();
+        }
+        // need to add code for save user data and navigate to movies
+      })
+      .catch(error => {
+        switch (error.status) {
+          case 409:
+            setRegistrationError(errorMessages.userExist);
+            break;
+          case 500:
+            setRegistrationError(errorMessages.couldNotRegister);
+        }
+      });
   };
 
   return (
@@ -93,13 +121,19 @@ export default function Register({ onSubmit }) {
             </label>
           </fieldset>
 
-          <div className="register__error-wrapper">
-            <span className="register__error register__error_shown">{errorMessage}</span>
+          <div className="register__validation-error-wrapper">
+            <span className="register__validation-error">{validationErrors}</span>
           </div>
         </form>
 
         <div className="register__bottom">
-          <Button type="blue" text="Зарегистрироваться" onClick={handleSubmit} />
+          <span className="register__registration-error">{registrationError}</span>
+          <Button
+            type={`blue ${!isValid ? 'button_disabled' : ''}`}
+            text="Зарегистрироваться"
+            onClick={handleSubmit}
+            disabled={false}
+          />
           <div className="register__already-registered-wrapper">
             <span className="register__already-registered-text">Уже зарегистрированы?</span>
             <Link className="register__login-link" to="/signin">
