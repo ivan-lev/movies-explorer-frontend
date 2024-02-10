@@ -30,14 +30,14 @@ export default function Register({ onSubmit }) {
   }, [errors]);
 
   const handleSubmit = () => {
+    if (registrationError) {
+      setRegistrationError('');
+    }
     const { name, email, password } = values;
     onSubmit(name, email, password)
       .then(response => {
-        if (registrationError) {
-          setRegistrationError('');
-          resetForm();
-        }
-        // need to add code for save user data and navigate to movies
+        resetForm();
+        // need to add code here for save user data and navigate to movies
       })
       .catch(error => {
         switch (error.status) {
