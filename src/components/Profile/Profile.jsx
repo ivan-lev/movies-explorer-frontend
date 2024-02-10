@@ -8,9 +8,9 @@ import { validateProfileUpdate } from '../../utils/formValidator';
 
 import Button from '../Button/Button';
 
-export default function Profile({ user, onSubmit, onLogout }) {
-  const { values, setValues, handleChange } = useForm(user);
-  const [greetingName, setGreetingName] = useState(user.name);
+export default function Profile({ currentUser, onSubmit, onLogout }) {
+  const { values, setValues, handleChange } = useForm(currentUser);
+  const [greetingName, setGreetingName] = useState(currentUser.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
   const [errorMessage, setErrorMessage] = useState('При обновлении профиля произошла ошибка');
 
@@ -20,7 +20,7 @@ export default function Profile({ user, onSubmit, onLogout }) {
       const key = event.key;
 
       if (key === 'Escape') {
-        setValues(user);
+        setValues(currentUser);
         setIsUserDataUpdating(false);
       }
     };
@@ -29,9 +29,9 @@ export default function Profile({ user, onSubmit, onLogout }) {
     return () => {
       document.removeEventListener('keydown', handleCloseEditingByEsc);
     };
-  }, [isUserDataUpdating, user, setValues]);
+  }, [isUserDataUpdating, currentUser, setValues]);
 
-  useEffect(() => setGreetingName(user.name), [user]);
+  useEffect(() => setGreetingName(currentUser.name), [currentUser]);
 
   const handleEditData = event => {
     event.preventDefault();
@@ -43,7 +43,7 @@ export default function Profile({ user, onSubmit, onLogout }) {
 
   const handleSubmitData = () => {
     const { name, email } = values;
-    if (name === user.name && email === user.email) {
+    if (name === currentUser.name && email === currentUser.email) {
       setIsUserDataUpdating(false);
       return;
     }
@@ -63,12 +63,12 @@ export default function Profile({ user, onSubmit, onLogout }) {
           <div className="profile__data">
             <div className="profile__row">
               <span className="profile__field">Имя</span>
-              <span className="profile__field">{user.name}</span>
+              <span className="profile__field">{currentUser.name}</span>
             </div>
             <div className="profile__divider"></div>
             <div className="profile__row">
               <span className="profile__field">E-mail</span>
-              <span className="profile__field">{user.email}</span>
+              <span className="profile__field">{currentUser.email}</span>
             </div>
           </div>
         ) : (

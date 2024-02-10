@@ -10,7 +10,7 @@ import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import { errorMessages } from '../../variables/errorMessages';
 
-export default function Register({ onSubmit }) {
+export default function Register({ onSubmit, onRegister }) {
   const fields = { name: null, email: null, password: null };
   const { values, errors, handleChange, isValid, resetForm } = useFormWithValidation(
     fields,
@@ -38,6 +38,7 @@ export default function Register({ onSubmit }) {
       .then(response => {
         resetForm();
         // need to add code here for save user data and navigate to movies
+        onRegister(response);
       })
       .catch(error => {
         switch (error.status) {

@@ -36,7 +36,11 @@ function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-  const [user, setUser] = useState({ name: 'Иван', email: 'ivanlev@mail.com', _id: '12345' });
+  const [currentUser, setCurrentUser] = useState({
+    name: 'Иван',
+    email: 'ivanlev@mail.com',
+    _id: '12345'
+  });
 
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
@@ -48,7 +52,7 @@ function App() {
 
   const handleSetUserData = data => {
     alert('Отправляем свежие данные: ' + data.name + ', ' + data.email);
-    setUser(data);
+    setCurrentUser(data);
   };
 
   const handleSearch = () => {
@@ -100,7 +104,7 @@ function App() {
 
   const handleLogout = () => {
     setIsLoggedIn(false);
-    setUser({});
+    setCurrentUser({});
     navigate('/');
   };
 
@@ -149,7 +153,7 @@ function App() {
                   isPreloaderShown={isPreloaderShown}
                   isSearchSuccessful={isSearchSuccessful}
                   isNothingFound={isNothingFound}
-                  userId={user._id}
+                  userId={currentUser._id}
                 />
               </Main>
               <Footer />
@@ -174,7 +178,7 @@ function App() {
                   toggleIsShortMeter={toggleIsShortMeter}
                 />
                 {isPreloaderShown && <Preloader />}
-                <SavedMovies filteredResults={filteredResults} userId={user._id} />
+                <SavedMovies filteredResults={filteredResults} userId={currentUser._id} />
               </Main>
               <Footer />
             </>
@@ -189,12 +193,19 @@ function App() {
                 <Navigation isLoggedIn={isLoggedIn} />
                 <UserButtons isLoggedIn={isLoggedIn} />
               </Header>
-              <Profile user={user} onSubmit={handleSetUserData} onLogout={handleLogout} />
+              <Profile
+                currentUser={currentUser}
+                onSubmit={handleSetUserData}
+                onLogout={handleLogout}
+              />
             </>
           }
         />
         <Route path="/signin" element={<Login />} />
-        <Route path="/signup" element={<Register onSubmit={mainApi.createUser} />} />
+        <Route
+          path="/signup"
+          element={<Register onSubmit={mainApi.createUser} onRegister={setCurrentUser} />}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
