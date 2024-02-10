@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
 
-export function useFormWithValidation(fields, validators) {
-  const [values, setValues] = useState(fields);
-  const [errors, setErrors] = useState(fields);
+export function useFormWithValidation(valuesFields, errorsFileds, validators) {
+  const [values, setValues] = useState(valuesFields);
+  const [errors, setErrors] = useState(errorsFileds);
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
