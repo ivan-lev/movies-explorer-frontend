@@ -20,15 +20,26 @@ const authorize = (email, password) => {
   }).then(response => checkResponseStatus(response));
 };
 
-// const checkTokenValidity = token => {
-//   return fetch(`${baseUrl}/!!!!!!`, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       Authorization: `Bearer ${token}`
-//     }
-//   }).then(response => checkResponseStatus(response));
-// };
+const getUserInfo = token => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }).then(response => checkResponseStatus(response));
+};
+
+const setUserInfo = (name, email, token) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ name, email })
+  }).then(response => checkResponseStatus(response));
+};
 
 const checkResponseStatus = res => {
   if (!res.ok) {
@@ -40,5 +51,7 @@ const checkResponseStatus = res => {
 
 export const mainApi = {
   createUser,
-  authorize
+  authorize,
+  getUserInfo,
+  setUserInfo
 };
