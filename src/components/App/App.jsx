@@ -30,17 +30,19 @@ import Preloader from '../Preloader/Preloader';
 import { movieApi } from '../../utils/MovieApi';
 import { mainApi } from '../../utils/MainApi';
 import { shortMeterDuration } from '../../variables/variables';
+import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
 
 function App() {
   const navigate = useNavigate();
 
+  const [token, setToken] = useStorage('token', '');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-  const [currentUser, setCurrentUser] = useState({
-    name: 'Иван',
-    email: 'ivanlev@mail.com',
-    _id: '12345'
-  });
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    checkToken();
+  }, []);
 
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
@@ -50,10 +52,38 @@ function App() {
   const [filmToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
 
+  const register = (name, email, password) => {
+    mainApi
+      .createUser(name, email, password)
+      .then(response => {
+        handleLogin(email, password);
+      })
+      .catch(error => console.log(error));
+  };
+
+  // USER FUNCTIONS
+  const checkToken = () => {
+    mainApi
+      .getUserInfo(token)
+      .then(result => {
+        setCurrentUser(result);
+        setIsLoggedIn(true);
+        navigate('/movies');
+      })
+      .catch(error => {
+        console.log('Ошибка проверки токена: ' + error);
+        handleLogout();
+      });
+  };
+
   const handleLogin = (email, password) => {
     mainApi
       .authorize(email, password)
-      .then(answer => console.log(answer))
+      .then(response => {
+        setToken(response.token);
+        navigate('/movies');
+        // checkToken(); it goes from server and must be valid, no need to check
+      })
       .catch(error => console.log(error));
   };
 
@@ -62,6 +92,14 @@ function App() {
     setCurrentUser(data);
   };
 
+  const handleLogout = () => {
+    setToken('');
+    setIsLoggedIn(false);
+    setCurrentUser({});
+    navigate('/');
+  };
+
+  // MOVIES FUNCTIONS
   const handleSearch = () => {
     setIsPreloaderShown(true);
     setSearchResults([]);
@@ -107,12 +145,6 @@ function App() {
   const toggleIsShortMeter = event => {
     event.preventDefault();
     setIsShortMeter(!isShortMeter);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setCurrentUser({});
-    navigate('/');
   };
 
   return (
@@ -211,7 +243,13 @@ function App() {
         <Route path="/signin" element={<Login onLogin={handleLogin} />} />
         <Route
           path="/signup"
-          element={<Register onSubmit={mainApi.createUser} onRegister={setCurrentUser} />}
+          element={
+            <Register
+              onSubmit={mainApi.createUser}
+              onRegister={setCurrentUser}
+              register={register}
+            />
+          }
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
