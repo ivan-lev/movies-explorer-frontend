@@ -1,37 +1,29 @@
 import './Register.css';
 
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
-import { validators } from '../../utils/formValidator';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import { errorMessages } from '../../variables/errorMessages';
 
 export default function Register({ onSubmit, onRegister }) {
-  const valuesFields = { name: null, email: null, password: null };
-  const errorsFields = { name: null, email: null, password: null };
-  const { values, errors, handleChange, isValid, resetForm } = useFormWithValidation(
-    valuesFields,
-    errorsFields,
-    validators
-  );
-  const [validationErrors, setValidationErrors] = useState('');
+  const navigate = useNavigate();
+  const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
+    useFormWithValidation();
   const [registrationError, setRegistrationError] = useState('');
 
+  // set values validity to false as we have blank inputs at start
   useEffect(() => {
-    let errorsList = Object.values(errors);
-    errorsList = errorsList
-      .filter(error => {
-        return error !== null && error !== '';
-      })
-      .join(', ');
-    setValidationErrors(errorsList);
-  }, [errors]);
+    setValuesValidity({ name: false, email: false, password: false });
+  }, []);
 
   const handleSubmit = () => {
+    if (!isValid) {
+      return;
+    }
     if (registrationError) {
       setRegistrationError('');
     }
@@ -39,8 +31,9 @@ export default function Register({ onSubmit, onRegister }) {
     onSubmit(name, email, password)
       .then(response => {
         resetForm();
-        // need to add code here for save user data and navigate to movies
+        // need to add code here for save user data
         onRegister(response);
+        navigate('/movies');
       })
       .catch(error => {
         switch (error.status) {
@@ -75,7 +68,7 @@ export default function Register({ onSubmit, onRegister }) {
                 placeholder="Введите имя"
                 autoComplete="on"
                 required
-                value={values.name}
+                value={values.name ?? ''}
                 onChange={handleChange}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
@@ -95,7 +88,7 @@ export default function Register({ onSubmit, onRegister }) {
                 placeholder="Введите email"
                 autoComplete="on"
                 required
-                value={values.email}
+                value={values.email ?? ''}
                 onChange={handleChange}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
@@ -115,7 +108,7 @@ export default function Register({ onSubmit, onRegister }) {
                 placeholder="Введите пароль"
                 autoComplete="on"
                 required
-                value={values.password}
+                value={values.password ?? ''}
                 onChange={handleChange}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
@@ -125,7 +118,7 @@ export default function Register({ onSubmit, onRegister }) {
           </fieldset>
 
           <div className="register__validation-error-wrapper">
-            <span className="register__validation-error">{validationErrors}</span>
+            <span className="register__validation-error">{errorToShow}</span>
           </div>
         </form>
 
