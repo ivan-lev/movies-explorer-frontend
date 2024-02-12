@@ -1,48 +1,77 @@
 import { useState, useCallback, useEffect } from 'react';
 
-export function useFormWithValidation(valuesFields, errorsFileds, validators) {
-  const [values, setValues] = useState(valuesFields);
-  const [errors, setErrors] = useState(errorsFileds);
+import { validators } from '../utils/formValidator';
+
+export function useFormWithValidation() {
+  const [values, setValues] = useState({});
+  const [errorMessages, setErrorMessages] = useState({});
+  const [errorToShow, setErrorToShow] = useState('');
+  const [valuesValidity, setValuesValidity] = useState({});
   const [isValid, setIsValid] = useState(false);
 
   useEffect(() => {
-    checkValidity();
-  }, [errors, isValid]);
-
-  const handleChange = event => {
-    const target = event.target;
-    const name = target.name;
-    const value = target.value;
-    const validator = validators[`${name}Validator`];
-    setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: validator(value) });
-  };
-
-  // check if all error fields was filled (values !== null)
-  // and all error fields has blank string values
-  const checkValidity = () => {
     if (
-      Object.values(errors).every(error => {
-        return error !== null;
-      }) &&
-      Object.values(errors).every(error => {
-        return error === '';
+      Object.values(valuesValidity).every(value => {
+        return value === true;
       })
     ) {
       setIsValid(true);
     } else {
       setIsValid(false);
     }
+  }, [valuesValidity]);
+
+  useEffect(() => {
+    handleErrorMessage();
+  }, [errorMessages]);
+
+  const handleErrorMessage = () => {
+    let errorsList = Object.values(errorMessages);
+    const errorMessage = errorsList
+      .filter(error => {
+        return error !== null && error !== '';
+      })
+      .join(', ')
+      .toLocaleLowerCase();
+    setErrorToShow(errorMessage);
+  };
+
+  const handleChange = event => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    const validator = validators[`${name}Validator`];
+    const validatorAnswer = validator(value);
+    setValues({ ...values, [name]: value });
+    setValuesValidity({ ...valuesValidity, [name]: validatorAnswer.isValid });
+    setErrorMessages({ ...errorMessages, [name]: validatorAnswer.errorMessage });
   };
 
   const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
+    (
+      newValues = {},
+      newErrorMessages = {},
+      newErrorToShow = '',
+      newValuesValidity = {},
+      newIsValid = false
+    ) => {
       setValues(newValues);
-      setErrors(newErrors);
+      setErrorMessages(newErrorMessages);
+      setErrorToShow(newErrorToShow);
+      setValuesValidity(newValuesValidity);
       setIsValid(newIsValid);
     },
-    [setValues, setErrors, setIsValid]
+    [setValues, setErrorMessages, setValuesValidity, setErrorToShow, setIsValid]
   );
 
-  return { values, handleChange, errors, isValid, resetForm };
+  return {
+    values,
+    setValues,
+    valuesValidity,
+    setValuesValidity,
+    handleChange,
+    errorToShow,
+    isValid,
+    resetForm
+  };
 }
