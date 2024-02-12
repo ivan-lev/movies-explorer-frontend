@@ -3,38 +3,42 @@ import './Profile.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { useForm } from '../../hooks/useForm';
-import { validateProfileUpdate } from '../../utils/formValidator';
-
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
-import { validators } from '../../utils/formValidator';
 
 import Button from '../Button/Button';
+import { errorMessages } from '../../variables/errorMessages';
 
 export default function Profile({ currentUser, onSubmit, onLogout }) {
-  //const { values, setValues, handleChange } = useForm(currentUser);
-  const valuesFields = { name: currentUser.name, email: currentUser.email };
-  const errorsFields = { name: null, email: null };
-  const { values, errors, handleChange, isValid, resetForm } = useFormWithValidation(
-    valuesFields,
-    errorsFields,
-    validators
-  );
+  const {
+    values,
+    setValues,
+    valuesValidity,
+    setValuesValidity,
+    errorToShow,
+    handleChange,
+    isValid,
+    resetForm
+  } = useFormWithValidation();
   const [greetingName, setGreetingName] = useState(currentUser.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
+  const [isValuesDiffers, setIsValuesDiffers] = useState(true);
 
-  const [validationErrors, setValidationErrors] = useState('');
   const [errorMessage, setErrorMessage] = useState('При обновлении профиля произошла ошибка');
 
+  // set current user input values and make them valid as they valid
   useEffect(() => {
-    let errorsList = Object.values(errors);
-    errorsList = errorsList
-      .filter(error => {
-        return error !== null && error !== '';
-      })
-      .join(', ');
-    setValidationErrors(errorsList);
-  }, [errors]);
+    setValues({ name: currentUser.name, email: currentUser.email });
+    setValuesValidity({ name: true, email: true });
+  }, []);
+
+  // check if inputs' values different from current user data
+  useEffect(() => {
+    if (values.name === currentUser.name && values.email === currentUser.email) {
+      setIsValuesDiffers(false);
+    } else {
+      setIsValuesDiffers(true);
+    }
+  }, [values]);
 
   // if esc pressed, hide edit form and set initial name and email values
   // useEffect(() => {
@@ -65,8 +69,8 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
 
   const handleSubmitData = () => {
     const { name, email } = values;
+    // if data in inputs is the same - do nothing
     if (name === currentUser.name && email === currentUser.email) {
-      alert('Данные совпадают');
       setIsUserDataUpdating(false);
       return;
     }
@@ -139,11 +143,11 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
           ) : (
             <>
               <div className="profile__updating-error-wrapper">
-                <p className="profile__updating-error">{validationErrors}</p>
+                <p className="profile__updating-error">{errorToShow}</p>
               </div>
               <Button
                 type={`blue ${!isValid ? 'button_disabled' : ''}`}
-                text="Сохранить"
+                text={isValuesDiffers ? 'Сохранить' : 'Закрыть'}
                 onClick={handleSubmitData}
               />
             </>
