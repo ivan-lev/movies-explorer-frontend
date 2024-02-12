@@ -11,8 +11,7 @@ const createUser = (name, email, password) => {
 };
 
 const authorize = (email, password) => {
-  return (fetch(`${baseUrl}/signin`),
-  {
+  return fetch(`${baseUrl}/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
