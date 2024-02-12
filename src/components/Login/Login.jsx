@@ -1,24 +1,30 @@
 import './Login.css';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useForm } from '../../hooks/useForm';
-import { validateLogin } from '../../utils/formValidator';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import { errorMessages } from '../../variables/errorMessages';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
-export default function Login({ onSubmit }) {
-  const { values, setValues, handleChange } = useForm({ email: '', password: '' });
-  const [errorMessage, setErrorMessage] = useState('Ошибка логина...');
+export default function Login({ onLogin }) {
+  const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
+    useFormWithValidation();
+  const [loginError, setLoginError] = useState(errorMessages.loginError);
 
-  const handleSubmit = () => {
+  // set values validity to false as we have blank inputs at start
+  useEffect(() => {
+    setValuesValidity({ email: false, password: false });
+  }, []);
+
+  const handleLogin = () => {
     const { email, password } = values;
-    const isDataValid = validateLogin(email, password, setErrorMessage);
-    if (isDataValid) {
-      alert('Отправляем форму с параметрами: ' + email + ', ' + password);
-      setValues({ email: '', password: '' });
+    if (isValid) {
+      onLogin(email, password);
+      //alert('Отправляем форму с параметрами: ' + email + ', ' + password);
+      resetForm();
     }
   };
 
@@ -27,7 +33,7 @@ export default function Login({ onSubmit }) {
       <section className="login">
         <Logo />
         <h1 className="login__title">Рады видеть!</h1>
-        <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
+        <form id="login__form" name="login__form" className="login__form" onSubmit={handleLogin}>
           <fieldset className="login__fieldset">
             <label className="login__input-label">
               Email
@@ -42,7 +48,7 @@ export default function Login({ onSubmit }) {
                 value={values.email}
                 onChange={handleChange}
                 onKeyDown={event => {
-                  event.key === 'Enter' && handleSubmit();
+                  event.key === 'Enter' && onLogin();
                 }}
               />
             </label>
@@ -62,19 +68,24 @@ export default function Login({ onSubmit }) {
                 value={values.password}
                 onChange={handleChange}
                 onKeyDown={event => {
-                  event.key === 'Enter' && handleSubmit();
+                  event.key === 'Enter' && handleLogin();
                 }}
               />
             </label>
           </fieldset>
 
-          <div className="login__error-wrapper">
-            <span className="login__error login__error_shown">{errorMessage}</span>
+          <div className="login__validation-error-wrapper">
+            <span className="login__validation-error">{errorToShow}</span>
           </div>
         </form>
 
         <div className="login__bottom">
-          <Button type="blue" text="Войти" onClick={handleSubmit} />
+          <span className="login__request-error">{loginError}</span>
+          <Button
+            type={`blue ${!isValid ? 'button_disabled' : ''}`}
+            text="Войти"
+            onClick={handleLogin}
+          />
           <div className="login__not-registered-wrapper">
             <span className="login__not-registered-text">Ещё не зарегистрированы?</span>
             <Link className="login__register-link" to="/signup">
