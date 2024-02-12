@@ -50,6 +50,13 @@ function App() {
   const [filmToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
 
+  const handleLogin = (email, password) => {
+    mainApi
+      .authorize(email, password)
+      .then(answer => console.log(answer))
+      .catch(error => console.log(error));
+  };
+
   const handleSetUserData = data => {
     alert('Отправляем свежие данные: ' + data.name + ', ' + data.email);
     setCurrentUser(data);
@@ -201,7 +208,7 @@ function App() {
             </>
           }
         />
-        <Route path="/signin" element={<Login />} />
+        <Route path="/signin" element={<Login onLogin={handleLogin} />} />
         <Route
           path="/signup"
           element={<Register onSubmit={mainApi.createUser} onRegister={setCurrentUser} />}
