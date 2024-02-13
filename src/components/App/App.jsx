@@ -59,7 +59,7 @@ function App() {
   const [isSearchSuccessful, setIsSearchSuccessful] = useState(true);
   const [isNothingFound, setIsNothingFound] = useState(false);
 
-  const [filmToSearch, setFilmToSearch] = useState('');
+  const [movieToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
 
   // USER FUNCTIONS
@@ -143,16 +143,31 @@ function App() {
   };
 
   // MOVIES FUNCTIONS
-  const handleSearch = () => {
+  const handleSearchMovie = () => {
     setIsPreloaderShown(true);
     setSearchResults([]);
 
     movieApi
       .getMovies()
-      .then(result => {
-        setSearchResults(result);
+      .then(allMovies => {
+        const filteredByQueryMovies = allMovies.filter(movie => {
+          const movieToSearchNameComponents = [];
+          movieToSearchNameComponents.push(...movieToSearch.toLowerCase().split(' '));
+          const movieNameComponents = [];
+          movieNameComponents.push(
+            ...movie.nameRU.toLowerCase().split(' '),
+            ...movie.nameEN.toLowerCase().split(' ')
+          );
+          console.log(movieNameComponents);
+          if (movieNameComponents.some(word => movieToSearchNameComponents.includes(word))) {
+            return movie;
+          }
+
+          // movie.nameRU === 'Баллада' || movie.nameEN === 'Баллада';
+        });
+        setSearchResults(filteredByQueryMovies);
         setIsSearchSuccessful(true);
-        if (result.length === 0) {
+        if (filteredByQueryMovies.length === 0) {
           setIsNothingFound(true);
         } else {
           setIsNothingFound(false);
@@ -225,9 +240,9 @@ function App() {
                 </Header>
                 <Main>
                   <SearchForm
-                    inputValue={filmToSearch}
+                    inputValue={movieToSearch}
                     onType={setFilmToSearch}
-                    onSearch={handleSearch}
+                    onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
                   />
@@ -254,9 +269,9 @@ function App() {
                 </Header>
                 <Main>
                   <SearchForm
-                    inputValue={filmToSearch}
+                    inputValue={movieToSearch}
                     onType={setFilmToSearch}
-                    onSearch={handleSearch}
+                    onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
                   />
