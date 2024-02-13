@@ -24,6 +24,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import NotFound from '../NotFound/NotFound';
 import Preloader from '../Preloader/Preloader';
 
@@ -216,7 +217,7 @@ function App() {
           <Route
             path="/movies"
             element={
-              <>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <Header>
                   <Logo />
                   <Navigation isLoggedIn={isLoggedIn} />
@@ -239,13 +240,13 @@ function App() {
                   />
                 </Main>
                 <Footer />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/saved-movies"
             element={
-              <>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <Header>
                   <Logo />
                   <Navigation isLoggedIn={isLoggedIn} />
@@ -263,13 +264,13 @@ function App() {
                   <SavedMovies filteredResults={filteredResults} userId={currentUser._id} />
                 </Main>
                 <Footer />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route
             path="/profile"
             element={
-              <>
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
                 <Header>
                   <Logo />
                   <Navigation isLoggedIn={isLoggedIn} />
@@ -281,7 +282,7 @@ function App() {
                   onLogout={handleLogout}
                   error={profileUpdateError}
                 />
-              </>
+              </ProtectedRoute>
             }
           />
           <Route path="/signin" element={<Login onLogin={handleLogin} error={loginError} />} />
