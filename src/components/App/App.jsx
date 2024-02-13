@@ -59,7 +59,7 @@ function App() {
   const [isSearchSuccessful, setIsSearchSuccessful] = useState(true);
   const [isNothingFound, setIsNothingFound] = useState(false);
 
-  const [movieToSearch, setFilmToSearch] = useState('');
+  const [movieToSearch, setMovieToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
 
   // USER FUNCTIONS
@@ -177,6 +177,7 @@ function App() {
         console.log(error);
         setIsSearchSuccessful(false);
       });
+    setMovieToSearch('');
   };
 
   const handleMoviesToShow = list => {
@@ -241,7 +242,7 @@ function App() {
                 <Main>
                   <SearchForm
                     inputValue={movieToSearch}
-                    onType={setFilmToSearch}
+                    onType={setMovieToSearch}
                     onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
@@ -270,7 +271,7 @@ function App() {
                 <Main>
                   <SearchForm
                     inputValue={movieToSearch}
-                    onType={setFilmToSearch}
+                    onType={setMovieToSearch}
                     onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
