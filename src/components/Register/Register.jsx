@@ -9,11 +9,10 @@ import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import { errorMessages } from '../../variables/errorMessages';
 
-export default function Register({ onSubmit, onRegister, register }) {
+export default function Register({ register, error }) {
   const navigate = useNavigate();
   const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
     useFormWithValidation();
-  const [registrationError, setRegistrationError] = useState('');
 
   // set values validity to false as we have blank inputs at start
   useEffect(() => {
@@ -23,9 +22,6 @@ export default function Register({ onSubmit, onRegister, register }) {
   const handleSubmit = () => {
     if (!isValid) {
       return;
-    }
-    if (registrationError) {
-      setRegistrationError('');
     }
     const { name, email, password } = values;
     register(name, email, password);
@@ -46,6 +42,7 @@ export default function Register({ onSubmit, onRegister, register }) {
     //       setRegistrationError(errorMessages.couldNotRegister);
     //   }
     // });
+    resetForm();
   };
 
   return (
@@ -125,7 +122,7 @@ export default function Register({ onSubmit, onRegister, register }) {
         </form>
 
         <div className="register__bottom">
-          <span className="register__registration-error">{registrationError}</span>
+          <span className="register__registration-error">{error}</span>
           <Button
             type={`blue ${!isValid ? 'button_disabled' : ''}`}
             text="Зарегистрироваться"

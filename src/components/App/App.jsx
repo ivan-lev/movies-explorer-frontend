@@ -31,21 +31,24 @@ import { movieApi } from '../../utils/MovieApi';
 import { mainApi } from '../../utils/MainApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
+import { errorMessages } from '../../variables/errorMessages';
 
 function App() {
   const navigate = useNavigate();
 
   const [token, setToken] = useStorage('token', '');
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [registerError, setRegisterError] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   // try to get user data on mount if some token saved in local storage
   useEffect(() => {
     if (token !== '' && token !== undefined && token !== null) {
       getUserInfo();
     }
-  }, []);
+  }, [token]);
 
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
@@ -55,7 +58,9 @@ function App() {
   const [filmToSearch, setFilmToSearch] = useState('');
   const [isShortMeter, setIsShortMeter] = useState(false);
 
+  // USER FUNCTIONS
   const register = (name, email, password) => {
+    setRegisterError('');
     mainApi
       .createUser(name, email, password)
       .then(response => {
@@ -63,38 +68,55 @@ function App() {
       })
       .catch(error => {
         console.log(error);
+        const errorStatus = error.status;
+        switch (errorStatus) {
+          case 409:
+            setRegisterError(errorMessages.userExist);
+            break;
+          case 500:
+            setRegisterError(errorMessages.couldNotRegister);
+        }
         return error.status;
       });
   };
 
-  // USER FUNCTIONS
-  const getUserInfo = () => {
-    mainApi
-      .getUserInfo(token)
-      .then(result => {
-        setCurrentUser(result);
-        setIsLoggedIn(true);
-        navigate('/movies');
-      })
-      .catch(error => {
-        console.log('Ошибка проверки токена:', error);
-        handleLogout();
-      });
-  };
-
   const handleLogin = (email, password) => {
+    setLoginError('');
     mainApi
       .authorize(email, password)
       .then(response => {
         setToken(response.token);
-        navigate('/movies');
         if (!isLoggedIn) {
           setIsLoggedIn(true);
         }
       })
       .catch(error => {
         console.log(error);
+        const errorStatus = error.status;
+        switch (errorStatus) {
+          case 401:
+            setLoginError(errorMessages.loginWrongCredentials);
+            break;
+          case 500:
+            setRegisterError(errorMessages.loginError);
+        }
         return error.status;
+      });
+  };
+
+  const getUserInfo = () => {
+    mainApi
+      .getUserInfo(token)
+      .then(result => {
+        setCurrentUser(result);
+        if (!isLoggedIn) {
+          setIsLoggedIn(true);
+        }
+        navigate('/movies');
+      })
+      .catch(error => {
+        console.log('Ошибка проверки токена:', error);
+        handleLogout();
       });
   };
 
@@ -107,6 +129,7 @@ function App() {
     setToken('');
     setIsLoggedIn(false);
     setCurrentUser({});
+    navigate('/');
   };
 
   // MOVIES FUNCTIONS
@@ -250,17 +273,8 @@ function App() {
             </>
           }
         />
-        <Route path="/signin" element={<Login onLogin={handleLogin} />} />
-        <Route
-          path="/signup"
-          element={
-            <Register
-              onSubmit={mainApi.createUser}
-              onRegister={setCurrentUser}
-              register={register}
-            />
-          }
-        />
+        <Route path="/signin" element={<Login onLogin={handleLogin} error={loginError} />} />
+        <Route path="/signup" element={<Register register={register} error={registerError} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

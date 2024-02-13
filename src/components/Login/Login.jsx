@@ -4,15 +4,13 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
-import { errorMessages } from '../../variables/errorMessages';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
-export default function Login({ onLogin }) {
+export default function Login({ onLogin, error }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
     useFormWithValidation();
-  const [loginError, setLoginError] = useState(errorMessages.loginError);
 
   // set values validity to false as we have blank inputs at start
   useEffect(() => {
@@ -23,8 +21,6 @@ export default function Login({ onLogin }) {
     const { email, password } = values;
     if (isValid) {
       onLogin(email, password);
-      //alert('Отправляем форму с параметрами: ' + email + ', ' + password);
-      resetForm();
     }
   };
 
@@ -80,7 +76,7 @@ export default function Login({ onLogin }) {
         </form>
 
         <div className="login__bottom">
-          <span className="login__request-error">{loginError}</span>
+          <span className="login__request-error">{error}</span>
           <Button
             type={`blue ${!isValid ? 'button_disabled' : ''}`}
             text="Войти"
