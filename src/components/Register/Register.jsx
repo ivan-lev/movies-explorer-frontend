@@ -18,7 +18,8 @@ export default function Register({ register, error }) {
   }, []);
 
   const handleSubmit = () => {
-    if (!isValid) {
+    // check if all inputs filled and valid
+    if (!isValid || Object.values(values).some(value => value.length === 0)) {
       return;
     }
     const { name, email, password } = values;
