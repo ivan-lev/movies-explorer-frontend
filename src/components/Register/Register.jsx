@@ -52,6 +52,7 @@ export default function Register({ register, error }) {
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                autoFocus
               />
             </label>
           </fieldset>

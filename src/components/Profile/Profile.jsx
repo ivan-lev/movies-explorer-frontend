@@ -104,7 +104,7 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
                 value={values.name}
                 onChange={handleChange}
                 required
-                validate="true"
+                autoFocus
               ></input>
             </div>
             <div className="profile__divider"></div>
@@ -118,7 +118,6 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
                 value={values.email}
                 onChange={handleChange}
                 required
-                validate="true"
               ></input>
             </div>
 

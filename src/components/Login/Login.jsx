@@ -44,8 +44,9 @@ export default function Login({ onLogin, error }) {
                 value={values.email}
                 onChange={handleChange}
                 onKeyDown={event => {
-                  event.key === 'Enter' && onLogin();
+                  event.key === 'Enter' && handleLogin();
                 }}
+                autoFocus
               />
             </label>
           </fieldset>
