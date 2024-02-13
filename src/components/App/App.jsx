@@ -158,12 +158,9 @@ function App() {
             ...movie.nameRU.toLowerCase().split(' '),
             ...movie.nameEN.toLowerCase().split(' ')
           );
-          console.log(movieNameComponents);
           if (movieNameComponents.some(word => movieToSearchNameComponents.includes(word))) {
             return movie;
           }
-
-          // movie.nameRU === 'Баллада' || movie.nameEN === 'Баллада';
         });
         setSearchResults(filteredByQueryMovies);
         setIsSearchSuccessful(true);
@@ -181,6 +178,7 @@ function App() {
   };
 
   const handleMoviesToShow = list => {
+    setIsNothingFound(false);
     if (isShortMeter) {
       const shortMoviesList = [];
       list.forEach(movie => {
@@ -188,6 +186,9 @@ function App() {
           shortMoviesList.push(movie);
         }
       });
+      if (shortMoviesList.length === 0) {
+        setIsNothingFound(true);
+      }
       setFilteredResults(shortMoviesList);
     } else {
       setFilteredResults(list);
