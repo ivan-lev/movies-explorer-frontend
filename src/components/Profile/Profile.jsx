@@ -6,9 +6,8 @@ import { useState, useEffect } from 'react';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 import Button from '../Button/Button';
-import { errorMessages } from '../../variables/errorMessages';
 
-export default function Profile({ currentUser, onSubmit, onLogout }) {
+export default function Profile({ currentUser, token, onUpdate, onLogout, error }) {
   const {
     values,
     setValues,
@@ -22,8 +21,6 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
   const [greetingName, setGreetingName] = useState(currentUser.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
-
-  const [errorMessage, setErrorMessage] = useState('При обновлении профиля произошла ошибка');
 
   // set current user input values and make them valid as they valid
   useEffect(() => {
@@ -67,7 +64,7 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
     }
   };
 
-  const handleSubmitData = () => {
+  const handleSubmitUserInfo = () => {
     const { name, email } = values;
     // if data in inputs is the same - do nothing
     if (name === currentUser.name && email === currentUser.email) {
@@ -75,7 +72,7 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
       return;
     }
 
-    onSubmit(values);
+    onUpdate(name, email, token);
     setIsUserDataUpdating(false);
   };
 
@@ -96,7 +93,7 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
             </div>
           </div>
         ) : (
-          <form className="profile__data" onSubmit={onSubmit}>
+          <form className="profile__data" onSubmit={handleSubmitUserInfo}>
             <div className="profile__row">
               <span className="profile__field">Имя</span>
               <input
@@ -124,6 +121,10 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
                 validate="true"
               ></input>
             </div>
+
+            <div className="profile__validation-error-wrapper">
+              <span className="profile__validation-error">{errorToShow}</span>
+            </div>
           </form>
         )}
         <div className="profile__buttons-wrapper">
@@ -143,12 +144,12 @@ export default function Profile({ currentUser, onSubmit, onLogout }) {
           ) : (
             <>
               <div className="profile__updating-error-wrapper">
-                <p className="profile__updating-error">{errorToShow}</p>
+                <p className="profile__updating-error">{error}</p>
               </div>
               <Button
                 type={`blue ${!isValid ? 'button_disabled' : ''}`}
                 text={isValuesDiffers ? 'Сохранить' : 'Закрыть'}
-                onClick={handleSubmitData}
+                onClick={handleSubmitUserInfo}
               />
             </>
           )}

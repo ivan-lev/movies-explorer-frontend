@@ -40,13 +40,15 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [profileUpdateError, setProfileUpdateError] = useState('');
 
   // try to get user data on mount if some token saved in local storage
   useEffect(() => {
     if (token !== '' && token !== undefined && token !== null) {
-      getUserInfo();
+      handleGetUserInfo();
     }
   }, [token]);
 
@@ -104,7 +106,7 @@ function App() {
       });
   };
 
-  const getUserInfo = () => {
+  const handleGetUserInfo = () => {
     mainApi
       .getUserInfo(token)
       .then(result => {
@@ -120,9 +122,15 @@ function App() {
       });
   };
 
-  const handleSetUserData = data => {
-    alert('Отправляем свежие данные: ' + data.name + ', ' + data.email);
-    setCurrentUser(data);
+  const handleSetUserInfo = (name, email, token) => {
+    setProfileUpdateError('');
+    mainApi
+      .setUserInfo(name, email, token)
+      .then(response => setCurrentUser(response))
+      .catch(error => {
+        console.log(error);
+        setProfileUpdateError(errorMessages.profileUpdateError);
+      });
   };
 
   const handleLogout = () => {
@@ -267,8 +275,10 @@ function App() {
               </Header>
               <Profile
                 currentUser={currentUser}
-                onSubmit={handleSetUserData}
+                token={token}
+                onUpdate={handleSetUserInfo}
                 onLogout={handleLogout}
+                error={profileUpdateError}
               />
             </>
           }
