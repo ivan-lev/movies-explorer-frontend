@@ -18,6 +18,10 @@ export default function Login({ onLogin, error }) {
   }, []);
 
   const handleLogin = () => {
+    // check if all inputs filled and valid
+    if (!isValid || Object.values(values).some(value => value.length === 0)) {
+      return;
+    }
     const { email, password } = values;
     if (isValid) {
       onLogin(email, password);
