@@ -1,13 +1,16 @@
 import './Profile.css';
 
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import CurrentUserContext from '../../contexts/currentUserContext';
 
 import Button from '../Button/Button';
 
-export default function Profile({ currentUser, token, onUpdate, onLogout, error }) {
+export default function Profile({ token, onUpdate, onLogout, error }) {
+  const currentUser = useContext(CurrentUserContext);
+
   const {
     values,
     setValues,
@@ -18,7 +21,6 @@ export default function Profile({ currentUser, token, onUpdate, onLogout, error 
     isValid,
     resetForm
   } = useFormWithValidation();
-  const [greetingName, setGreetingName] = useState(currentUser.name);
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
 
@@ -38,23 +40,21 @@ export default function Profile({ currentUser, token, onUpdate, onLogout, error 
   }, [values]);
 
   // if esc pressed, hide edit form and set initial name and email values
-  // useEffect(() => {
-  //   const handleCloseEditingByEsc = event => {
-  //     const key = event.key;
+  useEffect(() => {
+    const handleCloseEditingByEsc = event => {
+      const key = event.key;
 
-  //     if (key === 'Escape') {
-  //       setValues(currentUser);
-  //       setIsUserDataUpdating(false);
-  //     }
-  //   };
-  //   document.addEventListener('keydown', handleCloseEditingByEsc);
+      if (key === 'Escape') {
+        setValues(currentUser);
+        setIsUserDataUpdating(false);
+      }
+    };
+    document.addEventListener('keydown', handleCloseEditingByEsc);
 
-  //   return () => {
-  //     document.removeEventListener('keydown', handleCloseEditingByEsc);
-  //   };
-  // }, [isUserDataUpdating, currentUser, setValues]);
-
-  useEffect(() => setGreetingName(currentUser.name), [currentUser]);
+    return () => {
+      document.removeEventListener('keydown', handleCloseEditingByEsc);
+    };
+  }, [isUserDataUpdating, currentUser, setValues]);
 
   const handleEditData = event => {
     event.preventDefault();
@@ -79,7 +79,7 @@ export default function Profile({ currentUser, token, onUpdate, onLogout, error 
   return (
     <main className="main">
       <section className="profile">
-        <h1 className="profile__greeting">Привет, {greetingName}!</h1>
+        <h1 className="profile__greeting">Привет, {currentUser.name}!</h1>
         {!isUserDataUpdating ? (
           <div className="profile__data">
             <div className="profile__row">

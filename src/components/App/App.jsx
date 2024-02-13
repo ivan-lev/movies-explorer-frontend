@@ -32,6 +32,7 @@ import { mainApi } from '../../utils/MainApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
 import { errorMessages } from '../../variables/errorMessages';
+import CurrentUserContext from '../../contexts/currentUserContext.js';
 
 function App() {
   const navigate = useNavigate();
@@ -190,103 +191,104 @@ function App() {
 
   return (
     <div className="App">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Header>
-                <Logo />
-                <Navigation isLoggedIn={isLoggedIn} />
-                <UserButtons isLoggedIn={isLoggedIn} />
-              </Header>
-              <Main>
-                <Promo />
-                <AboutProject />
-                <Techs />
-                <AboutMe />
-                <Portfolio />
-              </Main>
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/movies"
-          element={
-            <>
-              <Header>
-                <Logo />
-                <Navigation isLoggedIn={isLoggedIn} />
-                <UserButtons isLoggedIn={isLoggedIn} />
-              </Header>
-              <Main>
-                <SearchForm
-                  inputValue={filmToSearch}
-                  onType={setFilmToSearch}
-                  onSearch={handleSearch}
-                  isShortMeter={isShortMeter}
-                  toggleIsShortMeter={toggleIsShortMeter}
+      <CurrentUserContext.Provider value={currentUser}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Header>
+                  <Logo />
+                  <Navigation isLoggedIn={isLoggedIn} />
+                  <UserButtons isLoggedIn={isLoggedIn} />
+                </Header>
+                <Main>
+                  <Promo />
+                  <AboutProject />
+                  <Techs />
+                  <AboutMe />
+                  <Portfolio />
+                </Main>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/movies"
+            element={
+              <>
+                <Header>
+                  <Logo />
+                  <Navigation isLoggedIn={isLoggedIn} />
+                  <UserButtons isLoggedIn={isLoggedIn} />
+                </Header>
+                <Main>
+                  <SearchForm
+                    inputValue={filmToSearch}
+                    onType={setFilmToSearch}
+                    onSearch={handleSearch}
+                    isShortMeter={isShortMeter}
+                    toggleIsShortMeter={toggleIsShortMeter}
+                  />
+                  <Movies
+                    moviesList={filteredResults}
+                    isPreloaderShown={isPreloaderShown}
+                    isSearchSuccessful={isSearchSuccessful}
+                    isNothingFound={isNothingFound}
+                    userId={currentUser._id}
+                  />
+                </Main>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/saved-movies"
+            element={
+              <>
+                <Header>
+                  <Logo />
+                  <Navigation isLoggedIn={isLoggedIn} />
+                  <UserButtons isLoggedIn={isLoggedIn} />
+                </Header>
+                <Main>
+                  <SearchForm
+                    inputValue={filmToSearch}
+                    onType={setFilmToSearch}
+                    onSearch={handleSearch}
+                    isShortMeter={isShortMeter}
+                    toggleIsShortMeter={toggleIsShortMeter}
+                  />
+                  {isPreloaderShown && <Preloader />}
+                  <SavedMovies filteredResults={filteredResults} userId={currentUser._id} />
+                </Main>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <>
+                <Header>
+                  <Logo />
+                  <Navigation isLoggedIn={isLoggedIn} />
+                  <UserButtons isLoggedIn={isLoggedIn} />
+                </Header>
+                <Profile
+                  token={token}
+                  onUpdate={handleSetUserInfo}
+                  onLogout={handleLogout}
+                  error={profileUpdateError}
                 />
-                <Movies
-                  moviesList={filteredResults}
-                  isPreloaderShown={isPreloaderShown}
-                  isSearchSuccessful={isSearchSuccessful}
-                  isNothingFound={isNothingFound}
-                  userId={currentUser._id}
-                />
-              </Main>
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/saved-movies"
-          element={
-            <>
-              <Header>
-                <Logo />
-                <Navigation isLoggedIn={isLoggedIn} />
-                <UserButtons isLoggedIn={isLoggedIn} />
-              </Header>
-              <Main>
-                <SearchForm
-                  inputValue={filmToSearch}
-                  onType={setFilmToSearch}
-                  onSearch={handleSearch}
-                  isShortMeter={isShortMeter}
-                  toggleIsShortMeter={toggleIsShortMeter}
-                />
-                {isPreloaderShown && <Preloader />}
-                <SavedMovies filteredResults={filteredResults} userId={currentUser._id} />
-              </Main>
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <>
-              <Header>
-                <Logo />
-                <Navigation isLoggedIn={isLoggedIn} />
-                <UserButtons isLoggedIn={isLoggedIn} />
-              </Header>
-              <Profile
-                currentUser={currentUser}
-                token={token}
-                onUpdate={handleSetUserInfo}
-                onLogout={handleLogout}
-                error={profileUpdateError}
-              />
-            </>
-          }
-        />
-        <Route path="/signin" element={<Login onLogin={handleLogin} error={loginError} />} />
-        <Route path="/signup" element={<Register register={register} error={registerError} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+              </>
+            }
+          />
+          <Route path="/signin" element={<Login onLogin={handleLogin} error={loginError} />} />
+          <Route path="/signup" element={<Register register={register} error={registerError} />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </CurrentUserContext.Provider>
     </div>
   );
 }
