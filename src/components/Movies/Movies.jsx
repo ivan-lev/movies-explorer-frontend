@@ -5,12 +5,12 @@ import React from 'react';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-import { errors } from '../../variables/errors';
+import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
 export default function Movies({
   moviesList,
   isPreloaderShown,
-  isSearchSuccessful,
+  requestError,
   isNothingFound,
   userId
 }) {
@@ -20,8 +20,10 @@ export default function Movies({
         <Preloader />
       ) : (
         <>
-          {isNothingFound && <p className="movies__nothing-found">{errors.nothingFound}</p>}
-          {!isSearchSuccessful && <p className="movies__search-error">{errors.requestError}</p>}
+          {isNothingFound && (
+            <p className="movies__nothing-found">{ERROR_MESSAGES.NOTHING_FOUND}</p>
+          )}
+          {requestError && <p className="movies__search-error">{ERROR_MESSAGES.REQUEST_ERROR}</p>}
           {moviesList.length > 0 && <MoviesCardList moviesList={moviesList} userId={userId} />}
         </>
       )}

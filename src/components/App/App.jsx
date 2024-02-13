@@ -46,6 +46,7 @@ function App() {
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
   const [profileUpdateError, setProfileUpdateError] = useState('');
+  const [searchError, setSearchError] = useState(false);
 
   // try to get user data on mount if some token saved in local storage
   useEffect(() => {
@@ -56,7 +57,6 @@ function App() {
 
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
-  const [isSearchSuccessful, setIsSearchSuccessful] = useState(true);
   const [isNothingFound, setIsNothingFound] = useState(false);
 
   const [movieToSearch, setMovieToSearch] = useState('');
@@ -162,23 +162,23 @@ function App() {
             return movie;
           }
         });
-        setSearchResults(filteredByQueryMovies);
-        setIsSearchSuccessful(true);
         if (filteredByQueryMovies.length === 0) {
+          setSearchResults([]);
           setIsNothingFound(true);
         } else {
+          setSearchResults(filteredByQueryMovies);
           setIsNothingFound(false);
         }
+        setSearchError(false);
       })
       .catch(error => {
         console.log(error);
-        setIsSearchSuccessful(false);
+        setSearchError(true);
       });
     setMovieToSearch('');
   };
 
   const handleMoviesToShow = list => {
-    setIsNothingFound(false);
     if (isShortMeter) {
       const shortMoviesList = [];
       list.forEach(movie => {
@@ -186,11 +186,10 @@ function App() {
           shortMoviesList.push(movie);
         }
       });
-      if (shortMoviesList.length === 0) {
-        setIsNothingFound(true);
-      }
+      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setFilteredResults(shortMoviesList);
     } else {
+      list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setFilteredResults(list);
     }
 
@@ -251,7 +250,7 @@ function App() {
                   <Movies
                     moviesList={filteredResults}
                     isPreloaderShown={isPreloaderShown}
-                    isSearchSuccessful={isSearchSuccessful}
+                    requestError={searchError}
                     isNothingFound={isNothingFound}
                     userId={currentUser._id}
                   />
