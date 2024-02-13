@@ -32,7 +32,7 @@ import { movieApi } from '../../utils/MovieApi';
 import { mainApi } from '../../utils/MainApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
-import { errorMessages } from '../../variables/errorMessages';
+import { ERROR_MESSAGES } from '../../variables/errorMessages';
 import CurrentUserContext from '../../contexts/currentUserContext.js';
 
 function App() {
@@ -45,7 +45,6 @@ function App() {
 
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [profileUpdateError, setProfileUpdateError] = useState('');
   const [searchError, setSearchError] = useState(false);
 
   // try to get user data on mount if some token saved in local storage
@@ -75,10 +74,10 @@ function App() {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 409:
-            setRegisterError(errorMessages.userExist);
+            setRegisterError(ERROR_MESSAGES.USER_EXISTS);
             break;
           case 500:
-            setRegisterError(errorMessages.couldNotRegister);
+            setRegisterError(ERROR_MESSAGES.COULD_NOT_REGISTER);
         }
         return error.status;
       });
@@ -99,10 +98,10 @@ function App() {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 401:
-            setLoginError(errorMessages.loginWrongCredentials);
+            setLoginError(ERROR_MESSAGES.WRONG_CREDEINTIALS);
             break;
           case 500:
-            setRegisterError(errorMessages.loginError);
+            setRegisterError(ERROR_MESSAGES.LOGIN_ERROR);
         }
         return error.status;
       });
@@ -121,17 +120,6 @@ function App() {
       .catch(error => {
         console.log('Ошибка проверки токена:', error);
         handleLogout();
-      });
-  };
-
-  const handleSetUserInfo = (name, email, token) => {
-    setProfileUpdateError('');
-    mainApi
-      .setUserInfo(name, email, token)
-      .then(response => setCurrentUser(response))
-      .catch(error => {
-        console.log(error);
-        setProfileUpdateError(errorMessages.profileUpdateError);
       });
   };
 
@@ -292,12 +280,7 @@ function App() {
                   <Navigation isLoggedIn={isLoggedIn} />
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
-                <Profile
-                  token={token}
-                  onUpdate={handleSetUserInfo}
-                  onLogout={handleLogout}
-                  error={profileUpdateError}
-                />
+                <Profile token={token} setCurrentUser={setCurrentUser} onLogout={handleLogout} />
               </ProtectedRoute>
             }
           />

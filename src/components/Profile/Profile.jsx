@@ -4,11 +4,13 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
+import { mainApi } from '../../utils/MainApi';
 import CurrentUserContext from '../../contexts/currentUserContext';
 
 import Button from '../Button/Button';
+import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
-export default function Profile({ token, onUpdate, onLogout, error }) {
+export default function Profile({ token, setCurrentUser, onLogout, error }) {
   const currentUser = useContext(CurrentUserContext);
 
   const {
@@ -23,6 +25,7 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
   } = useFormWithValidation();
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
+  const [profileUpdateError, setProfileUpdateError] = useState('');
 
   // set current user input values and make them valid as they valid
   useEffect(() => {
@@ -56,7 +59,7 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
     };
   }, [isUserDataUpdating, currentUser, setValues]);
 
-  const handleEditData = event => {
+  const handleIsDataEdited = event => {
     event.preventDefault();
 
     if (!isUserDataUpdating) {
@@ -71,9 +74,29 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
       setIsUserDataUpdating(false);
       return;
     }
+    // check if all inputs filled and valid
+    if (!isValid || Object.values(values).some(value => value.length === 0)) {
+      return;
+    }
 
-    onUpdate(name, email, token);
-    setIsUserDataUpdating(false);
+    mainApi
+      .setUserInfo(name, email, token)
+      .then(response => {
+        setCurrentUser(response);
+        setIsUserDataUpdating(false);
+      })
+      .catch(error => {
+        console.log(error);
+
+        const errorStatus = error.status;
+        switch (errorStatus) {
+          case 409:
+            setProfileUpdateError(ERROR_MESSAGES.USER_EXISTS);
+            break;
+          case 500:
+            setProfileUpdateError(ERROR_MESSAGES.PROFILE_UPDATE);
+        }
+      });
   };
 
   return (
@@ -132,7 +155,7 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
               <Button
                 type="transparent button_bigger-font"
                 text="Редактировать"
-                onClick={handleEditData}
+                onClick={handleIsDataEdited}
               />
               <Button
                 type="transparent button_bigger-font button_text-crimson"
@@ -143,7 +166,7 @@ export default function Profile({ token, onUpdate, onLogout, error }) {
           ) : (
             <>
               <div className="profile__updating-error-wrapper">
-                <p className="profile__updating-error">{error}</p>
+                <p className="profile__updating-error">{profileUpdateError}</p>
               </div>
               <Button
                 type={`blue ${!isValid ? 'button_disabled' : ''}`}
