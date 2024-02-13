@@ -37,8 +37,9 @@ export default function SearchForm({
             placeholder={searchPlaceholder}
             onChange={handleSetFilmToSearch}
             value={inputValue}
+            autoFocus
           ></input>
-          <button type="submit" className="search-form__button"></button>
+          <button type="submit" className="search-form__button" onClick={handleSearch}></button>
         </div>
         <FilterCheckBox isShortMeter={isShortMeter} toggleIsShortMeter={toggleIsShortMeter} />
       </form>
