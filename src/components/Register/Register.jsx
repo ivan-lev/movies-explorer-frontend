@@ -9,7 +9,7 @@ import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import { errorMessages } from '../../variables/errorMessages';
 
-export default function Register({ onSubmit, onRegister }) {
+export default function Register({ onSubmit, onRegister, register }) {
   const navigate = useNavigate();
   const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
     useFormWithValidation();
@@ -28,22 +28,24 @@ export default function Register({ onSubmit, onRegister }) {
       setRegistrationError('');
     }
     const { name, email, password } = values;
-    onSubmit(name, email, password)
-      .then(response => {
-        resetForm();
-        // need to add code here for save user data
-        onRegister(response);
-        navigate('/movies');
-      })
-      .catch(error => {
-        switch (error.status) {
-          case 409:
-            setRegistrationError(errorMessages.userExist);
-            break;
-          case 500:
-            setRegistrationError(errorMessages.couldNotRegister);
-        }
-      });
+    register(name, email, password);
+    // onSubmit(name, email, password)
+    //   .then(response => {
+    //     // need to add code here for save user data
+    //     register(response)
+    //     onRegister(response);
+    //     resetForm();
+    //     navigate('/movies');
+    //   })
+    // .catch(error => {
+    //   switch (error.status) {
+    //     case 409:
+    //       setRegistrationError(errorMessages.userExist);
+    //       break;
+    //     case 500:
+    //       setRegistrationError(errorMessages.couldNotRegister);
+    //   }
+    // });
   };
 
   return (

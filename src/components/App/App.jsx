@@ -40,8 +40,11 @@ function App() {
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
+  // try to get user data on mount if some token saved in local storage
   useEffect(() => {
-    checkToken();
+    if (token !== '' && token !== undefined && token !== null) {
+      getUserInfo();
+    }
   }, []);
 
   const [searchResults, setSearchResults] = useState([]);
@@ -58,11 +61,14 @@ function App() {
       .then(response => {
         handleLogin(email, password);
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        return error.status;
+      });
   };
 
   // USER FUNCTIONS
-  const checkToken = () => {
+  const getUserInfo = () => {
     mainApi
       .getUserInfo(token)
       .then(result => {
@@ -71,7 +77,7 @@ function App() {
         navigate('/movies');
       })
       .catch(error => {
-        console.log('Ошибка проверки токена: ' + error);
+        console.log('Ошибка проверки токена:', error);
         handleLogout();
       });
   };
@@ -82,9 +88,14 @@ function App() {
       .then(response => {
         setToken(response.token);
         navigate('/movies');
-        // checkToken(); it goes from server and must be valid, no need to check
+        if (!isLoggedIn) {
+          setIsLoggedIn(true);
+        }
       })
-      .catch(error => console.log(error));
+      .catch(error => {
+        console.log(error);
+        return error.status;
+      });
   };
 
   const handleSetUserData = data => {
@@ -96,7 +107,6 @@ function App() {
     setToken('');
     setIsLoggedIn(false);
     setCurrentUser({});
-    navigate('/');
   };
 
   // MOVIES FUNCTIONS
