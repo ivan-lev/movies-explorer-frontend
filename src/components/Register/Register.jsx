@@ -1,16 +1,14 @@
 import './Register.css';
 
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
-import { errorMessages } from '../../variables/errorMessages';
 
 export default function Register({ register, error }) {
-  const navigate = useNavigate();
   const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
     useFormWithValidation();
 
@@ -25,24 +23,6 @@ export default function Register({ register, error }) {
     }
     const { name, email, password } = values;
     register(name, email, password);
-    // onSubmit(name, email, password)
-    //   .then(response => {
-    //     // need to add code here for save user data
-    //     register(response)
-    //     onRegister(response);
-    //     resetForm();
-    //     navigate('/movies');
-    //   })
-    // .catch(error => {
-    //   switch (error.status) {
-    //     case 409:
-    //       setRegistrationError(errorMessages.userExist);
-    //       break;
-    //     case 500:
-    //       setRegistrationError(errorMessages.couldNotRegister);
-    //   }
-    // });
-    resetForm();
   };
 
   return (
