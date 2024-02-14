@@ -92,6 +92,7 @@ function App() {
         if (!isLoggedIn) {
           setIsLoggedIn(true);
         }
+        navigate('/movies');
       })
       .catch(error => {
         console.log(error);
@@ -115,7 +116,6 @@ function App() {
         if (!isLoggedIn) {
           setIsLoggedIn(true);
         }
-        navigate('/movies');
       })
       .catch(error => {
         console.log('Ошибка проверки токена:', error);
