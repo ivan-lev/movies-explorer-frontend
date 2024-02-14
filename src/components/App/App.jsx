@@ -129,6 +129,7 @@ function App() {
 
   const [lastSearchQuery, setLastSearchQuery] = useStorage('lastMovieQuery', '');
   const [lastSearchResults, setLastSearchResults] = useStorage('lastQueryResults', '');
+  const [shortMeterState, setShortMeterState] = useStorage('shortMeterState', false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
@@ -136,9 +137,23 @@ function App() {
   const [isShortMeter, setIsShortMeter] = useState(false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
 
+  // restore last session states
+  useEffect(() => {
+    setSearchQuery(lastSearchQuery);
+    setSearchResults(lastSearchResults);
+    setIsShortMeter(shortMeterState);
+  }, []);
+
+  // check if something ready to be displayed in searchResults after query
+  // or store list that was saved before page was refreshed
+  useEffect(() => {
+    handleMoviesToShow(searchResults);
+  }, [searchResults, isShortMeter]);
+
   const handleSearchMovie = () => {
     setIsPreloaderShown(true);
     setSearchResults([]);
+    setLastSearchQuery(searchQuery);
 
     movieApi
       .getMovies()
@@ -160,6 +175,7 @@ function App() {
           setIsNothingFound(true);
         } else {
           setSearchResults(filteredByQueryMovies);
+          setLastSearchResults(filteredByQueryMovies);
           setIsNothingFound(false);
         }
         setSearchError(false);
@@ -180,26 +196,19 @@ function App() {
         }
       });
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      //shortMoviesList.length === 0 && setIsNothingFound(true);
       setFilteredResults(shortMoviesList);
     } else {
-      //list.length !== 0 ? setIsNothingFound(false) : setIsNothingFound(true);
       list.length !== 0 && setIsNothingFound(false);
 
       setFilteredResults(list);
     }
-    // filteredResults.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
 
     setIsPreloaderShown(false);
   };
 
-  // check if something ready to be displayed in MoviesList
-  useEffect(() => {
-    handleMoviesToShow(searchResults);
-  }, [searchResults, isShortMeter]);
-
   const toggleIsShortMeter = event => {
     event.preventDefault();
+    setShortMeterState(!isShortMeter);
     setIsShortMeter(!isShortMeter);
   };
 
