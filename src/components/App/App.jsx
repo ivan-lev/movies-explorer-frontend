@@ -118,8 +118,10 @@ function App() {
 
   const handleLogout = () => {
     setToken('');
+    setSearchQuery('');
+    setSearchResults([]);
     setLastSearchQuery('');
-    setLastSearchResults('');
+    setLastSearchResults([]);
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
