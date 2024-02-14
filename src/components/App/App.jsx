@@ -179,11 +179,11 @@ function App() {
           shortMoviesList.push(movie);
         }
       });
-      // shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      shortMoviesList.length === 0 && setIsNothingFound(true);
+      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      //shortMoviesList.length === 0 && setIsNothingFound(true);
       setFilteredResults(shortMoviesList);
     } else {
-      //list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      //list.length !== 0 ? setIsNothingFound(false) : setIsNothingFound(true);
       list.length !== 0 && setIsNothingFound(false);
 
       setFilteredResults(list);
