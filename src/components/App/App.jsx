@@ -160,6 +160,7 @@ function App() {
     movieApi
       .getMovies()
       .then(allMovies => {
+        console.log(allMovies);
         const filteredByQueryMovies = allMovies.filter(movie => {
           const searchQueryWords = [];
           searchQueryWords.push(...searchQuery.toLowerCase().split(' '));

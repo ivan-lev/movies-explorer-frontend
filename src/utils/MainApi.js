@@ -41,6 +41,57 @@ const setUserInfo = (name, email, token) => {
   }).then(response => checkResponseStatus(response));
 };
 
+const saveMovie = (card, token) => {
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    owner,
+    id,
+    nameRU,
+    nameEN
+  } = card;
+  console.log(image);
+  const imageUrl = image.url;
+  const movieId = id;
+  return fetch(`${baseUrl}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image: imageUrl,
+      trailerLink,
+      thumbnail: imageUrl,
+      owner,
+      movieId,
+      nameRU,
+      nameEN
+    })
+  }).then(response => checkResponseStatus(response));
+};
+
+const deleteMovie = (id, token) => {
+  return fetch(`${baseUrl}/movies/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }).then(response => checkResponseStatus(response));
+};
+
 const checkResponseStatus = res => {
   if (!res.ok) {
     console.log(`Ошибка: ${res.status}`);
@@ -53,5 +104,7 @@ export const mainApi = {
   createUser,
   authorize,
   getUserInfo,
-  setUserInfo
+  setUserInfo,
+  saveMovie,
+  deleteMovie
 };
