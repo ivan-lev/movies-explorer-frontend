@@ -39,7 +39,8 @@ function App() {
   const navigate = useNavigate();
 
   const [token, setToken] = useStorage('token', '');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useStorage('isLoggedIn', false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
@@ -52,7 +53,7 @@ function App() {
     if (token !== '' && token !== undefined && token !== null) {
       handleGetUserInfo();
     }
-  }, [token]);
+  }, []);
 
   const [searchResults, setSearchResults] = useState([]);
   const [filteredResults, setFilteredResults] = useState([]);
