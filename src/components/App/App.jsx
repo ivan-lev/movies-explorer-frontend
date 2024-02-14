@@ -41,7 +41,6 @@ function App() {
   const [token, setToken] = useStorage('token', '');
   const [isLoggedIn, setIsLoggedIn] = useStorage('isLoggedIn', false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   const [registerError, setRegisterError] = useState('');
@@ -54,13 +53,6 @@ function App() {
       handleGetUserInfo();
     }
   }, []);
-
-  const [searchResults, setSearchResults] = useState([]);
-  const [filteredResults, setFilteredResults] = useState([]);
-  const [isNothingFound, setIsNothingFound] = useState(false);
-
-  const [movieToSearch, setMovieToSearch] = useState('');
-  const [isShortMeter, setIsShortMeter] = useState(false);
 
   // USER FUNCTIONS
   const register = (name, email, password) => {
@@ -126,12 +118,24 @@ function App() {
 
   const handleLogout = () => {
     setToken('');
+    setLastSearchQuery('');
+    setLastSearchResults('');
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
   };
 
-  // MOVIES FUNCTIONS
+  // MOVIES FUNCTIONS AND VARIABLES
+
+  const [lastSearchQuery, setLastSearchQuery] = useStorage('lastMovieQuery', '');
+  const [lastSearchResults, setLastSearchResults] = useStorage('lastQueryResults', '');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [isNothingFound, setIsNothingFound] = useState(false);
+  const [isShortMeter, setIsShortMeter] = useState(false);
+  const [isPreloaderShown, setIsPreloaderShown] = useState(false);
+
   const handleSearchMovie = () => {
     setIsPreloaderShown(true);
     setSearchResults([]);
@@ -140,14 +144,14 @@ function App() {
       .getMovies()
       .then(allMovies => {
         const filteredByQueryMovies = allMovies.filter(movie => {
-          const movieToSearchNameComponents = [];
-          movieToSearchNameComponents.push(...movieToSearch.toLowerCase().split(' '));
-          const movieNameComponents = [];
-          movieNameComponents.push(
+          const searchQueryWords = [];
+          searchQueryWords.push(...searchQuery.toLowerCase().split(' '));
+          const movieTitleWords = [];
+          movieTitleWords.push(
             ...movie.nameRU.toLowerCase().split(' '),
             ...movie.nameEN.toLowerCase().split(' ')
           );
-          if (movieNameComponents.some(word => movieToSearchNameComponents.includes(word))) {
+          if (movieTitleWords.some(word => searchQueryWords.includes(word))) {
             return movie;
           }
         });
@@ -164,7 +168,7 @@ function App() {
         console.log(error);
         setSearchError(true);
       });
-    setMovieToSearch('');
+    setSearchQuery('');
   };
 
   const handleMoviesToShow = list => {
@@ -175,12 +179,16 @@ function App() {
           shortMoviesList.push(movie);
         }
       });
-      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      // shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      shortMoviesList.length === 0 && setIsNothingFound(true);
       setFilteredResults(shortMoviesList);
     } else {
-      list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      //list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      list.length !== 0 && setIsNothingFound(false);
+
       setFilteredResults(list);
     }
+    // filteredResults.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
 
     setIsPreloaderShown(false);
   };
@@ -230,8 +238,8 @@ function App() {
                 </Header>
                 <Main>
                   <SearchForm
-                    inputValue={movieToSearch}
-                    onType={setMovieToSearch}
+                    inputValue={searchQuery}
+                    onType={setSearchQuery}
                     onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
@@ -259,8 +267,8 @@ function App() {
                 </Header>
                 <Main>
                   <SearchForm
-                    inputValue={movieToSearch}
-                    onType={setMovieToSearch}
+                    inputValue={searchQuery}
+                    onType={setSearchQuery}
                     onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
