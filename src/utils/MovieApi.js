@@ -13,18 +13,16 @@ const getMovies = () => {
 
 const makeAbsoluteImagePaths = moviesList => {
   moviesList.forEach(movie => {
-    const relativeImageUrl = movie.image.url;
-    const relativeImagePreviewUrl = movie.image.previewUrl;
-    movie.image.url = `${movieImageUrl}${relativeImageUrl}`;
-    movie.image.previewUrl = `${movieImageUrl}${relativeImagePreviewUrl}`;
+    const absoluteImagePath = `${movieImageUrl}${movie.image.url}`;
+    movie.image = absoluteImagePath;
   });
 };
 
-const checkResponseStatus = res => {
-  if (!res.ok) {
-    return Promise.reject(`Ошибка: ${res.status}`);
+const checkResponseStatus = response => {
+  if (!response.ok) {
+    return Promise.reject(`Ошибка: ${response.status}`);
   }
-  return res.json();
+  return response.json();
 };
 
 export const movieApi = {

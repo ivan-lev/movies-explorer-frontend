@@ -92,6 +92,16 @@ const deleteMovie = (id, token) => {
   }).then(response => checkResponseStatus(response));
 };
 
+const getMovies = token => {
+  return fetch(`${baseUrl}/movies`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    }
+  }).then(response => checkResponseStatus(response));
+};
+
 const checkResponseStatus = res => {
   if (!res.ok) {
     console.log(`Ошибка: ${res.status}`);
@@ -106,5 +116,6 @@ export const mainApi = {
   getUserInfo,
   setUserInfo,
   saveMovie,
-  deleteMovie
+  deleteMovie,
+  getMovies
 };

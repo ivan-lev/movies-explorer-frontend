@@ -62,7 +62,7 @@ export default function MovieCard({ card, userId }) {
     <div className="movie-card">
       <img
         className="movie-card__cover"
-        src={card.image.url}
+        src={card.image}
         alt={`${card.nameRU} movie cover`}
         onMouseEnter={() => setIsSaveButtonShown(true)}
         onMouseLeave={() => setIsSaveButtonShown(false)}

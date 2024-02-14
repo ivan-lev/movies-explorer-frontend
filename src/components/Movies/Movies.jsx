@@ -24,7 +24,9 @@ export default function Movies({
             <p className="movies__nothing-found">{ERROR_MESSAGES.NOTHING_FOUND}</p>
           )}
           {requestError && <p className="movies__search-error">{ERROR_MESSAGES.REQUEST_ERROR}</p>}
-          {moviesList.length > 0 && <MoviesCardList moviesList={moviesList} userId={userId} />}
+          {moviesList.length > 0 && (
+            <MoviesCardList moviesList={moviesList} userId={userId} keyFieldName="id" />
+          )}
         </>
       )}
     </section>
