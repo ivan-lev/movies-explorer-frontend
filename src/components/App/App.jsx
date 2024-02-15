@@ -120,8 +120,6 @@ function App() {
     setToken('');
     setSearchQuery('');
     setSearchResults([]);
-    setLastSearchQuery('');
-    setLastSearchResults([]);
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
@@ -129,20 +127,17 @@ function App() {
 
   // MOVIES FUNCTIONS AND VARIABLES
 
-  const [lastSearchQuery, setLastSearchQuery] = useStorage('lastMovieQuery', '');
-  const [lastSearchResults, setLastSearchResults] = useStorage('lastQueryResults', '');
   const [shortMeterState, setShortMeterState] = useStorage('shortMeterState', false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [searchQuery, setSearchQuery] = useStorage('searchQuery', '');
+  const [searchResults, setSearchResults] = useStorage('searchResults', []);
   const [filteredResults, setFilteredResults] = useState([]);
   const [isNothingFound, setIsNothingFound] = useState(false);
-  const [isShortMeter, setIsShortMeter] = useState(false);
+  const [isShortMeter, setIsShortMeter] = useStorage('isShortMeter', false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
 
   // restore last session states
   useEffect(() => {
-    setSearchQuery(lastSearchQuery);
-    setSearchResults(lastSearchResults);
     setIsShortMeter(shortMeterState);
   }, []);
 
@@ -155,12 +150,11 @@ function App() {
   const handleSearchMovie = () => {
     setIsPreloaderShown(true);
     setSearchResults([]);
-    setLastSearchQuery(searchQuery);
 
     movieApi
       .getMovies()
       .then(allMovies => {
-        console.log(allMovies);
+        // console.log(allMovies);
         const filteredByQueryMovies = allMovies.filter(movie => {
           const searchQueryWords = [];
           searchQueryWords.push(...searchQuery.toLowerCase().split(' '));
@@ -178,7 +172,6 @@ function App() {
           setIsNothingFound(true);
         } else {
           setSearchResults(filteredByQueryMovies);
-          setLastSearchResults(filteredByQueryMovies);
           setIsNothingFound(false);
         }
         setSearchError(false);
@@ -187,7 +180,7 @@ function App() {
         console.log(error);
         setSearchError(true);
       });
-    setSearchQuery('');
+    // setSearchQuery('');
   };
 
   const handleMoviesToShow = list => {
@@ -213,6 +206,19 @@ function App() {
     event.preventDefault();
     setShortMeterState(!isShortMeter);
     setIsShortMeter(!isShortMeter);
+  };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      handleLoadSavedMovies();
+    }
+  }, []);
+
+  const handleLoadSavedMovies = () => {
+    mainApi
+      .getMovies(token)
+      .then(result => setSavedMovies(result))
+      .catch(error => console.log(error));
   };
 
   return (
@@ -286,7 +292,7 @@ function App() {
                     toggleIsShortMeter={toggleIsShortMeter}
                   />
                   {isPreloaderShown && <Preloader />}
-                  <SavedMovies filteredResults={filteredResults} userId={currentUser._id} />
+                  <SavedMovies savedMovies={savedMovies} userId={currentUser._id} />
                 </Main>
                 <Footer />
               </ProtectedRoute>
