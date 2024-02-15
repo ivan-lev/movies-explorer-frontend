@@ -2,28 +2,32 @@ import './SavedMovies.css';
 
 import React, { useEffect, useState } from 'react';
 
-import { mainApi } from '../../utils/MainApi';
+import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 export default function SavedMovies({ moviesList, userId }) {
-  const token = JSON.parse(localStorage.getItem('token'));
-  const [savedMoviesList, setSavedMoviesList] = useState([]);
+  // const token = JSON.parse(localStorage.getItem('token'));
+  // const [savedMoviesList, setSavedMoviesList] = useState([]);
 
-  useEffect(() => {
-    handleSavedMovieslist();
-  }, []);
+  // useEffect(() => {
+  //   handleSavedMovieslist();
+  // }, []);
 
-  const handleSavedMovieslist = () => {
-    mainApi
-      .getMovies(token)
-      .then(result => setSavedMoviesList(result))
-      .catch(error => console.log(error));
-  };
+  // const handleSavedMovieslist = () => {
+  //   mainApi
+  //     .getMovies(token)
+  //     .then(result => setSavedMoviesList(result))
+  //     .catch(error => console.log(error));
+  // };
 
   return (
     <section className="main__section saved-movies">
-      <MoviesCardList moviesList={savedMoviesList} userId={userId} keyFieldName="movieId" />
+      {moviesList.length === 0 ? (
+        <p className="movies__nothing-found">{ERROR_MESSAGES.NOTHING_FOUND}</p>
+      ) : (
+        <MoviesCardList moviesList={moviesList} userId={userId} keyFieldName="movieId" />
+      )}
     </section>
   );
 }

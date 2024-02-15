@@ -120,6 +120,7 @@ function App() {
     setToken('');
     setSearchQuery('');
     setSearchResults([]);
+    setIsShortMeter(false);
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
@@ -127,25 +128,23 @@ function App() {
 
   // MOVIES FUNCTIONS AND VARIABLES
 
-  const [shortMeterState, setShortMeterState] = useStorage('shortMeterState', false);
-  const [savedMovies, setSavedMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useStorage('searchQuery', '');
-  const [searchResults, setSearchResults] = useStorage('searchResults', []);
-  const [filteredResults, setFilteredResults] = useState([]);
   const [isNothingFound, setIsNothingFound] = useState(false);
   const [isShortMeter, setIsShortMeter] = useStorage('isShortMeter', false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-
-  // restore last session states
-  useEffect(() => {
-    setIsShortMeter(shortMeterState);
-  }, []);
+  // arrays of all movies and all saved movies
+  const [searchResults, setSearchResults] = useStorage('searchResults', []);
+  const [savedMovies, setSavedMovies] = useState([]);
+  // arrays of movies which are displayed in components
+  const [filteredResults, setFilteredResults] = useState([]);
+  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
 
   // check if something ready to be displayed in searchResults after query
   // or store list that was saved before page was refreshed
   useEffect(() => {
-    handleMoviesToShow(searchResults);
-  }, [searchResults, isShortMeter]);
+    handleMoviesToShow(searchResults, setFilteredResults);
+    handleMoviesToShow(savedMovies, setFilteredSavedMovies);
+  }, [searchResults, savedMovies, isShortMeter]);
 
   const handleSearchMovie = () => {
     setIsPreloaderShown(true);
@@ -183,7 +182,7 @@ function App() {
     // setSearchQuery('');
   };
 
-  const handleMoviesToShow = list => {
+  const handleMoviesToShow = (list, listSetter) => {
     if (isShortMeter) {
       const shortMoviesList = [];
       list.forEach(movie => {
@@ -192,19 +191,37 @@ function App() {
         }
       });
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      setFilteredResults(shortMoviesList);
+      listSetter(shortMoviesList);
     } else {
       list.length !== 0 && setIsNothingFound(false);
 
-      setFilteredResults(list);
+      listSetter(list);
     }
 
     setIsPreloaderShown(false);
   };
 
+  // const handleMoviesToShow = list => {
+  //   if (isShortMeter) {
+  //     const shortMoviesList = [];
+  //     list.forEach(movie => {
+  //       if (movie.duration <= shortMeterDuration) {
+  //         shortMoviesList.push(movie);
+  //       }
+  //     });
+  //     shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+  //     setFilteredResults(shortMoviesList);
+  //   } else {
+  //     list.length !== 0 && setIsNothingFound(false);
+
+  //     setFilteredResults(list);
+  //   }
+
+  //   setIsPreloaderShown(false);
+  // };
+
   const toggleIsShortMeter = event => {
     event.preventDefault();
-    setShortMeterState(!isShortMeter);
     setIsShortMeter(!isShortMeter);
   };
 
@@ -292,7 +309,7 @@ function App() {
                     toggleIsShortMeter={toggleIsShortMeter}
                   />
                   {isPreloaderShown && <Preloader />}
-                  <SavedMovies savedMovies={savedMovies} userId={currentUser._id} />
+                  <SavedMovies moviesList={filteredSavedMovies} userId={currentUser._id} />
                 </Main>
                 <Footer />
               </ProtectedRoute>
