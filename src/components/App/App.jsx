@@ -184,14 +184,7 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <Movies
-                    isLoggedIn={isLoggedIn}
-                    moviesList={allMovies}
-                    savedMovies={savedMovies}
-                    // isPreloaderShown={isPreloaderShown}
-                    // requestError={searchError}
-                    userId={currentUser._id}
-                  />
+                  <Movies savedMovies={savedMovies} />
                 </Main>
                 <Footer />
               </ProtectedRoute>
