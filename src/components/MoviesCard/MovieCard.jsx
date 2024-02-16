@@ -1,12 +1,12 @@
 import './MovieCard.css';
 
 import React from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useMatch } from 'react-router-dom';
 
 import { mainApi } from '../../utils/MainApi';
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, onDelete }) {
   const token = JSON.parse(localStorage.getItem('token'));
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
   const [isSaved, setIsSaved] = useState(movie.isSaved);
@@ -29,11 +29,12 @@ export default function MovieCard({ movie }) {
   const handleDeleteMovie = () => {
     console.log(movie);
     mainApi
-      .deleteMovie(movie.dbId)
+      .deleteMovie(movie._id)
       .then(response => {
         console.log(response);
         setIsSaved(false);
         movie.isSaved = false;
+        onDelete(movie._id);
       })
       .catch(error => console.log(error));
   };

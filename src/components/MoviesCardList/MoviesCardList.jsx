@@ -6,7 +6,7 @@ import MovieCard from '../MoviesCard/MovieCard';
 import Button from '../Button/Button';
 import { displayCardsAmount } from '../../utils/displayCardsAmount';
 
-export default function MoviesCardList({ moviesList, keyFieldName }) {
+export default function MoviesCardList({ moviesList, keyFieldName, onDelete }) {
   const displayParameters = displayCardsAmount();
   const [showMoviesCount, setShowMoviesCount] = useState(displayParameters.initialAmount);
 
@@ -18,7 +18,7 @@ export default function MoviesCardList({ moviesList, keyFieldName }) {
       <ul className="movies-card-list">
         {moviesList.slice(0, showMoviesCount).map(movie => (
           <li className="movies-card-list__item" key={movie[keyFieldName]}>
-            <MovieCard movie={movie} />
+            <MovieCard movie={movie} onDelete={onDelete} />
           </li>
         ))}
       </ul>

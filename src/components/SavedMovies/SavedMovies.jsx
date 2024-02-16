@@ -10,33 +10,24 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import CurrentUserContext from '../../contexts/currentUserContext';
 
-export default function SavedMovies({ moviesList, isLoggedIn, userId }) {
+export default function SavedMovies({ savedMovies, setSavedMovies }) {
   const token = JSON.parse(localStorage.getItem('token'));
   const currentUser = useContext(CurrentUserContext);
   const [searchQueryInSaved, setSearchQueryInSaved] = useStorage('searchQueryInSaved', '');
   const [isNothingFoundInSaved, setIsNothingFoundInSaved] = useState(false);
   const [isShortMeterInSaved, setIsShortMeterInSaved] = useStorage('isShortMeterInSaved', false);
-  const [savedMovies, setSavedMovies] = useState([]);
+  // const [savedMovies, setSavedMovies] = useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
   const [moviesToShow, setMoviesToShow] = useState([]);
 
-  // send query only of user is logged in
-  // useEffect(() => {
-  //   if (isLoggedIn) {
-  //     handleLoadSavedMovies();
-  //   }
-  // }, [isLoggedIn]);
-
   useEffect(() => {
-    setSavedMovies(moviesList);
-  }, [moviesList]);
+    setSavedMovies(savedMovies);
+  }, [savedMovies]);
 
   // set movies to be shown
   useEffect(() => {
-    if (isLoggedIn) {
-      setFilteredSavedMovies(savedMovies);
-    }
-  }, [isLoggedIn, savedMovies]);
+    setFilteredSavedMovies(savedMovies);
+  }, [savedMovies]);
 
   // show all films if input is empty
   useEffect(() => {
@@ -50,12 +41,12 @@ export default function SavedMovies({ moviesList, isLoggedIn, userId }) {
     setIsShortMeterInSaved(!isShortMeterInSaved);
   };
 
-  // const handleLoadSavedMovies = () => {
-  //   mainApi
-  //     .getMovies(token)
-  //     .then(result => setSavedMovies(result))
-  //     .catch(error => console.log(error));
-  // };
+  const updateSavedMovies = _id => {
+    const newList = savedMovies.filter(movie => {
+      return movie._id !== _id;
+    });
+    setSavedMovies(newList);
+  };
 
   const handleSearchMovie = () => {
     setIsNothingFoundInSaved(false);
@@ -116,6 +107,7 @@ export default function SavedMovies({ moviesList, isLoggedIn, userId }) {
             moviesList={moviesToShow}
             userId={currentUser._id}
             keyFieldName="movieId"
+            onDelete={updateSavedMovies}
           />
         )}
       </section>
