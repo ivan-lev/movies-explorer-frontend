@@ -59,14 +59,14 @@ export default function Movies({ savedMovies }) {
       .then(result => {
         const allMoviesList = result.map(movie => {
           let isSaved = false;
-          let dbId = null;
+          let _id = null;
           savedMovies.forEach(savedMovie => {
             if (savedMovie.movieId === movie.id) {
               isSaved = true;
-              dbId = savedMovie._id;
+              _id = savedMovie._id;
             }
           });
-          return { ...movie, isSaved, dbId };
+          return { ...movie, isSaved, _id };
         });
         // console.log(allMoviesList);
         setAllMovies(allMoviesList);
@@ -77,6 +77,7 @@ export default function Movies({ savedMovies }) {
       .catch(error => {
         console.log(error);
         setSearchError(ERROR_MESSAGES.REQUEST_ERROR);
+        setIsPreloaderShown(false);
       });
   };
 
