@@ -7,7 +7,7 @@ import { useMatch } from 'react-router-dom';
 import { mainApi } from '../../utils/MainApi';
 
 export default function MovieCard({ movie, onDelete, onSave }) {
-  const token = JSON.parse(localStorage.getItem('token'));
+  // const token = JSON.parse(localStorage.getItem('token'));
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
   const [isSaved, setIsSaved] = useState(movie.isSaved);
   const hours = Math.trunc(movie.duration / 60);
@@ -72,13 +72,16 @@ export default function MovieCard({ movie, onDelete, onSave }) {
 
   return (
     <div className="movie-card">
-      <img
-        className="movie-card__cover"
-        src={movie.image}
-        alt={`${movie.nameRU} movie cover`}
-        onMouseEnter={() => setIsSaveButtonShown(true)}
-        onMouseLeave={() => setIsSaveButtonShown(false)}
-      />
+      <a href={movie.trailerLink} target="_blank">
+        <img
+          className="movie-card__cover"
+          src={movie.image}
+          alt={`${movie.nameRU} movie cover`}
+          onMouseEnter={() => setIsSaveButtonShown(true)}
+          onMouseLeave={() => setIsSaveButtonShown(false)}
+        />
+      </a>
+
       {
         // below are one of the save/unsave buttons rendered
         !isSaved
