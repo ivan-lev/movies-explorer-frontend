@@ -208,12 +208,7 @@ function App() {
                     toggleIsShortMeter={toggleIsShortMeter}
                   /> */}
                   {/* {isPreloaderShown && <Preloader />} */}
-                  <SavedMovies
-                    moviesList={savedMovies}
-                    // handleMoviesToShow={handleMoviesToShow}
-                    isLoggedIn={isLoggedIn}
-                    // userId={currentUser._id}
-                  />
+                  <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
                 </Main>
                 <Footer />
               </ProtectedRoute>
