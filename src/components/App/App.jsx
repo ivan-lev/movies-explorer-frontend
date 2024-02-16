@@ -184,7 +184,7 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <Movies savedMovies={savedMovies} />
+                  <Movies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
                 </Main>
                 <Footer />
               </ProtectedRoute>

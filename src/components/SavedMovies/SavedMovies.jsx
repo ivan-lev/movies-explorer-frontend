@@ -20,10 +20,6 @@ export default function SavedMovies({ savedMovies, setSavedMovies }) {
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
   const [moviesToShow, setMoviesToShow] = useState([]);
 
-  useEffect(() => {
-    setSavedMovies(savedMovies);
-  }, [savedMovies]);
-
   // set movies to be shown
   useEffect(() => {
     setFilteredSavedMovies(savedMovies);

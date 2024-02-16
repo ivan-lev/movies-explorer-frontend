@@ -11,7 +11,7 @@ import { searchMovies } from '../../utils/utils';
 
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
-export default function Movies({ savedMovies }) {
+export default function Movies({ savedMovies, setSavedMovies }) {
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [allMovies, setAllMovies] = useState([]);
   const [searchResults, setSearchResults] = useLocalStorageState('searchResults', []);
@@ -81,6 +81,12 @@ export default function Movies({ savedMovies }) {
       });
   };
 
+  const addMovieToSaved = movie => {
+    // const newList = [...savedMovies, movie];
+    // console.log('newList:', newList);
+    setSavedMovies([...savedMovies, movie]);
+  };
+
   return (
     <>
       <SearchForm
@@ -100,7 +106,11 @@ export default function Movies({ savedMovies }) {
             )}
             {searchError && <p className="movies__search-error">{ERROR_MESSAGES.REQUEST_ERROR}</p>}
             {moviesToDisplay.length > 0 && (
-              <MoviesCardList moviesList={moviesToDisplay} keyFieldName="id" />
+              <MoviesCardList
+                moviesList={moviesToDisplay}
+                keyFieldName="id"
+                onSave={addMovieToSaved}
+              />
             )}
           </>
         )}
