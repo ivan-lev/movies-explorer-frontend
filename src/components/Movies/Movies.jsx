@@ -11,9 +11,8 @@ import { searchMovies } from '../../utils/utils';
 
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
-export default function Movies({ savedMovies, setSavedMovies }) {
+export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedMovies }) {
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
-  const [allMovies, setAllMovies] = useState([]);
   const [searchResults, setSearchResults] = useLocalStorageState('searchResults', []);
   const [moviesToDisplay, setMoviesToDisplay] = useState([]);
   const [searchError, setSearchError] = useState('');
@@ -82,8 +81,6 @@ export default function Movies({ savedMovies, setSavedMovies }) {
   };
 
   const addMovieToSaved = movie => {
-    // const newList = [...savedMovies, movie];
-    // console.log('newList:', newList);
     setSavedMovies([...savedMovies, movie]);
   };
 

@@ -10,7 +10,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import CurrentUserContext from '../../contexts/currentUserContext';
 
-export default function SavedMovies({ savedMovies, setSavedMovies }) {
+export default function SavedMovies({ allMovies, setAllMovies, savedMovies, setSavedMovies }) {
   const token = JSON.parse(localStorage.getItem('token'));
   const currentUser = useContext(CurrentUserContext);
   const [searchQueryInSaved, setSearchQueryInSaved] = useStorage('searchQueryInSaved', '');

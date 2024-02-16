@@ -184,7 +184,12 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <Movies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+                  <Movies
+                    allMovies={allMovies}
+                    setAllMovies={setAllMovies}
+                    savedMovies={savedMovies}
+                    setSavedMovies={setSavedMovies}
+                  />
                 </Main>
                 <Footer />
               </ProtectedRoute>
@@ -208,7 +213,12 @@ function App() {
                     toggleIsShortMeter={toggleIsShortMeter}
                   /> */}
                   {/* {isPreloaderShown && <Preloader />} */}
-                  <SavedMovies savedMovies={savedMovies} setSavedMovies={setSavedMovies} />
+                  <SavedMovies
+                    allMovies={allMovies}
+                    setAllMovies={setAllMovies}
+                    savedMovies={savedMovies}
+                    setSavedMovies={setSavedMovies}
+                  />
                 </Main>
                 <Footer />
               </ProtectedRoute>
