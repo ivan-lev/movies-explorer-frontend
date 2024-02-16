@@ -99,7 +99,7 @@ function App() {
 
   const handleGetUserInfo = () => {
     mainApi
-      .getUserInfo(token)
+      .checkToken(token)
       .then(result => {
         setCurrentUser(result);
         if (!isLoggedIn) {
@@ -205,14 +205,6 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  {/* <SearchForm
-                    inputValue={searchQuery}
-                    onType={setSearchQuery}
-                    onSearch={handleSearchMovie}
-                    isShortMeter={isShortMeter}
-                    toggleIsShortMeter={toggleIsShortMeter}
-                  /> */}
-                  {/* {isPreloaderShown && <Preloader />} */}
                   <SavedMovies
                     allMovies={allMovies}
                     setAllMovies={setAllMovies}

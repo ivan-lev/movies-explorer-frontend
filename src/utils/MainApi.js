@@ -22,7 +22,7 @@ const authorize = (email, password) => {
   }).then(response => checkResponseStatus(response));
 };
 
-const getUserInfo = token => {
+const checkToken = token => {
   return fetch(`${baseUrl}/users/me`, {
     method: 'GET',
     headers: {
@@ -116,7 +116,7 @@ const checkResponseStatus = res => {
 export const mainApi = {
   createUser,
   authorize,
-  getUserInfo,
+  checkToken,
   setUserInfo,
   saveMovie,
   deleteMovie,
