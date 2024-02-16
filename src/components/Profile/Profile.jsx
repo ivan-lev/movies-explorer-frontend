@@ -16,12 +16,11 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
   const {
     values,
     setValues,
-    valuesValidity,
     setValuesValidity,
     errorToShow,
+    setErrorToShow,
     handleChange,
-    isValid,
-    resetForm
+    isValid
   } = useFormWithValidation();
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
@@ -50,6 +49,8 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
       if (key === 'Escape') {
         setValues(currentUser);
         setIsUserDataUpdating(false);
+        setValuesValidity({ name: true, email: true });
+        setErrorToShow('');
       }
     };
     document.addEventListener('keydown', handleCloseEditingByEsc);

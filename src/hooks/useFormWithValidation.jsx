@@ -71,6 +71,7 @@ export function useFormWithValidation() {
     setValuesValidity,
     handleChange,
     errorToShow,
+    setErrorToShow,
     isValid,
     resetForm
   };
