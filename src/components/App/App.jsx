@@ -17,7 +17,7 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 
-import SearchForm from '../SearchForm/SearchForm';
+// import SearchForm from '../SearchForm/SearchForm';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
@@ -26,11 +26,8 @@ import Login from '../Login/Login';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import NotFound from '../NotFound/NotFound';
-import Preloader from '../Preloader/Preloader';
 
-import { movieApi } from '../../utils/MovieApi';
 import { mainApi } from '../../utils/MainApi';
-import { shortMeterDuration } from '../../variables/variables';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 import CurrentUserContext from '../../contexts/currentUserContext.js';
@@ -40,19 +37,18 @@ function App() {
 
   const [token, setToken] = useStorage('token', '');
   const [isLoggedIn, setIsLoggedIn] = useStorage('isLoggedIn', false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
 
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
-  const [searchError, setSearchError] = useState(false);
+  // const [searchError, setSearchError] = useState(false);
 
   // try to get user data on mount if some token saved in local storage
   useEffect(() => {
     if (token !== '' && token !== undefined && token !== null) {
       handleGetUserInfo();
     }
-  }, []);
+  }, [isLoggedIn]);
 
   // USER FUNCTIONS
   const register = (name, email, password) => {
@@ -112,131 +108,47 @@ function App() {
       })
       .catch(error => {
         console.log('Ошибка проверки токена:', error);
-        handleLogout();
+        // handleLogout();
       });
   };
 
   const handleLogout = () => {
     setToken('');
-    setSearchQuery('');
-    setSearchResults([]);
-    setIsShortMeter(false);
+    localStorage.setItem('searchQuery', JSON.stringify(''));
+    localStorage.setItem('searchResults', JSON.stringify([]));
+    localStorage.setItem('isShortMeter', JSON.stringify(false));
+    localStorage.setItem('searchQueryInSaved', JSON.stringify(''));
+    localStorage.setItem('isShortMeterInSaved', JSON.stringify(false));
+    // setSearchQuery('');
+    // setSearchResults([]);
+    //setIsShortMeter(false);
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
   };
 
-  // MOVIES FUNCTIONS AND VARIABLES
-
-  const [searchQuery, setSearchQuery] = useStorage('searchQuery', '');
-  const [isNothingFound, setIsNothingFound] = useState(false);
-  const [isShortMeter, setIsShortMeter] = useStorage('isShortMeter', false);
-  const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-  // arrays of all movies and all saved movies
-  const [searchResults, setSearchResults] = useStorage('searchResults', []);
+  // MOVIES LOGIC
+  const [allMovies, setAllMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
-  // arrays of movies which are displayed in components
-  const [filteredResults, setFilteredResults] = useState([]);
-  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
 
-  // check if something ready to be displayed in searchResults after query
-  // or store list that was saved before page was refreshed
-  useEffect(() => {
-    handleMoviesToShow(searchResults, setFilteredResults);
-    handleMoviesToShow(savedMovies, setFilteredSavedMovies);
-  }, [searchResults, savedMovies, isShortMeter]);
-
-  const handleSearchMovie = () => {
-    setIsPreloaderShown(true);
-    setSearchResults([]);
-
-    movieApi
-      .getMovies()
-      .then(allMovies => {
-        // console.log(allMovies);
-        const filteredByQueryMovies = allMovies.filter(movie => {
-          const searchQueryWords = [];
-          searchQueryWords.push(...searchQuery.toLowerCase().split(' '));
-          const movieTitleWords = [];
-          movieTitleWords.push(
-            ...movie.nameRU.toLowerCase().split(' '),
-            ...movie.nameEN.toLowerCase().split(' ')
-          );
-          if (movieTitleWords.some(word => searchQueryWords.includes(word))) {
-            return movie;
-          }
+  const loadSavedMovies = () => {
+    mainApi
+      .getMovies(token)
+      .then(savedMovies => {
+        const savedMoviesList = savedMovies.map(movie => {
+          return { ...movie, isSaved: true };
         });
-        if (filteredByQueryMovies.length === 0) {
-          setSearchResults([]);
-          setIsNothingFound(true);
-        } else {
-          setSearchResults(filteredByQueryMovies);
-          setIsNothingFound(false);
-        }
-        setSearchError(false);
+        // console.log(savedMoviesList);
+        setSavedMovies(savedMoviesList);
       })
-      .catch(error => {
-        console.log(error);
-        setSearchError(true);
-      });
-    // setSearchQuery('');
-  };
-
-  const handleMoviesToShow = (list, listSetter) => {
-    if (isShortMeter) {
-      const shortMoviesList = [];
-      list.forEach(movie => {
-        if (movie.duration <= shortMeterDuration) {
-          shortMoviesList.push(movie);
-        }
-      });
-      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      listSetter(shortMoviesList);
-    } else {
-      list.length !== 0 && setIsNothingFound(false);
-
-      listSetter(list);
-    }
-
-    setIsPreloaderShown(false);
-  };
-
-  // const handleMoviesToShow = list => {
-  //   if (isShortMeter) {
-  //     const shortMoviesList = [];
-  //     list.forEach(movie => {
-  //       if (movie.duration <= shortMeterDuration) {
-  //         shortMoviesList.push(movie);
-  //       }
-  //     });
-  //     shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-  //     setFilteredResults(shortMoviesList);
-  //   } else {
-  //     list.length !== 0 && setIsNothingFound(false);
-
-  //     setFilteredResults(list);
-  //   }
-
-  //   setIsPreloaderShown(false);
-  // };
-
-  const toggleIsShortMeter = event => {
-    event.preventDefault();
-    setIsShortMeter(!isShortMeter);
+      .catch(error => console.log(error));
   };
 
   useEffect(() => {
     if (isLoggedIn) {
-      handleLoadSavedMovies();
+      loadSavedMovies();
     }
-  }, []);
-
-  const handleLoadSavedMovies = () => {
-    mainApi
-      .getMovies(token)
-      .then(result => setSavedMovies(result))
-      .catch(error => console.log(error));
-  };
+  }, [isLoggedIn]);
 
   return (
     <div className="App">
@@ -272,18 +184,12 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <SearchForm
-                    inputValue={searchQuery}
-                    onType={setSearchQuery}
-                    onSearch={handleSearchMovie}
-                    isShortMeter={isShortMeter}
-                    toggleIsShortMeter={toggleIsShortMeter}
-                  />
                   <Movies
-                    moviesList={filteredResults}
-                    isPreloaderShown={isPreloaderShown}
-                    requestError={searchError}
-                    isNothingFound={isNothingFound}
+                    isLoggedIn={isLoggedIn}
+                    moviesList={allMovies}
+                    savedMovies={savedMovies}
+                    // isPreloaderShown={isPreloaderShown}
+                    // requestError={searchError}
                     userId={currentUser._id}
                   />
                 </Main>
@@ -301,15 +207,20 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <SearchForm
+                  {/* <SearchForm
                     inputValue={searchQuery}
                     onType={setSearchQuery}
                     onSearch={handleSearchMovie}
                     isShortMeter={isShortMeter}
                     toggleIsShortMeter={toggleIsShortMeter}
+                  /> */}
+                  {/* {isPreloaderShown && <Preloader />} */}
+                  <SavedMovies
+                    moviesList={savedMovies}
+                    // handleMoviesToShow={handleMoviesToShow}
+                    isLoggedIn={isLoggedIn}
+                    // userId={currentUser._id}
                   />
-                  {isPreloaderShown && <Preloader />}
-                  <SavedMovies moviesList={filteredSavedMovies} userId={currentUser._id} />
                 </Main>
                 <Footer />
               </ProtectedRoute>

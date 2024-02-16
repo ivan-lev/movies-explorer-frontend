@@ -1,5 +1,7 @@
 import { baseUrl } from '../variables/variables';
 
+const token = JSON.parse(localStorage.getItem('token'));
+
 const createUser = (name, email, password) => {
   return fetch(`${baseUrl}/signup`, {
     method: 'POST',
@@ -41,7 +43,7 @@ const setUserInfo = (name, email, token) => {
   }).then(response => checkResponseStatus(response));
 };
 
-const saveMovie = (card, token) => {
+const saveMovie = card => {
   const {
     country,
     director,
@@ -50,14 +52,15 @@ const saveMovie = (card, token) => {
     description,
     image,
     trailerLink,
-    thumbnail,
+    thumbnail = image,
     owner,
     id,
     nameRU,
     nameEN
   } = card;
-  console.log(image);
-  const imageUrl = image.url;
+  // console.log('image:', image);
+  // console.log('thumbnail:', thumbnail);
+  // const imageUrl = image.url;
   const movieId = id;
   return fetch(`${baseUrl}/movies`, {
     method: 'POST',
@@ -71,9 +74,9 @@ const saveMovie = (card, token) => {
       duration,
       year,
       description,
-      image: imageUrl,
+      image,
       trailerLink,
-      thumbnail: imageUrl,
+      thumbnail,
       owner,
       movieId,
       nameRU,
@@ -82,7 +85,7 @@ const saveMovie = (card, token) => {
   }).then(response => checkResponseStatus(response));
 };
 
-const deleteMovie = (id, token) => {
+const deleteMovie = id => {
   return fetch(`${baseUrl}/movies/${id}`, {
     method: 'DELETE',
     headers: {
