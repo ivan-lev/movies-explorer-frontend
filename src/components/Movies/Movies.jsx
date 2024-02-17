@@ -7,11 +7,11 @@ import { shortMeterDuration } from '../../variables/variables';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-import { searchMovies } from '../../utils/utils';
+import { filterMovies } from '../../utils/utils';
 
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
-export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedMovies }) {
+export default function Movies({ savedMovies, setSavedMovies }) {
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [searchResults, setSearchResults] = useLocalStorageState('searchResults', []);
   const [moviesToDisplay, setMoviesToDisplay] = useState([]);
@@ -28,9 +28,12 @@ export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedM
 
   // check if something ready to be displayed in searchResults
   // after search or shortmeter clicked
+  // useEffect(() => {
+  //   handleMoviesToDisplay();
+  // }, [searchResults, isShortMeter]);
   useEffect(() => {
     handleMoviesToDisplay();
-  }, [searchResults, isShortMeter]);
+  });
 
   const handleMoviesToDisplay = () => {
     if (isShortMeter) {
@@ -43,7 +46,7 @@ export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedM
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList);
     } else {
-      searchResults.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      searchResults.length !== 0 && setIsNothingFound(false);
       setMoviesToDisplay(searchResults);
     }
   };
@@ -51,7 +54,6 @@ export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedM
   const handleSearchMovie = () => {
     setIsNothingFound(false);
     setIsPreloaderShown(true);
-    setAllMovies([]);
     setSearchError('');
     movieApi
       .getMovies()
@@ -67,9 +69,7 @@ export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedM
           });
           return { ...movie, isSaved, _id };
         });
-        // console.log(allMoviesList);
-        setAllMovies(allMoviesList);
-        const searchMoviesResults = searchMovies(searchQuery, allMovies);
+        const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
         setSearchResults(searchMoviesResults);
         setIsPreloaderShown(false);
       })
@@ -83,6 +83,29 @@ export default function Movies({ allMovies, setAllMovies, savedMovies, setSavedM
   const addMovieToSaved = movie => {
     setSavedMovies([...savedMovies, movie]);
   };
+
+  // const addMovieToSaved = movie => {
+  //   mainApi
+  //     .saveMovie(movie)
+  //     .then(savedCard => {
+  //       // get card, set is as saved, and push to savedMovies array
+  //       savedCard.isSaved = true;
+  //       setSavedMovies([...savedMovies, savedCard]);
+  //       // set new searchResults with updated card and set it
+  //       const newMovieState = { ...movie, isSaved: true, _id: savedCard._id };
+  //       const updatedSearchResults = searchResults.map(searchedElement => {
+  //         if (searchedElement.id !== savedCard.movieId) {
+  //           return searchedElement;
+  //         }
+  //       });
+  //       console.log('updatedSearchResults:', updatedSearchResults);
+  //       setSearchResults([updatedSearchResults, newMovieState]);
+  //       console.log('searchResults:', searchResults);
+  //       // movie.isSaved = true;
+  //       // movie._id = savedCard._id;
+  //     })
+  //     .catch(error => console.log(error));
+  // };
 
   return (
     <>

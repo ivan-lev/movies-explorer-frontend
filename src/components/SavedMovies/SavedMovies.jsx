@@ -2,7 +2,6 @@ import './SavedMovies.css';
 
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
-import { mainApi } from '../../utils/MainApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
@@ -16,7 +15,6 @@ export default function SavedMovies({ allMovies, setAllMovies, savedMovies, setS
   const [searchQueryInSaved, setSearchQueryInSaved] = useStorage('searchQueryInSaved', '');
   const [isNothingFoundInSaved, setIsNothingFoundInSaved] = useState(false);
   const [isShortMeterInSaved, setIsShortMeterInSaved] = useStorage('isShortMeterInSaved', false);
-  // const [savedMovies, setSavedMovies] = useState([]);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
   const [moviesToShow, setMoviesToShow] = useState([]);
 
@@ -37,11 +35,19 @@ export default function SavedMovies({ allMovies, setAllMovies, savedMovies, setS
     setIsShortMeterInSaved(!isShortMeterInSaved);
   };
 
-  const updateSavedMovies = _id => {
+  // delete saved movie from the list of saved
+  const deleteMovieFromSaved = _id => {
     const newList = savedMovies.filter(movie => {
       return movie._id !== _id;
     });
     setSavedMovies(newList);
+    // update isSaved to 'false' for movie which was removed from saved
+    const newAllMoviesList = allMovies.map(movie => {
+      if (movie._id === _id) {
+        movie.isSaved = false;
+      }
+    });
+    setAllMovies(newAllMoviesList);
   };
 
   const handleSearchMovie = () => {
@@ -103,7 +109,7 @@ export default function SavedMovies({ allMovies, setAllMovies, savedMovies, setS
             moviesList={moviesToShow}
             userId={currentUser._id}
             keyFieldName="movieId"
-            onDelete={updateSavedMovies}
+            onDelete={deleteMovieFromSaved}
           />
         )}
       </section>

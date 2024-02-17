@@ -43,13 +43,6 @@ function App() {
   const [loginError, setLoginError] = useState('');
   // const [searchError, setSearchError] = useState(false);
 
-  // try to get user data on mount if some token saved in local storage
-  useEffect(() => {
-    if (token !== '' && token !== undefined && token !== null) {
-      handleGetUserInfo();
-    }
-  }, [isLoggedIn]);
-
   // USER FUNCTIONS
   const register = (name, email, password) => {
     setRegisterError('');
@@ -72,16 +65,14 @@ function App() {
       });
   };
 
+  // if email and password are correct,
+  // the token will be recieved and saved in local storage
   const handleLogin = (email, password) => {
     setLoginError('');
     mainApi
       .authorize(email, password)
       .then(response => {
         setToken(response.token);
-        if (!isLoggedIn) {
-          setIsLoggedIn(true);
-        }
-        navigate('/movies');
       })
       .catch(error => {
         console.log(error);
@@ -97,6 +88,9 @@ function App() {
       });
   };
 
+  // when token is received - it checked on server
+  // and then user is logging in
+
   const handleGetUserInfo = () => {
     mainApi
       .checkToken(token)
@@ -105,12 +99,20 @@ function App() {
         if (!isLoggedIn) {
           setIsLoggedIn(true);
         }
+        navigate('/movies');
       })
       .catch(error => {
         console.log('Ошибка проверки токена:', error);
         // handleLogout();
       });
   };
+
+  // this hook is checked if some token was saved in local storage
+  useEffect(() => {
+    if (token !== '' && token !== undefined && token !== null) {
+      handleGetUserInfo();
+    }
+  }, [token]);
 
   const handleLogout = () => {
     setToken('');
@@ -119,9 +121,6 @@ function App() {
     localStorage.setItem('isShortMeter', JSON.stringify(false));
     localStorage.setItem('searchQueryInSaved', JSON.stringify(''));
     localStorage.setItem('isShortMeterInSaved', JSON.stringify(false));
-    // setSearchQuery('');
-    // setSearchResults([]);
-    //setIsShortMeter(false);
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
