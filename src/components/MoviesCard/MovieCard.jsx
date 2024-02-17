@@ -18,7 +18,6 @@ export default function MovieCard({ movie, onSave, onDelete }) {
     mainApi
       .saveMovie(movie)
       .then(savedCard => {
-        console.log(savedCard);
         savedCard.isSaved = true;
         setIsSaved(true);
         movie._id = savedCard._id;
