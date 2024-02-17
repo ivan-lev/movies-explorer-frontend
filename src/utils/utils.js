@@ -1,49 +1,4 @@
-import { mainApi } from './MainApi';
-
-// export const register = (name, email, password, errorSetter) => {
-//   //errorSetter('');
-//   mainApi.createUser(name, email, password).catch(error => {
-//     console.log(error);
-//     const errorStatus = error.status;
-//     switch (errorStatus) {
-//       case 409:
-//         // errorSetter(ERROR_MESSAGES.USER_EXISTS);
-//         break;
-//       case 500:
-//       // errorSetter(ERROR_MESSAGES.COULD_NOT_REGISTER);
-//     }
-//     return error.status;
-//   });
-// };
-
-// export const login = (email, password, errorSetter) => {
-//   //   errorSetter('');
-//   mainApi
-//     .authorize(email, password)
-//     .then(response => {
-//       setToken(response.token);
-//       if (!isLoggedIn) {
-//         setIsLoggedIn(true);
-//       }
-//       navigate('/movies');
-//     })
-//     .catch(error => {
-//       console.log(error);
-//       const errorStatus = error.status;
-//       switch (errorStatus) {
-//         case 401:
-//           //   errorSetter(ERROR_MESSAGES.WRONG_CREDEINTIALS);
-//           break;
-//         case 500:
-//         //   errorSetter(ERROR_MESSAGES.LOGIN_ERROR);
-//       }
-//       return error.status;
-//     });
-// };
-
-// userFunctions = { handleRegister, handleLogin };
-
-export const searchMovies = (searchQuery, movieList) => {
+export const filterMovies = (searchQuery, movieList) => {
   const filteredByQueryMovies = movieList.filter(movie => {
     const searchQueryWords = [];
     searchQueryWords.push(...searchQuery.toLowerCase().split(' '));
@@ -57,4 +12,31 @@ export const searchMovies = (searchQuery, movieList) => {
     }
   });
   return filteredByQueryMovies;
+};
+
+// this function is calculating how many movie cards
+// will be displayed on 'show more' button click
+// depending on current window width
+
+export const displayCardsAmount = () => {
+  const windowInnerWidth = window.innerWidth;
+  const displayCards = {
+    count: 0,
+    initialAmount: 0
+  };
+
+  if (windowInnerWidth >= 768) {
+    displayCards.count = 3;
+    displayCards.initialAmount = 4 * 3;
+  }
+
+  if (windowInnerWidth > 540 && windowInnerWidth <= 768) {
+    displayCards.count = 2;
+    displayCards.initialAmount = 4 * 2;
+  }
+  if (windowInnerWidth <= 540) {
+    displayCards.count = 2;
+    displayCards.initialAmount = 5 * 1;
+  }
+  return displayCards;
 };

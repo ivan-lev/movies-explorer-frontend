@@ -7,11 +7,20 @@ import { shortMeterDuration } from '../../variables/variables';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
+import Button from '../Button/Button';
 import { filterMovies } from '../../utils/utils';
-
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
+import { displayCardsAmount } from '../../utils/utils.js';
+
 export default function Movies({ savedMovies, setSavedMovies }) {
+  // logic for displaying movies count
+  const displayCardsCount = displayCardsAmount();
+  const [showMoviesCount, setShowMoviesCount] = useState(displayCardsCount.initialAmount);
+  const handleShowMore = () => {
+    setShowMoviesCount(showMoviesCount + displayCardsCount.count);
+  };
+
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [searchResults, setSearchResults] = useLocalStorageState('searchResults', []);
   const [moviesToDisplay, setMoviesToDisplay] = useState([]);
@@ -27,13 +36,10 @@ export default function Movies({ savedMovies, setSavedMovies }) {
   };
 
   // check if something ready to be displayed in searchResults
-  // after search or shortmeter clicked
-  // useEffect(() => {
-  //   handleMoviesToDisplay();
-  // }, [searchResults, isShortMeter]);
+  // after search or shortmeter or More button clicked
   useEffect(() => {
     handleMoviesToDisplay();
-  });
+  }, [searchResults, isShortMeter, showMoviesCount]);
 
   const handleMoviesToDisplay = () => {
     if (isShortMeter) {
@@ -44,10 +50,10 @@ export default function Movies({ savedMovies, setSavedMovies }) {
         }
       });
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      setMoviesToDisplay(shortMoviesList);
+      setMoviesToDisplay(shortMoviesList.slice(0, showMoviesCount));
     } else {
       searchResults.length !== 0 && setIsNothingFound(false);
-      setMoviesToDisplay(searchResults);
+      setMoviesToDisplay(searchResults.slice(0, showMoviesCount));
     }
   };
 
@@ -57,20 +63,27 @@ export default function Movies({ savedMovies, setSavedMovies }) {
     setSearchError('');
     movieApi
       .getMovies()
+      // retrieve it when fix more button logic
+      // .then(result => {
+      //   const allMoviesList = result.map(movie => {
+      //     let isSaved = false;
+      //     let _id = null;
+      //     savedMovies.forEach(savedMovie => {
+      //       if (savedMovie.movieId === movie.id) {
+      //         isSaved = true;
+      //         _id = savedMovie._id;
+      //       }
+      //     });
+      //     return { ...movie, isSaved, _id };
+      //   });
+      //   const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
+      //   setSearchResults(searchMoviesResults);
+      //   setIsPreloaderShown(false);
+      // })
+      // in this then we just put all movies in the list
       .then(result => {
-        const allMoviesList = result.map(movie => {
-          let isSaved = false;
-          let _id = null;
-          savedMovies.forEach(savedMovie => {
-            if (savedMovie.movieId === movie.id) {
-              isSaved = true;
-              _id = savedMovie._id;
-            }
-          });
-          return { ...movie, isSaved, _id };
-        });
-        const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
-        setSearchResults(searchMoviesResults);
+        console.log(result);
+        setSearchResults(result);
         setIsPreloaderShown(false);
       })
       .catch(error => {
@@ -135,6 +148,9 @@ export default function Movies({ savedMovies, setSavedMovies }) {
           </>
         )}
       </section>
+      {moviesToDisplay.length !== 0 && searchResults.length > moviesToDisplay.length && (
+        <Button type="bordered" text="Ещё" onClick={handleShowMore} />
+      )}
     </>
   );
 }

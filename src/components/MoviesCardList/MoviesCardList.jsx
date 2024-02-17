@@ -1,30 +1,19 @@
 import './MoviesCardList.css';
 
-import React, { useState } from 'react';
+import React from 'react';
 
 import MovieCard from '../MoviesCard/MovieCard';
-import Button from '../Button/Button';
-import { displayCardsAmount } from '../../utils/displayCardsAmount';
 
 export default function MoviesCardList({ moviesList, keyFieldName, onDelete, onSave }) {
-  const displayParameters = displayCardsAmount();
-  const [showMoviesCount, setShowMoviesCount] = useState(displayParameters.initialAmount);
-
-  const handleShowMore = () => {
-    setShowMoviesCount(showMoviesCount + displayParameters.count);
-  };
   return (
     <>
       <ul className="movies-card-list">
-        {moviesList.slice(0, showMoviesCount).map(movie => (
+        {moviesList.map(movie => (
           <li className="movies-card-list__item" key={movie[keyFieldName]}>
             <MovieCard movie={movie} onDelete={onDelete} onSave={onSave} />
           </li>
         ))}
       </ul>
-      {moviesList.length !== 0 && moviesList.length > showMoviesCount && (
-        <Button type="bordered" text="Ещё" onClick={handleShowMore} />
-      )}
     </>
   );
 }
