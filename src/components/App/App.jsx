@@ -127,7 +127,6 @@ function App() {
   };
 
   // MOVIES LOGIC
-  const [allMovies, setAllMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
 
   const loadSavedMovies = () => {
@@ -148,6 +147,17 @@ function App() {
       loadSavedMovies();
     }
   }, [isLoggedIn]);
+
+  const deleteMovie = movie => {
+    mainApi
+      .deleteMovie(movie._id)
+      .then(
+        setSavedMovies(savedMovies =>
+          savedMovies.filter(savedMovie => savedMovie._id !== movie._id)
+        )
+      )
+      .catch(error => console.error(error));
+  };
 
   return (
     <div className="App">
@@ -184,10 +194,9 @@ function App() {
                 </Header>
                 <Main>
                   <Movies
-                    allMovies={allMovies}
-                    setAllMovies={setAllMovies}
                     savedMovies={savedMovies}
                     setSavedMovies={setSavedMovies}
+                    onDelete={deleteMovie}
                   />
                 </Main>
                 <Footer />
@@ -205,10 +214,9 @@ function App() {
                 </Header>
                 <Main>
                   <SavedMovies
-                    allMovies={allMovies}
-                    setAllMovies={setAllMovies}
                     savedMovies={savedMovies}
                     setSavedMovies={setSavedMovies}
+                    onDelete={deleteMovie}
                   />
                 </Main>
                 <Footer />

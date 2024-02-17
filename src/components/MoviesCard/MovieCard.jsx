@@ -6,7 +6,7 @@ import { useMatch } from 'react-router-dom';
 
 import { mainApi } from '../../utils/MainApi';
 
-export default function MovieCard({ movie, onDelete, onSave }) {
+export default function MovieCard({ movie, onSave, onDelete }) {
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
   const [isSaved, setIsSaved] = useState(movie.isSaved);
   const hours = Math.trunc(movie.duration / 60);
@@ -28,14 +28,7 @@ export default function MovieCard({ movie, onDelete, onSave }) {
   };
 
   const handleDeleteMovie = () => {
-    mainApi
-      .deleteMovie(movie._id)
-      .then(response => {
-        setIsSaved(false);
-        movie.isSaved = false;
-        onDelete(movie._id);
-      })
-      .catch(error => console.log(error));
+    onDelete(movie);
   };
 
   //buttons

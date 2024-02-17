@@ -9,7 +9,13 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import CurrentUserContext from '../../contexts/currentUserContext';
 
-export default function SavedMovies({ allMovies, setAllMovies, savedMovies, setSavedMovies }) {
+export default function SavedMovies({
+  allMovies,
+  setAllMovies,
+  savedMovies,
+  setSavedMovies,
+  onDelete
+}) {
   const token = JSON.parse(localStorage.getItem('token'));
   const currentUser = useContext(CurrentUserContext);
   const [searchQueryInSaved, setSearchQueryInSaved] = useStorage('searchQueryInSaved', '');
@@ -109,7 +115,7 @@ export default function SavedMovies({ allMovies, setAllMovies, savedMovies, setS
             moviesList={moviesToShow}
             userId={currentUser._id}
             keyFieldName="movieId"
-            onDelete={deleteMovieFromSaved}
+            onDelete={onDelete}
           />
         )}
       </section>

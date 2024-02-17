@@ -11,14 +11,19 @@ import Button from '../Button/Button';
 import { filterMovies } from '../../utils/utils';
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
-import { displayCardsAmount } from '../../utils/utils.js';
+import { displayCardsUtil } from '../../utils/utils.js';
 
-export default function Movies({ savedMovies, setSavedMovies }) {
+export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
   // logic for displaying movies count
-  const displayCardsCount = displayCardsAmount();
-  const [showMoviesCount, setShowMoviesCount] = useState(displayCardsCount.initialAmount);
+  const displayCards = displayCardsUtil();
+  const [displayedMoviesCount, setDisplayedMoviesCount] = useState(displayCards.initialAmount);
   const handleShowMore = () => {
-    setShowMoviesCount(showMoviesCount + displayCardsCount.count);
+    const countForRowToBeFilled = displayedMoviesCount % displayCards.cardsInRow;
+    setDisplayedMoviesCount(displayedMoviesCount + countForRowToBeFilled);
+    console.log('countForRowToBeFilled:', countForRowToBeFilled);
+    console.log('cardsInRow:', displayCards.cardsInRow);
+    setDisplayedMoviesCount(displayedMoviesCount + displayCards.cardsInRow);
+    console.log('displayCardsAmount', displayedMoviesCount);
   };
 
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
@@ -39,7 +44,7 @@ export default function Movies({ savedMovies, setSavedMovies }) {
   // after search or shortmeter or More button clicked
   useEffect(() => {
     handleMoviesToDisplay();
-  }, [searchResults, isShortMeter, showMoviesCount]);
+  }, [searchResults, isShortMeter, displayedMoviesCount]);
 
   const handleMoviesToDisplay = () => {
     if (isShortMeter) {
@@ -50,10 +55,10 @@ export default function Movies({ savedMovies, setSavedMovies }) {
         }
       });
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      setMoviesToDisplay(shortMoviesList.slice(0, showMoviesCount));
+      setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
     } else {
       searchResults.length !== 0 && setIsNothingFound(false);
-      setMoviesToDisplay(searchResults.slice(0, showMoviesCount));
+      setMoviesToDisplay(searchResults.slice(0, displayedMoviesCount));
     }
   };
 
@@ -64,28 +69,29 @@ export default function Movies({ savedMovies, setSavedMovies }) {
     movieApi
       .getMovies()
       // retrieve it when fix more button logic
-      // .then(result => {
-      //   const allMoviesList = result.map(movie => {
-      //     let isSaved = false;
-      //     let _id = null;
-      //     savedMovies.forEach(savedMovie => {
-      //       if (savedMovie.movieId === movie.id) {
-      //         isSaved = true;
-      //         _id = savedMovie._id;
-      //       }
-      //     });
-      //     return { ...movie, isSaved, _id };
-      //   });
-      //   const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
-      //   setSearchResults(searchMoviesResults);
-      //   setIsPreloaderShown(false);
-      // })
-      // in this then we just put all movies in the list
       .then(result => {
-        console.log(result);
-        setSearchResults(result);
+        const allMoviesList = result.map(movie => {
+          let isSaved = false;
+          let _id = null;
+          savedMovies.forEach(savedMovie => {
+            if (savedMovie.movieId === movie.id) {
+              isSaved = true;
+              _id = savedMovie._id;
+            }
+          });
+          return { ...movie, isSaved, _id };
+        });
+        const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
+        setSearchResults(searchMoviesResults);
         setIsPreloaderShown(false);
       })
+      // in this 'then' we just put all movies in the list
+      // to check 'more' button functionality
+      // .then(result => {
+      //   console.log(result);
+      //   setSearchResults(result);
+      //   setIsPreloaderShown(false);
+      // })
       .catch(error => {
         console.log(error);
         setSearchError(ERROR_MESSAGES.REQUEST_ERROR);
@@ -97,28 +103,11 @@ export default function Movies({ savedMovies, setSavedMovies }) {
     setSavedMovies([...savedMovies, movie]);
   };
 
-  // const addMovieToSaved = movie => {
-  //   mainApi
-  //     .saveMovie(movie)
-  //     .then(savedCard => {
-  //       // get card, set is as saved, and push to savedMovies array
-  //       savedCard.isSaved = true;
-  //       setSavedMovies([...savedMovies, savedCard]);
-  //       // set new searchResults with updated card and set it
-  //       const newMovieState = { ...movie, isSaved: true, _id: savedCard._id };
-  //       const updatedSearchResults = searchResults.map(searchedElement => {
-  //         if (searchedElement.id !== savedCard.movieId) {
-  //           return searchedElement;
-  //         }
-  //       });
-  //       console.log('updatedSearchResults:', updatedSearchResults);
-  //       setSearchResults([updatedSearchResults, newMovieState]);
-  //       console.log('searchResults:', searchResults);
-  //       // movie.isSaved = true;
-  //       // movie._id = savedCard._id;
-  //     })
-  //     .catch(error => console.log(error));
-  // };
+  const handleDeleteMovie = movie => {
+    // find this movie in saved and delete from that list
+    const savedMovie = savedMovies.find(savedMovie => savedMovie.movieId === movie.id);
+    onDelete(savedMovie);
+  };
 
   return (
     <>
@@ -143,6 +132,7 @@ export default function Movies({ savedMovies, setSavedMovies }) {
                 moviesList={moviesToDisplay}
                 keyFieldName="id"
                 onSave={addMovieToSaved}
+                onDelete={handleDeleteMovie}
               />
             )}
           </>
