@@ -107,6 +107,10 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
     // find this movie in saved and delete from that list
     const savedMovie = savedMovies.find(savedMovie => savedMovie.movieId === movie.id);
     onDelete(savedMovie);
+    // set new search result witn new movie state
+    const movieWithNewState = { ...movie, isSaved: false };
+    const newSearchResults = searchResults.filter(result => result.id !== movie.id);
+    setSearchResults([...newSearchResults, movieWithNewState]);
   };
 
   return (
