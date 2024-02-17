@@ -121,13 +121,14 @@ function App() {
     localStorage.setItem('isShortMeter', JSON.stringify(false));
     localStorage.setItem('searchQueryInSaved', JSON.stringify(''));
     localStorage.setItem('isShortMeterInSaved', JSON.stringify(false));
+    localStorage.setItem('savedMovies', JSON.stringify([]));
     setIsLoggedIn(false);
     setCurrentUser({});
     navigate('/');
   };
 
   // MOVIES LOGIC
-  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useStorage('savedMovies', []);
 
   const loadSavedMovies = () => {
     mainApi
