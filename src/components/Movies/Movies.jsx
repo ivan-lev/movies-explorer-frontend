@@ -40,6 +40,20 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
     setIsShortMeter(!isShortMeter);
   };
 
+  // on mount check if some stored results was added to saved films
+  useEffect(() => {
+    const updatedSearchResults = searchResults.map(movie => {
+      savedMovies.forEach(savedMovie => {
+        if (savedMovie.movieId === movie.id) {
+          movie.isSaved = true;
+          movie._id = savedMovie._id;
+        }
+      });
+      return movie;
+    });
+    setSearchResults(updatedSearchResults);
+  }, []);
+
   // check if something ready to be displayed in searchResults
   // after search or shortmeter or More button clicked
   useEffect(() => {
