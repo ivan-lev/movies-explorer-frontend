@@ -122,9 +122,16 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
     const savedMovie = savedMovies.find(savedMovie => savedMovie.movieId === movie.id);
     onDelete(savedMovie);
     // set new search result witn new movie state
-    const movieWithNewState = { ...movie, isSaved: false };
-    const newSearchResults = searchResults.filter(result => result.id !== movie.id);
-    setSearchResults([...newSearchResults, movieWithNewState]);
+    // const movieWithNewState = { ...movie, isSaved: false };
+    // const newSearchResults = searchResults.filter(result => result.id !== movie.id);
+    // setSearchResults([...newSearchResults, movieWithNewState]);
+    const newSearchResults = searchResults.map(searchedMovie => {
+      if (searchedMovie.id === movie.id) {
+        searchedMovie.isSaved = false;
+      }
+      return searchedMovie;
+    });
+    setSearchResults([...newSearchResults]);
   };
 
   return (
