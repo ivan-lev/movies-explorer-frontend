@@ -63,7 +63,7 @@ export default function MovieCard({ movie, onSave, onDelete }) {
 
   return (
     <div className="movie-card">
-      <a href={movie.trailerLink} target="_blank">
+      <a href={movie.trailerLink} target="_blank" rel="noreferrer">
         <img
           className="movie-card__cover"
           src={movie.image}
