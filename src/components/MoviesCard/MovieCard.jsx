@@ -27,6 +27,7 @@ export default function MovieCard({ movie, onSave, onDelete }) {
   };
 
   const handleDeleteMovie = () => {
+    setIsSaved(false);
     onDelete(movie);
   };
 
