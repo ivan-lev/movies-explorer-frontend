@@ -18,25 +18,27 @@ export const filterMovies = (searchQuery, movieList) => {
 // will be displayed on 'show more' button click
 // depending on current window width
 
-export const displayCardsAmount = () => {
-  const windowInnerWidth = window.innerWidth;
-  const displayCards = {
-    count: 0,
-    initialAmount: 0
-  };
+export const displayCardsUtil = () => {
+  const displayCards = {};
 
-  if (windowInnerWidth >= 768) {
-    displayCards.count = 3;
-    displayCards.initialAmount = 4 * 3;
+  if (window.innerWidth >= 768) {
+    displayCards.displayRows = 4;
+    displayCards.cardsInRow = 3;
+    displayCards.layout = 'wide';
+    displayCards.initialAmount = displayCards.displayRows * displayCards.cardsInRow;
   }
 
-  if (windowInnerWidth > 540 && windowInnerWidth <= 768) {
-    displayCards.count = 2;
-    displayCards.initialAmount = 4 * 2;
+  if (window.innerWidth > 540 && window.innerWidth <= 768) {
+    displayCards.displayRows = 4;
+    displayCards.cardsInRow = 2;
+    displayCards.layout = 'medium';
+    displayCards.initialAmount = displayCards.displayRows * displayCards.cardsInRow;
   }
-  if (windowInnerWidth <= 540) {
-    displayCards.count = 2;
-    displayCards.initialAmount = 5 * 1;
+  if (window.innerWidth <= 540) {
+    displayCards.displayRows = 5;
+    displayCards.cardsInRow = 2;
+    displayCards.layout = 'narrow';
+    displayCards.initialAmount = displayCards.displayRows;
   }
   return displayCards;
 };

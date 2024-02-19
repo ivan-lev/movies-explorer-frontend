@@ -1,30 +1,44 @@
 import './Movies.css';
 
 import React, { useEffect, useState } from 'react';
+
+//hooks
 import { useLocalStorageState } from '../../hooks/useLocalStoredState';
-import { movieApi } from '../../utils/MovieApi';
-import { shortMeterDuration } from '../../variables/variables';
+import { useWindowSize } from '../../hooks/useWindowSize.jsx';
+
+// components
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import Button from '../Button/Button';
-import { filterMovies } from '../../utils/utils';
-import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
+// utils and variables
+import { movieApi } from '../../utils/MovieApi';
+import { shortMeterDuration } from '../../variables/variables';
+import { filterMovies } from '../../utils/utils';
 import { displayCardsUtil } from '../../utils/utils.js';
+import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
 export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
   // logic for displaying movies count
+  const width = useWindowSize();
   const displayCards = displayCardsUtil();
+  const [currentLayout, setCurrentLayout] = useState(displayCards.layout);
   const [displayedMoviesCount, setDisplayedMoviesCount] = useState(displayCards.initialAmount);
+
+  useEffect(() => {
+    // check if layout is changed and set new parameters
+    const layout = displayCards.layout;
+    if (currentLayout !== layout) {
+      setCurrentLayout(layout);
+      setDisplayedMoviesCount(displayCards.initialAmount);
+    }
+  }, [width]);
+
   const handleShowMore = () => {
-    const countForRowToBeFilled = displayedMoviesCount % displayCards.cardsInRow;
-    setDisplayedMoviesCount(displayedMoviesCount + countForRowToBeFilled);
-    console.log('countForRowToBeFilled:', countForRowToBeFilled);
-    console.log('cardsInRow:', displayCards.cardsInRow);
     setDisplayedMoviesCount(displayedMoviesCount + displayCards.cardsInRow);
-    console.log('displayCardsAmount', displayedMoviesCount);
   };
+  // end of logic for displaying movies count
 
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [searchResults, setSearchResults] = useLocalStorageState('searchResults', []);
@@ -68,10 +82,11 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
           shortMoviesList.push(movie);
         }
       });
-      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      // shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
     } else {
-      searchResults.length !== 0 && setIsNothingFound(false);
+      // searchResults.length !== 0 && setIsNothingFound(false);
+      // searchResults.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(searchResults.slice(0, displayedMoviesCount));
     }
   };
@@ -163,7 +178,7 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
           </>
         )}
       </section>
-      {moviesToDisplay.length !== 0 && searchResults.length > moviesToDisplay.length && (
+      {searchResults.length > displayedMoviesCount && (
         <Button type="bordered" text="Ещё" onClick={handleShowMore} />
       )}
     </>
