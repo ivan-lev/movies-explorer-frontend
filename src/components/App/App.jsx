@@ -116,14 +116,15 @@ function App() {
 
   const handleLogout = () => {
     setToken('');
-    localStorage.setItem('searchQuery', JSON.stringify(''));
-    localStorage.setItem('searchResults', JSON.stringify([]));
-    localStorage.setItem('isShortMeter', JSON.stringify(false));
-    localStorage.setItem('searchQueryInSaved', JSON.stringify(''));
-    localStorage.setItem('isShortMeterInSaved', JSON.stringify(false));
-    localStorage.setItem('savedMovies', JSON.stringify([]));
-    setIsLoggedIn(false);
     setCurrentUser({});
+    setSearchResults([]);
+    setIsLoggedIn(false);
+    localStorage.removeItem('searchQuery');
+    localStorage.removeItem('searchResults');
+    localStorage.removeItem('isShortMeter');
+    localStorage.removeItem('savedMovies');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     navigate('/');
   };
 
