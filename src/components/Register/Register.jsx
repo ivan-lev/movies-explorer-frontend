@@ -48,7 +48,7 @@ export default function Register({ register, error }) {
                 placeholder="Введите имя"
                 autoComplete="on"
                 required
-                value={values.name ?? ''}
+                value={values?.name || ''}
                 onChange={handleChange}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
@@ -69,7 +69,7 @@ export default function Register({ register, error }) {
                 placeholder="Введите email"
                 autoComplete="on"
                 required
-                value={values.email ?? ''}
+                value={values?.email || ''}
                 onChange={handleChange}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
@@ -89,7 +89,7 @@ export default function Register({ register, error }) {
                 placeholder="Введите пароль"
                 autoComplete="on"
                 required
-                value={values.password ?? ''}
+                value={values?.password || ''}
                 onChange={handleChange}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();

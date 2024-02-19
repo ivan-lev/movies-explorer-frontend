@@ -125,7 +125,7 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
                 type="text"
                 name="name"
                 placeholder="Введите имя"
-                value={values.name}
+                value={values?.name || ''}
                 onChange={handleChange}
                 required
                 autoFocus
@@ -139,7 +139,7 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
                 type="text"
                 name="email"
                 placeholder="Введите email"
-                value={values.email}
+                value={values?.email || ''}
                 onChange={handleChange}
                 required
               ></input>
