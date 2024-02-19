@@ -3,25 +3,27 @@ export const ERROR_MESSAGES = {
   PAGE_NOT_FOUND: 'Страница по указанному маршруту не найдена.'
 };
 
-export const SEARCH_ERRORS = {
+export const SEARCH_MESSAGES = {
   REQUEST_ERROR:
     'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз.',
   NOTHING_FOUND: 'Ничего не найдено'
 };
 
-export const REGISTER_ERRORS = {
+export const REGISTER_MESSAGES = {
   USER_EXISTS: 'Пользователь с таким email уже существует.',
   COULD_NOT_REGISTER: 'При регистрации пользователя произошла ошибка.'
 };
 
-export const LOGIN_ERRORS = {
+export const LOGIN_MESSAGES = {
   WRONG_CREDEINTIALS: 'Вы ввели неправильный логин или пароль.',
-  LOGIN_ERROR: 'Ошибка логина...'
+  LOGIN_ERROR: 'Ошибка логина...',
+  TOKEN_ERROR: 'Ошибка проверки токена.'
 };
 
-export const PROFILE_ERRORS = {
-  EMAIL_EXISTS: 'Пользователь с таким email уже существует.',
-  PROFILE_UPDATE: 'При обновлении профиля произошла ошибка'
+export const PROFILE_MESSAGES = {
+  UPDATE_SUCCESS: 'Данные успешно сохранены!',
+  UPDATE_ERROR: 'При обновлении профиля произошла ошибка',
+  EMAIL_EXISTS: 'Пользователь с таким email уже существует.'
 };
 
 export const VALIDATION_ERRORS = {

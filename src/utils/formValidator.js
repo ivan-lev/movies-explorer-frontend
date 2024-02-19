@@ -1,5 +1,5 @@
 import { nameRegexp, emailRegExp } from '../variables/variables';
-import { VALIDATION_ERRORS } from '../variables/errorMessages';
+import { VALIDATION_ERRORS } from '../variables/messages';
 
 const nameValidator = name => {
   if (!name) {

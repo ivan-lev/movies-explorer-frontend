@@ -1,16 +1,19 @@
 import './Profile.css';
 
+// React and hooks
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
-
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
-import { mainApi } from '../../utils/MainApi';
-import CurrentUserContext from '../../contexts/currentUserContext';
 
+// components
 import Button from '../Button/Button';
-import { PROFILE_ERRORS } from '../../variables/errorMessages';
 
-export default function Profile({ token, setCurrentUser, onLogout, error }) {
+// utils and variables
+import CurrentUserContext from '../../contexts/currentUserContext';
+import { mainApi } from '../../utils/MainApi';
+import { PROFILE_MESSAGES } from '../../variables/messages';
+
+export default function Profile({ token, setCurrentUser, onLogout }) {
   const currentUser = useContext(CurrentUserContext);
 
   const {
@@ -95,10 +98,10 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 409:
-            setProfileUpdateError(PROFILE_ERRORS.EMAIL_EXISTS);
+            setProfileUpdateError(PROFILE_MESSAGES.EMAIL_EXISTS);
             break;
           case 500:
-            setProfileUpdateError(PROFILE_ERRORS.PROFILE_UPDATE);
+            setProfileUpdateError(PROFILE_MESSAGES.UPDATE_ERROR);
         }
       });
   };
@@ -119,7 +122,7 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
               <span className="profile__field">{currentUser.email}</span>
             </div>
             {isSubmitSuccessful && (
-              <span className="profile__data_updated">Данные успешно сохранены!</span>
+              <span className="profile__data_updated">{PROFILE_MESSAGES.UPDATE_SUCCESS}</span>
             )}
           </div>
         ) : (

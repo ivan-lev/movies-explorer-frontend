@@ -25,10 +25,10 @@ import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import NotFound from '../NotFound/NotFound';
 
-//utils and contexts
+//utils and variables
 import CurrentUserContext from '../../contexts/currentUserContext.js';
 import { mainApi } from '../../utils/MainApi';
-import { LOGIN_ERRORS, REGISTER_ERRORS } from '../../variables/errorMessages';
+import { LOGIN_MESSAGES, REGISTER_MESSAGES } from '../../variables/messages.js';
 
 function App() {
   const navigate = useNavigate();
@@ -53,10 +53,10 @@ function App() {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 409:
-            setRegisterError(REGISTER_ERRORS.USER_EXISTS);
+            setRegisterError(REGISTER_MESSAGES.USER_EXISTS);
             break;
           case 500:
-            setRegisterError(REGISTER_ERRORS.COULD_NOT_REGISTER);
+            setRegisterError(REGISTER_MESSAGES.COULD_NOT_REGISTER);
         }
         return error.status;
       });
@@ -76,10 +76,10 @@ function App() {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 401:
-            setLoginError(LOGIN_ERRORS.WRONG_CREDEINTIALS);
+            setLoginError(LOGIN_MESSAGES.WRONG_CREDEINTIALS);
             break;
           case 500:
-            setRegisterError(LOGIN_ERRORS.LOGIN_ERROR);
+            setRegisterError(LOGIN_MESSAGES.LOGIN_ERROR);
         }
         return error.status;
       });
@@ -98,14 +98,7 @@ function App() {
         }
       })
       .catch(error => {
-        // switch (errorStatus) {
-        //   case 401:
-        //     setLoginError(LOGIN_ERRORS.WRONG_CREDEINTIALS);
-        //     break;
-        //   case 500:
-        //     setRegisterError(LOGIN_ERRORS.LOGIN_ERROR);
-        // }
-        console.log('Ошибка проверки токена:', error);
+        console.log(LOGIN_MESSAGES.TOKEN_ERROR, error);
         handleLogout();
       });
   };

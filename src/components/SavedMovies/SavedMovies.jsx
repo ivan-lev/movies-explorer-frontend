@@ -11,7 +11,7 @@ import CurrentUserContext from '../../contexts/currentUserContext';
 // utils and variables
 import { filterMovies } from '../../utils/utils';
 import { shortMeterDuration } from '../../variables/variables';
-import { SEARCH_ERRORS } from '../../variables/errorMessages';
+import { SEARCH_MESSAGES } from '../../variables/messages';
 
 export default function SavedMovies({ savedMovies, onDelete }) {
   const currentUser = useContext(CurrentUserContext);
@@ -81,7 +81,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
           <p className="movies__nothing-found">У вас нет сохранённых фильмов</p>
         )}
         {isNothingFound ? (
-          <p className="movies__nothing-found">{SEARCH_ERRORS.NOTHING_FOUND}</p>
+          <p className="movies__nothing-found">{SEARCH_MESSAGES.NOTHING_FOUND}</p>
         ) : (
           <MoviesCardList
             moviesList={moviesToShow}

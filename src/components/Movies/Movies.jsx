@@ -16,7 +16,7 @@ import { movieApi } from '../../utils/MovieApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { filterMovies } from '../../utils/utils';
 import { layoutConfig } from '../../utils/utils.js';
-import { SEARCH_ERRORS } from '../../variables/errorMessages';
+import { SEARCH_MESSAGES } from '../../variables/messages.js';
 
 export default function Movies({ searchResults, setSearchResults, savedMovies, onSave, onDelete }) {
   // logic for displaying movies count
@@ -144,9 +144,9 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         ) : (
           <>
             {isNothingFound && (
-              <p className="movies__nothing-found">{SEARCH_ERRORS.NOTHING_FOUND}</p>
+              <p className="movies__nothing-found">{SEARCH_MESSAGES.NOTHING_FOUND}</p>
             )}
-            {searchError && <p className="movies__search-error">{SEARCH_ERRORS.REQUEST_ERROR}</p>}
+            {searchError && <p className="movies__search-error">{SEARCH_MESSAGES.REQUEST_ERROR}</p>}
             {moviesToDisplay.length > 0 && (
               <MoviesCardList
                 moviesList={moviesToDisplay}
