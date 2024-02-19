@@ -1,8 +1,10 @@
 import './SearchForm.css';
 
+//React and components
 import React, { useState } from 'react';
 import FilterCheckBox from '../FilterCheckbox/FilterCheckBox';
 
+// utils
 import { validateSearch } from '../../utils/formValidator';
 
 export default function SearchForm({
@@ -23,6 +25,7 @@ export default function SearchForm({
     const isDataValid = validateSearch(inputValue, setSearchPlaceholder);
     if (isDataValid) {
       onSearch(inputValue);
+      setSearchPlaceholder('Фильм');
     }
   };
 

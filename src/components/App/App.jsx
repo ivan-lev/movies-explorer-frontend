@@ -1,36 +1,34 @@
 import './App.css';
 
+// React and hooks
 import { useEffect, useState } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
+import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
 
+// components
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
-
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
 import UserButtons from '../UserButtons/UserButtons';
-
 import Promo from '../Promo/Promo';
 import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
-
-// import SearchForm from '../SearchForm/SearchForm';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import NotFound from '../NotFound/NotFound';
 
-import { mainApi } from '../../utils/MainApi';
-import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
-import { ERROR_MESSAGES } from '../../variables/errorMessages';
+//utils and contexts
 import CurrentUserContext from '../../contexts/currentUserContext.js';
+import { mainApi } from '../../utils/MainApi';
+import { LOGIN_ERRORS, REGISTER_ERRORS } from '../../variables/errorMessages';
 
 function App() {
   const navigate = useNavigate();
@@ -41,7 +39,6 @@ function App() {
 
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
-  // const [searchError, setSearchError] = useState(false);
 
   // USER FUNCTIONS
   const register = (name, email, password) => {
@@ -56,10 +53,10 @@ function App() {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 409:
-            setRegisterError(ERROR_MESSAGES.USER_EXISTS);
+            setRegisterError(REGISTER_ERRORS.USER_EXISTS);
             break;
           case 500:
-            setRegisterError(ERROR_MESSAGES.COULD_NOT_REGISTER);
+            setRegisterError(REGISTER_ERRORS.COULD_NOT_REGISTER);
         }
         return error.status;
       });
@@ -79,10 +76,10 @@ function App() {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 401:
-            setLoginError(ERROR_MESSAGES.WRONG_CREDEINTIALS);
+            setLoginError(LOGIN_ERRORS.WRONG_CREDEINTIALS);
             break;
           case 500:
-            setRegisterError(ERROR_MESSAGES.LOGIN_ERROR);
+            setRegisterError(LOGIN_ERRORS.LOGIN_ERROR);
         }
         return error.status;
       });
@@ -90,7 +87,6 @@ function App() {
 
   // when token is received - it checked on server
   // and then user is logging in
-
   const handleGetUserInfo = () => {
     mainApi
       .checkToken(token)
@@ -102,8 +98,15 @@ function App() {
         }
       })
       .catch(error => {
+        // switch (errorStatus) {
+        //   case 401:
+        //     setLoginError(LOGIN_ERRORS.WRONG_CREDEINTIALS);
+        //     break;
+        //   case 500:
+        //     setRegisterError(LOGIN_ERRORS.LOGIN_ERROR);
+        // }
         console.log('Ошибка проверки токена:', error);
-        // handleLogout();
+        handleLogout();
       });
   };
 
@@ -139,7 +142,6 @@ function App() {
         const savedMoviesList = savedMovies.map(movie => {
           return { ...movie, isSaved: true };
         });
-        // console.log(savedMoviesList);
         setSavedMovies(savedMoviesList);
       })
       .catch(error => console.log(error));

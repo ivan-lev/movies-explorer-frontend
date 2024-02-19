@@ -58,9 +58,6 @@ const saveMovie = card => {
     nameRU,
     nameEN
   } = card;
-  // console.log('image:', image);
-  // console.log('thumbnail:', thumbnail);
-  // const imageUrl = image.url;
   const movieId = id;
   return fetch(`${baseUrl}/movies`, {
     method: 'POST',

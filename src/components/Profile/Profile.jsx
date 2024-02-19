@@ -8,7 +8,7 @@ import { mainApi } from '../../utils/MainApi';
 import CurrentUserContext from '../../contexts/currentUserContext';
 
 import Button from '../Button/Button';
-import { ERROR_MESSAGES } from '../../variables/errorMessages';
+import { PROFILE_ERRORS } from '../../variables/errorMessages';
 
 export default function Profile({ token, setCurrentUser, onLogout, error }) {
   const currentUser = useContext(CurrentUserContext);
@@ -92,10 +92,10 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
         const errorStatus = error.status;
         switch (errorStatus) {
           case 409:
-            setProfileUpdateError(ERROR_MESSAGES.USER_EXISTS);
+            setProfileUpdateError(PROFILE_ERRORS.EMAIL_EXISTS);
             break;
           case 500:
-            setProfileUpdateError(ERROR_MESSAGES.PROFILE_UPDATE);
+            setProfileUpdateError(PROFILE_ERRORS.PROFILE_UPDATE);
         }
       });
   };

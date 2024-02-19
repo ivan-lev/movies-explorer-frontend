@@ -1,16 +1,16 @@
 import './Register.css';
 
+// React and hooks
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
+//components
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
 export default function Register({ register, error }) {
-  const { values, setValuesValidity, errorToShow, handleChange, isValid, resetForm } =
-    useFormWithValidation();
+  const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
 
   // set values validity to false as we have blank inputs at start
   useEffect(() => {

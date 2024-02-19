@@ -16,7 +16,7 @@ import { movieApi } from '../../utils/MovieApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { filterMovies } from '../../utils/utils';
 import { layoutConfig } from '../../utils/utils.js';
-import { ERROR_MESSAGES } from '../../variables/errorMessages';
+import { SEARCH_ERRORS } from '../../variables/errorMessages';
 
 export default function Movies({ searchResults, setSearchResults, savedMovies, onSave, onDelete }) {
   // logic for displaying movies count
@@ -43,7 +43,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
 
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [isNothingFound, setIsNothingFound] = useState(false);
-  const [searchError, setSearchError] = useState('');
+  const [searchError, setSearchError] = useState(false);
 
   const toggleIsShortMeter = event => {
     event.preventDefault();
@@ -86,8 +86,6 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
     } else {
-      // searchResults.length !== 0 && setIsNothingFound(false);
-      // searchResults.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(searchResults.slice(0, displayedMoviesCount));
       searchResults.length !== 0 && setIsNothingFound(false);
     }
@@ -96,7 +94,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
   const handleSearchMovie = () => {
     setIsNothingFound(false);
     setIsPreloaderShown(true);
-    setSearchError('');
+    setSearchError(false);
     movieApi
       .getMovies()
       // find movies, compare them with saved, and fullfill with _id's and isSaved properties
@@ -126,7 +124,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
       // })
       .catch(error => {
         console.log(error);
-        setSearchError(ERROR_MESSAGES.REQUEST_ERROR);
+        setSearchError(true);
         setIsPreloaderShown(false);
       });
   };
@@ -146,9 +144,9 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         ) : (
           <>
             {isNothingFound && (
-              <p className="movies__nothing-found">{ERROR_MESSAGES.NOTHING_FOUND}</p>
+              <p className="movies__nothing-found">{SEARCH_ERRORS.NOTHING_FOUND}</p>
             )}
-            {searchError && <p className="movies__search-error">{ERROR_MESSAGES.REQUEST_ERROR}</p>}
+            {searchError && <p className="movies__search-error">{SEARCH_ERRORS.REQUEST_ERROR}</p>}
             {moviesToDisplay.length > 0 && (
               <MoviesCardList
                 moviesList={moviesToDisplay}

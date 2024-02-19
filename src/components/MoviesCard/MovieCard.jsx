@@ -1,9 +1,11 @@
 import './MovieCard.css';
 
+// React and hooks
 import React from 'react';
 import { useState } from 'react';
 import { useMatch } from 'react-router-dom';
 
+// utils
 import { mainApi } from '../../utils/MainApi';
 
 export default function MovieCard({ movie, onSave, onDelete }) {
