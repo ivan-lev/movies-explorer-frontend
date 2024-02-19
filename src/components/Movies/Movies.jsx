@@ -77,12 +77,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
 
   const handleMoviesToDisplay = () => {
     if (isShortMeter) {
-      const shortMoviesList = [];
-      searchResults.forEach(movie => {
-        if (movie.duration <= shortMeterDuration) {
-          shortMoviesList.push(movie);
-        }
-      });
+      const shortMoviesList = searchResults.filter(movie => movie.duration < shortMeterDuration);
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
     } else {
