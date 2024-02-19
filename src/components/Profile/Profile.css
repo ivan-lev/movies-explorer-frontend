@@ -96,7 +96,7 @@
 }
 
 .profile__validation-error {
-  color: #ee3465;
+  color: var(--bg-button-crimson);
   font-size: 10px;
   line-height: 10px;
   text-transform: lowercase;
@@ -105,6 +105,11 @@
 
 .profile__validation-error::first-letter {
   text-transform: uppercase;
+}
+
+.profile__data_updated {
+  color: var(--bg-button-blue);
+  font-size: 10px;
 }
 
 .profile__buttons-wrapper {

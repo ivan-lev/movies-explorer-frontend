@@ -25,6 +25,7 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
   const [isUserDataUpdating, setIsUserDataUpdating] = useState(false);
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
   const [profileUpdateError, setProfileUpdateError] = useState('');
+  const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
 
   // set current user input values and make them valid as they valid
   useEffect(() => {
@@ -62,7 +63,8 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
 
   const handleIsDataEdited = event => {
     event.preventDefault();
-
+    setIsSubmitSuccessful(false);
+    setProfileUpdateError(false);
     if (!isUserDataUpdating) {
       setIsUserDataUpdating(true);
     }
@@ -85,6 +87,7 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
       .then(response => {
         setCurrentUser(response);
         setIsUserDataUpdating(false);
+        setIsSubmitSuccessful(true);
       })
       .catch(error => {
         console.log(error);
@@ -115,6 +118,9 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
               <span className="profile__field">E-mail</span>
               <span className="profile__field">{currentUser.email}</span>
             </div>
+            {isSubmitSuccessful && (
+              <span className="profile__data_updated">Данные успешно сохранены!</span>
+            )}
           </div>
         ) : (
           <form className="profile__data" onSubmit={handleSubmitUserInfo}>
@@ -150,6 +156,7 @@ export default function Profile({ token, setCurrentUser, onLogout, error }) {
             </div>
           </form>
         )}
+
         <div className="profile__buttons-wrapper">
           {!isUserDataUpdating ? (
             <>
