@@ -110,13 +110,6 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         setIsPreloaderShown(false);
         searchMoviesResults.length === 0 && setIsNothingFound(true);
       })
-      // in this 'then' we just put all movies in the list
-      // to check 'more' button functionality
-      // .then(result => {
-      //   console.log(result);
-      //   setSearchResults(result);
-      //   setIsPreloaderShown(false);
-      // })
       .catch(error => {
         console.log(error);
         setSearchError(true);
