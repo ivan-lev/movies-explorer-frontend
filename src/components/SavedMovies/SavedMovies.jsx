@@ -2,7 +2,6 @@ import './SavedMovies.css';
 
 // React and hooks
 import React, { useEffect, useState, useContext } from 'react';
-import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
 
 // components and contexts
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -17,7 +16,7 @@ import { ERROR_MESSAGES } from '../../variables/errorMessages';
 export default function SavedMovies({ savedMovies, onDelete }) {
   const currentUser = useContext(CurrentUserContext);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isNothingFoundInSaved, setIsNothingFoundInSaved] = useState(false);
+  const [isNothingFound, setIsNothingFound] = useState(false);
   const [isShortMeter, setIsShortMeter] = useState(false);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
   const [moviesToShow, setMoviesToShow] = useState([]);
@@ -40,7 +39,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   };
 
   const handleSearchMovie = () => {
-    setIsNothingFoundInSaved(false);
+    setIsNothingFound(false);
     const filteredByQueryMovies = filterMovies(searchQuery, savedMovies);
     setFilteredSavedMovies(filteredByQueryMovies);
   };
@@ -59,12 +58,10 @@ export default function SavedMovies({ savedMovies, onDelete }) {
           shortMoviesList.push(movie);
         }
       });
-      shortMoviesList.length === 0
-        ? setIsNothingFoundInSaved(true)
-        : setIsNothingFoundInSaved(false);
+      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       listSetter(shortMoviesList);
     } else {
-      list.length !== 0 && setIsNothingFoundInSaved(false);
+      list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
 
       listSetter(list);
     }
@@ -80,7 +77,10 @@ export default function SavedMovies({ savedMovies, onDelete }) {
         toggleIsShortMeter={toggleIsShortMeter}
       />
       <section className="main__section saved-movies">
-        {isNothingFoundInSaved ? (
+        {savedMovies.length === 0 && (
+          <p className="movies__nothing-found">У вас нет сохранённых фильмов</p>
+        )}
+        {isNothingFound ? (
           <p className="movies__nothing-found">{ERROR_MESSAGES.NOTHING_FOUND}</p>
         ) : (
           <MoviesCardList

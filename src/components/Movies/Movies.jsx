@@ -35,23 +35,23 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
       setCardsInRow(newConfig.cardsInRow);
     }
   }, [width]);
-
-  const handleShowMore = () => {
-    setDisplayedMoviesCount(displayedMoviesCount + cardsInRow);
-  };
   // end of logic for displaying movies count
 
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [moviesToDisplay, setMoviesToDisplay] = useState([]);
-  const [searchError, setSearchError] = useState('');
-
-  const [isNothingFound, setIsNothingFound] = useState(false);
   const [isShortMeter, setIsShortMeter] = useLocalStorageState('isShortMeter', false);
+
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
+  const [isNothingFound, setIsNothingFound] = useState(false);
+  const [searchError, setSearchError] = useState('');
 
   const toggleIsShortMeter = event => {
     event.preventDefault();
     setIsShortMeter(!isShortMeter);
+  };
+
+  const handleShowMore = () => {
+    setDisplayedMoviesCount(displayedMoviesCount + cardsInRow);
   };
 
   // on mount check if some stored results was added to saved films
@@ -83,12 +83,13 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
           shortMoviesList.push(movie);
         }
       });
-      // shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
     } else {
       // searchResults.length !== 0 && setIsNothingFound(false);
       // searchResults.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(searchResults.slice(0, displayedMoviesCount));
+      searchResults.length !== 0 && setIsNothingFound(false);
     }
   };
 
@@ -114,6 +115,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
         setSearchResults(searchMoviesResults);
         setIsPreloaderShown(false);
+        searchMoviesResults.length === 0 && setIsNothingFound(true);
       })
       // in this 'then' we just put all movies in the list
       // to check 'more' button functionality
