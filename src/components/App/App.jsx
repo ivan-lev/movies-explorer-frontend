@@ -98,8 +98,8 @@ function App() {
         setCurrentUser(result);
         if (!isLoggedIn) {
           setIsLoggedIn(true);
+          navigate('/movies');
         }
-        navigate('/movies');
       })
       .catch(error => {
         console.log('Ошибка проверки токена:', error);
