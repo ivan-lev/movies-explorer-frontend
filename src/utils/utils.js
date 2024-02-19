@@ -28,27 +28,21 @@ export const filterMovies = (searchQuery, movieList) => {
 // will be displayed on 'show more' button click
 // depending on current window width
 
-export const displayCardsUtil = () => {
-  const displayCards = {};
+export const layoutConfig = width => {
+  let layoutConfig = {};
 
-  if (window.innerWidth >= 768) {
-    displayCards.displayRows = 4;
-    displayCards.cardsInRow = 3;
-    displayCards.layout = 'wide';
-    displayCards.initialAmount = displayCards.displayRows * displayCards.cardsInRow;
+  if (width >= 768) {
+    layoutConfig = { displayRows: 4, cardsInRow: 3, layout: 'wide' };
+    layoutConfig.initialAmount = layoutConfig.displayRows * layoutConfig.cardsInRow;
   }
 
-  if (window.innerWidth > 540 && window.innerWidth <= 768) {
-    displayCards.displayRows = 4;
-    displayCards.cardsInRow = 2;
-    displayCards.layout = 'medium';
-    displayCards.initialAmount = displayCards.displayRows * displayCards.cardsInRow;
+  if (width > 540 && width < 768) {
+    layoutConfig = { displayRows: 4, cardsInRow: 2, layout: 'medium' };
+    layoutConfig.initialAmount = layoutConfig.displayRows * layoutConfig.cardsInRow;
   }
-  if (window.innerWidth <= 540) {
-    displayCards.displayRows = 5;
-    displayCards.cardsInRow = 2;
-    displayCards.layout = 'narrow';
-    displayCards.initialAmount = displayCards.displayRows;
+  if (width <= 540) {
+    layoutConfig = { displayRows: 5, cardsInRow: 2, layout: 'narrow' };
+    layoutConfig.initialAmount = layoutConfig.displayRows;
   }
-  return displayCards;
+  return layoutConfig;
 };

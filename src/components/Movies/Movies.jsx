@@ -15,27 +15,29 @@ import Button from '../Button/Button';
 import { movieApi } from '../../utils/MovieApi';
 import { shortMeterDuration } from '../../variables/variables';
 import { filterMovies } from '../../utils/utils';
-import { displayCardsUtil } from '../../utils/utils.js';
+import { layoutConfig } from '../../utils/utils.js';
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
 export default function Movies({ searchResults, setSearchResults, savedMovies, onSave, onDelete }) {
   // logic for displaying movies count
   const width = useWindowSize();
-  const displayCards = displayCardsUtil();
-  const [currentLayout, setCurrentLayout] = useState(displayCards.layout);
-  const [displayedMoviesCount, setDisplayedMoviesCount] = useState(displayCards.initialAmount);
+  const config = layoutConfig(width);
+  const [layout, setLayout] = useState(config.layout);
+  const [displayedMoviesCount, setDisplayedMoviesCount] = useState(config.initialAmount);
+  const [cardsInRow, setCardsInRow] = useState(config.cardsInRow);
 
   useEffect(() => {
-    // check if layout is changed and set new parameters
-    const layout = displayCards.layout;
-    if (currentLayout !== layout) {
-      setCurrentLayout(layout);
-      setDisplayedMoviesCount(displayCards.initialAmount);
+    // check if layout should to be changed and set new parameters
+    const newConfig = layoutConfig(width);
+    if (newConfig.layout !== layout) {
+      setLayout(newConfig.layout);
+      setDisplayedMoviesCount(newConfig.initialAmount);
+      setCardsInRow(newConfig.cardsInRow);
     }
   }, [width]);
 
   const handleShowMore = () => {
-    setDisplayedMoviesCount(displayedMoviesCount + displayCards.cardsInRow);
+    setDisplayedMoviesCount(displayedMoviesCount + cardsInRow);
   };
   // end of logic for displaying movies count
 
@@ -126,10 +128,6 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         setIsPreloaderShown(false);
       });
   };
-
-  // const addMovieToSaved = movie => {
-  //   setSavedMovies([...savedMovies, movie]);
-  // };
 
   return (
     <>
