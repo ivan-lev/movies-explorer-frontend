@@ -1,26 +1,24 @@
 import './SavedMovies.css';
 
+// React and hooks
 import React, { useEffect, useState, useContext } from 'react';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
-import { shortMeterDuration } from '../../variables/variables';
-import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
+// components and contexts
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
 import CurrentUserContext from '../../contexts/currentUserContext';
 
-export default function SavedMovies({
-  allMovies,
-  setAllMovies,
-  savedMovies,
-  setSavedMovies,
-  onDelete
-}) {
-  const token = JSON.parse(localStorage.getItem('token'));
+// utils and variables
+import { filterMovies } from '../../utils/utils';
+import { shortMeterDuration } from '../../variables/variables';
+import { ERROR_MESSAGES } from '../../variables/errorMessages';
+
+export default function SavedMovies({ savedMovies, onDelete }) {
   const currentUser = useContext(CurrentUserContext);
-  const [searchQueryInSaved, setSearchQueryInSaved] = useStorage('searchQueryInSaved', '');
+  const [searchQuery, setSearchQuery] = useState('');
   const [isNothingFoundInSaved, setIsNothingFoundInSaved] = useState(false);
-  const [isShortMeterInSaved, setIsShortMeterInSaved] = useStorage('isShortMeterInSaved', false);
+  const [isShortMeter, setIsShortMeter] = useState(false);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
   const [moviesToShow, setMoviesToShow] = useState([]);
 
@@ -31,45 +29,19 @@ export default function SavedMovies({
 
   // show all films if input is empty
   useEffect(() => {
-    if (searchQueryInSaved === '') {
+    if (searchQuery === '') {
       setFilteredSavedMovies(savedMovies);
     }
-  }, [searchQueryInSaved, savedMovies]);
+  }, [searchQuery, savedMovies]);
 
   const toggleIsShortMeter = event => {
     event.preventDefault();
-    setIsShortMeterInSaved(!isShortMeterInSaved);
-  };
-
-  // delete saved movie from the list of saved
-  const deleteMovieFromSaved = _id => {
-    const newList = savedMovies.filter(movie => {
-      return movie._id !== _id;
-    });
-    setSavedMovies(newList);
-    // update isSaved to 'false' for movie which was removed from saved
-    const newAllMoviesList = allMovies.map(movie => {
-      if (movie._id === _id) {
-        movie.isSaved = false;
-      }
-    });
-    setAllMovies(newAllMoviesList);
+    setIsShortMeter(!isShortMeter);
   };
 
   const handleSearchMovie = () => {
     setIsNothingFoundInSaved(false);
-    const filteredByQueryMovies = savedMovies.filter(movie => {
-      const searchQueryWords = [];
-      searchQueryWords.push(...searchQueryInSaved.toLowerCase().split(' '));
-      const movieTitleWords = [];
-      movieTitleWords.push(
-        ...movie.nameRU.toLowerCase().split(' '),
-        ...movie.nameEN.toLowerCase().split(' ')
-      );
-      if (movieTitleWords.some(word => searchQueryWords.includes(word))) {
-        return movie;
-      }
-    });
+    const filteredByQueryMovies = filterMovies(searchQuery, savedMovies);
     setFilteredSavedMovies(filteredByQueryMovies);
   };
 
@@ -77,10 +49,10 @@ export default function SavedMovies({
   // after search or shortmeter clicked
   useEffect(() => {
     handleMoviesToShow(filteredSavedMovies, setMoviesToShow);
-  }, [filteredSavedMovies, isShortMeterInSaved]);
+  }, [filteredSavedMovies, isShortMeter]);
 
   const handleMoviesToShow = (list, listSetter) => {
-    if (isShortMeterInSaved) {
+    if (isShortMeter) {
       const shortMoviesList = [];
       list.forEach(movie => {
         if (movie.duration <= shortMeterDuration) {
@@ -101,10 +73,10 @@ export default function SavedMovies({
   return (
     <>
       <SearchForm
-        inputValue={searchQueryInSaved}
-        onType={setSearchQueryInSaved}
+        inputValue={searchQuery}
+        onType={setSearchQuery}
         onSearch={handleSearchMovie}
-        isShortMeter={isShortMeterInSaved}
+        isShortMeter={isShortMeter}
         toggleIsShortMeter={toggleIsShortMeter}
       />
       <section className="main__section saved-movies">

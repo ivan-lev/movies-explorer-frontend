@@ -129,6 +129,7 @@ function App() {
 
   // MOVIES LOGIC
   const [savedMovies, setSavedMovies] = useStorage('savedMovies', []);
+  const [searchResults, setSearchResults] = useStorage('searchResults', []);
 
   const loadSavedMovies = () => {
     mainApi
@@ -149,14 +150,27 @@ function App() {
     }
   }, [isLoggedIn]);
 
+  const saveMovie = movie => {
+    setSavedMovies([...savedMovies, movie]);
+  };
+
   const deleteMovie = movie => {
     mainApi
       .deleteMovie(movie._id)
-      .then(
+      .then(result => {
+        // if the movies was saved - update it's 'isSaved' state to false in searchResults
+        const newSearchResults = searchResults.map(searchedMovie => {
+          if (searchedMovie.id === movie.id) {
+            searchedMovie.isSaved = false;
+          }
+          return searchedMovie;
+        });
+        setSearchResults([...newSearchResults]);
+        // then remove movie from savedMovies
         setSavedMovies(savedMovies =>
           savedMovies.filter(savedMovie => savedMovie._id !== movie._id)
-        )
-      )
+        );
+      })
       .catch(error => console.error(error));
   };
 
@@ -195,8 +209,10 @@ function App() {
                 </Header>
                 <Main>
                   <Movies
+                    searchResults={searchResults}
+                    setSearchResults={setSearchResults}
                     savedMovies={savedMovies}
-                    setSavedMovies={setSavedMovies}
+                    onSave={saveMovie}
                     onDelete={deleteMovie}
                   />
                 </Main>
@@ -214,11 +230,7 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <SavedMovies
-                    savedMovies={savedMovies}
-                    setSavedMovies={setSavedMovies}
-                    onDelete={deleteMovie}
-                  />
+                  <SavedMovies savedMovies={savedMovies} onDelete={deleteMovie} />
                 </Main>
                 <Footer />
               </ProtectedRoute>

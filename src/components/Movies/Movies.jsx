@@ -1,8 +1,7 @@
 import './Movies.css';
 
+//React and hooks
 import React, { useEffect, useState } from 'react';
-
-//hooks
 import { useLocalStorageState } from '../../hooks/useLocalStoredState';
 import { useWindowSize } from '../../hooks/useWindowSize.jsx';
 
@@ -19,7 +18,7 @@ import { filterMovies } from '../../utils/utils';
 import { displayCardsUtil } from '../../utils/utils.js';
 import { ERROR_MESSAGES } from '../../variables/errorMessages';
 
-export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
+export default function Movies({ searchResults, setSearchResults, savedMovies, onSave, onDelete }) {
   // logic for displaying movies count
   const width = useWindowSize();
   const displayCards = displayCardsUtil();
@@ -41,7 +40,6 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
   // end of logic for displaying movies count
 
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
-  const [searchResults, setSearchResults] = useLocalStorageState('searchResults', []);
   const [moviesToDisplay, setMoviesToDisplay] = useState([]);
   const [searchError, setSearchError] = useState('');
 
@@ -55,6 +53,7 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
   };
 
   // on mount check if some stored results was added to saved films
+  // and fulfill them with _id fileds and thruthy 'isSaved' states
   useEffect(() => {
     const updatedSearchResults = searchResults.map(movie => {
       savedMovies.forEach(savedMovie => {
@@ -97,7 +96,7 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
     setSearchError('');
     movieApi
       .getMovies()
-      // retrieve it when fix more button logic
+      // find movies, compare them with saved, and fullfill with _id's and isSaved properties
       .then(result => {
         const allMoviesList = result.map(movie => {
           let isSaved = false;
@@ -128,26 +127,9 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
       });
   };
 
-  const addMovieToSaved = movie => {
-    setSavedMovies([...savedMovies, movie]);
-  };
-
-  const handleDeleteMovie = movie => {
-    // find this movie in saved and delete from that list
-    const savedMovie = savedMovies.find(savedMovie => savedMovie.movieId === movie.id);
-    onDelete(savedMovie);
-    // set new search result witn new movie state
-    // const movieWithNewState = { ...movie, isSaved: false };
-    // const newSearchResults = searchResults.filter(result => result.id !== movie.id);
-    // setSearchResults([...newSearchResults, movieWithNewState]);
-    const newSearchResults = searchResults.map(searchedMovie => {
-      if (searchedMovie.id === movie.id) {
-        searchedMovie.isSaved = false;
-      }
-      return searchedMovie;
-    });
-    setSearchResults([...newSearchResults]);
-  };
+  // const addMovieToSaved = movie => {
+  //   setSavedMovies([...savedMovies, movie]);
+  // };
 
   return (
     <>
@@ -171,8 +153,8 @@ export default function Movies({ savedMovies, setSavedMovies, onDelete }) {
               <MoviesCardList
                 moviesList={moviesToDisplay}
                 keyFieldName="id"
-                onSave={addMovieToSaved}
-                onDelete={handleDeleteMovie}
+                onSave={onSave}
+                onDelete={onDelete}
               />
             )}
           </>
