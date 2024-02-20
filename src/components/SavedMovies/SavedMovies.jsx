@@ -19,7 +19,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   const [isNothingFound, setIsNothingFound] = useState(false);
   const [isShortMeter, setIsShortMeter] = useState(false);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
-  const [moviesToShow, setMoviesToShow] = useState([]);
+  const [moviesToDisplay, setMoviesToDisplay] = useState([]);
 
   // set movies to be shown
   useEffect(() => {
@@ -46,24 +46,43 @@ export default function SavedMovies({ savedMovies, onDelete }) {
 
   // check if something ready to be displayed in searchResults
   // after search or shortmeter clicked
+  // useEffect(() => {
+  //   handleMoviesToShow(filteredSavedMovies, setMoviesToDisplay);
+  // }, [filteredSavedMovies, isShortMeter]);
+
+  // const handleMoviesToShow = (list, listSetter) => {
+  //   if (isShortMeter) {
+  //     const shortMoviesList = [];
+  //     list.forEach(movie => {
+  //       if (movie.duration <= shortMeterDuration) {
+  //         shortMoviesList.push(movie);
+  //       }
+  //     });
+  //     shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+  //     listSetter(shortMoviesList);
+  //   } else {
+  //     list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
+
+  //     listSetter(list);
+  //   }
+  // };
+
+  // check if something ready to be displayed in searchResults
+  // after search or shortmeter clicked
   useEffect(() => {
-    handleMoviesToShow(filteredSavedMovies, setMoviesToShow);
+    handleMoviesToDisplay();
   }, [filteredSavedMovies, isShortMeter]);
 
-  const handleMoviesToShow = (list, listSetter) => {
+  const handleMoviesToDisplay = () => {
     if (isShortMeter) {
-      const shortMoviesList = [];
-      list.forEach(movie => {
-        if (movie.duration <= shortMeterDuration) {
-          shortMoviesList.push(movie);
-        }
-      });
+      const shortMoviesList = filteredSavedMovies.filter(
+        movie => movie.duration < shortMeterDuration
+      );
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      listSetter(shortMoviesList);
+      setMoviesToDisplay(shortMoviesList);
     } else {
-      list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-
-      listSetter(list);
+      setMoviesToDisplay(filteredSavedMovies);
+      filteredSavedMovies.length !== 0 && setIsNothingFound(false);
     }
   };
 
@@ -84,7 +103,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
           <p className="movies__nothing-found">{SEARCH_MESSAGES.NOTHING_FOUND}</p>
         ) : (
           <MoviesCardList
-            moviesList={moviesToShow}
+            moviesList={moviesToDisplay}
             userId={currentUser._id}
             keyFieldName="movieId"
             onDelete={onDelete}
