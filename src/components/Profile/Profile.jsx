@@ -106,6 +106,11 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
       });
   };
 
+  const handleHideErrorOnType = event => {
+    profileUpdateError && setProfileUpdateError(false);
+    handleChange(event);
+  };
+
   return (
     <main className="main">
       <section className="profile">
@@ -135,7 +140,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 name="name"
                 placeholder="Введите имя"
                 value={values?.name || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 required
                 autoFocus
               ></input>
@@ -149,7 +154,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 name="email"
                 placeholder="Введите email"
                 value={values?.email || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 required
               ></input>
             </div>

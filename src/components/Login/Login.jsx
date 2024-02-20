@@ -9,7 +9,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
-export default function Login({ onLogin, error }) {
+export default function Login({ onLogin, error, setError }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
 
   // set values validity to false as we have blank inputs at start
@@ -26,6 +26,11 @@ export default function Login({ onLogin, error }) {
     if (isValid) {
       onLogin(email, password);
     }
+  };
+
+  const handleHideErrorOnType = event => {
+    error !== '' && setError('');
+    handleChange(event);
   };
 
   return (
@@ -46,7 +51,7 @@ export default function Login({ onLogin, error }) {
                 autoComplete="on"
                 required
                 value={values?.email || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleLogin();
                 }}
@@ -67,7 +72,7 @@ export default function Login({ onLogin, error }) {
                 autoComplete="on"
                 required
                 value={values?.password || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleLogin();
                 }}

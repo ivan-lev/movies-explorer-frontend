@@ -245,8 +245,16 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/signin" element={<Login onLogin={handleLogin} error={loginError} />} />
-          <Route path="/signup" element={<Register register={register} error={registerError} />} />
+          <Route
+            path="/signin"
+            element={<Login onLogin={handleLogin} error={loginError} setError={setLoginError} />}
+          />
+          <Route
+            path="/signup"
+            element={
+              <Register register={register} error={registerError} setError={setRegisterError} />
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </CurrentUserContext.Provider>

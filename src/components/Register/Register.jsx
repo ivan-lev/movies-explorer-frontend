@@ -9,7 +9,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
-export default function Register({ register, error }) {
+export default function Register({ register, error, setError }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
 
   // set values validity to false as we have blank inputs at start
@@ -24,6 +24,11 @@ export default function Register({ register, error }) {
     }
     const { name, email, password } = values;
     register(name, email, password);
+  };
+
+  const handleHideErrorOnType = event => {
+    error !== '' && setError('');
+    handleChange(event);
   };
 
   return (
@@ -49,7 +54,7 @@ export default function Register({ register, error }) {
                 autoComplete="on"
                 required
                 value={values?.name || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
@@ -70,7 +75,7 @@ export default function Register({ register, error }) {
                 autoComplete="on"
                 required
                 value={values?.email || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
@@ -90,7 +95,7 @@ export default function Register({ register, error }) {
                 autoComplete="on"
                 required
                 value={values?.password || ''}
-                onChange={handleChange}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
