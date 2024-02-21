@@ -9,7 +9,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
-export default function Register({ register, error, setError }) {
+export default function Register({ register, error, setError, isInputsDisabled }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
 
   // set values validity to false as we have blank inputs at start
@@ -58,6 +58,7 @@ export default function Register({ register, error, setError }) {
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                disabled={isInputsDisabled}
                 autoFocus
               />
             </label>
@@ -79,6 +80,7 @@ export default function Register({ register, error, setError }) {
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                disabled={isInputsDisabled}
               />
             </label>
           </fieldset>
@@ -99,6 +101,7 @@ export default function Register({ register, error, setError }) {
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                disabled={isInputsDisabled}
               />
             </label>
           </fieldset>

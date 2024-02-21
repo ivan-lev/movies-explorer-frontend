@@ -9,7 +9,7 @@ import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 
-export default function Login({ onLogin, error, setError }) {
+export default function Login({ onLogin, error, setError, isInputsDisabled }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
 
   // set values validity to false as we have blank inputs at start
@@ -55,6 +55,7 @@ export default function Login({ onLogin, error, setError }) {
                 onKeyDown={event => {
                   event.key === 'Enter' && handleLogin();
                 }}
+                disabled={isInputsDisabled}
                 autoFocus
               />
             </label>
@@ -76,6 +77,7 @@ export default function Login({ onLogin, error, setError }) {
                 onKeyDown={event => {
                   event.key === 'Enter' && handleLogin();
                 }}
+                disabled={isInputsDisabled}
               />
             </label>
           </fieldset>

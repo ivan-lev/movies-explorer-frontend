@@ -39,9 +39,11 @@ function App() {
 
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
+  const [isInputsDisabled, setIsInputsDisabled] = useState(false);
 
   // USER FUNCTIONS
   const register = (name, email, password) => {
+    setIsInputsDisabled(true);
     setRegisterError('');
     mainApi
       .createUser(name, email, password)
@@ -60,11 +62,13 @@ function App() {
         }
         return error.status;
       });
+    setIsInputsDisabled(false);
   };
 
   // if email and password are correct,
   // the token will be recieved and saved in local storage
   const handleLogin = (email, password) => {
+    setIsInputsDisabled(true);
     setLoginError('');
     mainApi
       .authorize(email, password)
@@ -83,6 +87,7 @@ function App() {
         }
         return error.status;
       });
+    setIsInputsDisabled(false);
   };
 
   // when token is received - it checked on server
@@ -247,12 +252,24 @@ function App() {
           />
           <Route
             path="/signin"
-            element={<Login onLogin={handleLogin} error={loginError} setError={setLoginError} />}
+            element={
+              <Login
+                onLogin={handleLogin}
+                error={loginError}
+                setError={setLoginError}
+                isInputsDisabled={isInputsDisabled}
+              />
+            }
           />
           <Route
             path="/signup"
             element={
-              <Register register={register} error={registerError} setError={setRegisterError} />
+              <Register
+                register={register}
+                error={registerError}
+                setError={setRegisterError}
+                isInputsDisabled={isInputsDisabled}
+              />
             }
           />
           <Route path="*" element={<NotFound />} />

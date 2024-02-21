@@ -20,6 +20,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   const [isShortMeter, setIsShortMeter] = useState(false);
   const [filteredSavedMovies, setFilteredSavedMovies] = useState(savedMovies);
   const [moviesToDisplay, setMoviesToDisplay] = useState([]);
+  const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false);
 
   // set movies to be shown
   useEffect(() => {
@@ -39,33 +40,12 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   };
 
   const handleSearchMovie = () => {
+    setIsSearchInputDisabled(true);
     setIsNothingFound(false);
     const filteredByQueryMovies = filterMovies(searchQuery, savedMovies);
     setFilteredSavedMovies(filteredByQueryMovies);
+    setIsSearchInputDisabled(false);
   };
-
-  // check if something ready to be displayed in searchResults
-  // after search or shortmeter clicked
-  // useEffect(() => {
-  //   handleMoviesToShow(filteredSavedMovies, setMoviesToDisplay);
-  // }, [filteredSavedMovies, isShortMeter]);
-
-  // const handleMoviesToShow = (list, listSetter) => {
-  //   if (isShortMeter) {
-  //     const shortMoviesList = [];
-  //     list.forEach(movie => {
-  //       if (movie.duration <= SHORTMETER_DURATION) {
-  //         shortMoviesList.push(movie);
-  //       }
-  //     });
-  //     shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-  //     listSetter(shortMoviesList);
-  //   } else {
-  //     list.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-
-  //     listSetter(list);
-  //   }
-  // };
 
   // check if something ready to be displayed in searchResults
   // after search or shortmeter clicked
@@ -94,6 +74,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
         onSearch={handleSearchMovie}
         isShortMeter={isShortMeter}
         toggleIsShortMeter={toggleIsShortMeter}
+        isSearchInputDisabled={isSearchInputDisabled}
       />
       <section className="main__section saved-movies">
         {savedMovies.length === 0 && (

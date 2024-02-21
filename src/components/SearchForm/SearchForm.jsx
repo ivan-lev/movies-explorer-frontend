@@ -12,7 +12,8 @@ export default function SearchForm({
   onType,
   onSearch,
   isShortMeter,
-  toggleIsShortMeter
+  toggleIsShortMeter,
+  isSearchInputDisabled
 }) {
   const [searchPlaceholder, setSearchPlaceholder] = useState('Фильм');
 
@@ -40,6 +41,7 @@ export default function SearchForm({
             placeholder={searchPlaceholder}
             onChange={handleSetFilmToSearch}
             value={inputValue}
+            disabled={isSearchInputDisabled}
             autoFocus
           ></input>
           <button type="submit" className="search-form__button" onClick={handleSearch}></button>

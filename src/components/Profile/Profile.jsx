@@ -29,6 +29,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
   const [profileUpdateError, setProfileUpdateError] = useState('');
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
+  const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false);
 
   // set current user input values and make them valid as they valid
   useEffect(() => {
@@ -68,12 +69,14 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
     event.preventDefault();
     setIsSubmitSuccessful(false);
     setProfileUpdateError(false);
+    setIsSearchInputDisabled(false);
     if (!isUserDataUpdating) {
       setIsUserDataUpdating(true);
     }
   };
 
   const handleSubmitUserInfo = () => {
+    setIsSearchInputDisabled(true);
     const { name, email } = values;
     // if data in inputs is the same - do nothing
     if (name === currentUser.name && email === currentUser.email) {
@@ -104,6 +107,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
             setProfileUpdateError(PROFILE_MESSAGES.UPDATE_ERROR);
         }
       });
+    setIsSearchInputDisabled(false);
   };
 
   const handleHideErrorOnType = event => {
@@ -142,6 +146,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 value={values?.name || ''}
                 onChange={handleHideErrorOnType}
                 required
+                disabled={isSearchInputDisabled}
                 autoFocus
               ></input>
             </div>
@@ -156,6 +161,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 value={values?.email || ''}
                 onChange={handleHideErrorOnType}
                 required
+                disabled={isSearchInputDisabled}
               ></input>
             </div>
 

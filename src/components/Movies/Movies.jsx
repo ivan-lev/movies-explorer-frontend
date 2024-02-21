@@ -44,6 +44,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [isNothingFound, setIsNothingFound] = useState(false);
   const [searchError, setSearchError] = useState(false);
+  const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false);
 
   const toggleIsShortMeter = event => {
     event.preventDefault();
@@ -87,6 +88,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
   };
 
   const handleSearchMovie = () => {
+    setIsSearchInputDisabled(true);
     setIsNothingFound(false);
     setIsPreloaderShown(true);
     setSearchError(false);
@@ -115,6 +117,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         setSearchError(true);
         setIsPreloaderShown(false);
       });
+    setIsSearchInputDisabled(false);
   };
 
   return (
@@ -125,6 +128,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
         onSearch={handleSearchMovie}
         isShortMeter={isShortMeter}
         toggleIsShortMeter={toggleIsShortMeter}
+        isSearchInputDisabled={isSearchInputDisabled}
       />
       <section className="main__section movies">
         {isPreloaderShown ? (
