@@ -253,23 +253,27 @@ function App() {
           <Route
             path="/signin"
             element={
-              <Login
-                onLogin={handleLogin}
-                error={loginError}
-                setError={setLoginError}
-                isInputsDisabled={isInputsDisabled}
-              />
+              <ProtectedRoute isLoggedIn={!isLoggedIn}>
+                <Login
+                  onLogin={handleLogin}
+                  error={loginError}
+                  setError={setLoginError}
+                  isInputsDisabled={isInputsDisabled}
+                />
+              </ProtectedRoute>
             }
           />
           <Route
             path="/signup"
             element={
-              <Register
-                register={register}
-                error={registerError}
-                setError={setRegisterError}
-                isInputsDisabled={isInputsDisabled}
-              />
+              <ProtectedRoute isLoggedIn={!isLoggedIn}>
+                <Register
+                  register={register}
+                  error={registerError}
+                  setError={setRegisterError}
+                  isInputsDisabled={isInputsDisabled}
+                />
+              </ProtectedRoute>
             }
           />
           <Route path="*" element={<NotFound />} />
