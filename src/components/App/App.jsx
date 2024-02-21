@@ -2,7 +2,7 @@ import './App.css';
 
 // React and hooks
 import { useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { useLocalStorageState as useStorage } from '../../hooks/useLocalStoredState';
 
 // components
@@ -32,7 +32,6 @@ import { LOGIN_MESSAGES, REGISTER_MESSAGES } from '../../variables/messages.js';
 
 function App() {
   const navigate = useNavigate();
-
   const [token, setToken] = useStorage('token', '');
   const [isLoggedIn, setIsLoggedIn] = useStorage('isLoggedIn', false);
   const [currentUser, setCurrentUser] = useState({});
@@ -262,27 +261,31 @@ function App() {
           <Route
             path="/signin"
             element={
-              <ProtectedRoute isLoggedIn={!isLoggedIn}>
+              isLoggedIn ? (
+                <Navigate to="/movies" true></Navigate>
+              ) : (
                 <Login
                   onLogin={handleLogin}
                   error={loginError}
                   setError={setLoginError}
                   isInputsDisabled={isInputsDisabled}
                 />
-              </ProtectedRoute>
+              )
             }
           />
           <Route
             path="/signup"
             element={
-              <ProtectedRoute isLoggedIn={!isLoggedIn}>
+              isLoggedIn ? (
+                <Navigate to="/movies" true></Navigate>
+              ) : (
                 <Register
                   register={register}
                   error={registerError}
                   setError={setRegisterError}
                   isInputsDisabled={isInputsDisabled}
                 />
-              </ProtectedRoute>
+              )
             }
           />
           <Route path="*" element={<NotFound />} />
