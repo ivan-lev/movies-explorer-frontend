@@ -79,12 +79,14 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
     setIsSearchInputDisabled(true);
     const { name, email } = values;
     // if data in inputs is the same - do nothing
-    if (name === currentUser.name && email === currentUser.email) {
+    if (!isValuesDiffers) {
       setIsUserDataUpdating(false);
+      setIsSearchInputDisabled(false);
       return;
     }
     // check if all inputs filled and valid
     if (!isValid || Object.values(values).some(value => value.length === 0)) {
+      setIsSearchInputDisabled(false);
       return;
     }
 
@@ -173,30 +175,28 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
 
         <div className="profile__buttons-wrapper">
           {!isUserDataUpdating ? (
-            <>
-              <Button
-                type="transparent button_bigger-font"
-                text="Редактировать"
-                onClick={handleIsDataEdited}
-              />
-              <Button
-                type="transparent button_bigger-font button_text-crimson"
-                text="Выйти из аккаутна"
-                onClick={onLogout}
-              />
-            </>
+            <Button
+              type="transparent button_bigger-font"
+              text="Редактировать"
+              onClick={handleIsDataEdited}
+            />
           ) : (
             <>
               <div className="profile__updating-error-wrapper">
                 <p className="profile__updating-error">{profileUpdateError}</p>
               </div>
               <Button
-                type={`blue ${!isValid ? 'button_disabled' : ''}`}
+                type={`transparent button_bigger-font ${!isValid ? 'button_text-crimson' : ''}`}
                 text={isValuesDiffers ? 'Сохранить' : 'Закрыть'}
                 onClick={handleSubmitUserInfo}
               />
             </>
           )}
+          <Button
+            type="transparent button_bigger-font button_text-crimson"
+            text="Выйти из аккаутна"
+            onClick={onLogout}
+          />
         </div>
       </section>
     </main>
