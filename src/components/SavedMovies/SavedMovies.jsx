@@ -10,7 +10,7 @@ import CurrentUserContext from '../../contexts/currentUserContext';
 
 // utils and variables
 import { filterMovies } from '../../utils/utils';
-import { shortMeterDuration } from '../../variables/variables';
+import { SHORTMETER_DURATION } from '../../variables/variables';
 import { SEARCH_MESSAGES } from '../../variables/messages';
 
 export default function SavedMovies({ savedMovies, onDelete }) {
@@ -54,7 +54,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   //   if (isShortMeter) {
   //     const shortMoviesList = [];
   //     list.forEach(movie => {
-  //       if (movie.duration <= shortMeterDuration) {
+  //       if (movie.duration <= SHORTMETER_DURATION) {
   //         shortMoviesList.push(movie);
   //       }
   //     });
@@ -76,7 +76,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   const handleMoviesToDisplay = () => {
     if (isShortMeter) {
       const shortMoviesList = filteredSavedMovies.filter(
-        movie => movie.duration < shortMeterDuration
+        movie => movie.duration < SHORTMETER_DURATION
       );
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList);

@@ -1,3 +1,5 @@
+import { LAYOUTS } from '../variables/variables';
+
 const cleanString = string => {
   return (
     string
@@ -27,16 +29,28 @@ export const layoutConfig = width => {
   let layoutConfig = {};
 
   if (width >= 768) {
-    layoutConfig = { displayRows: 4, cardsInRow: 3, layout: 'wide' };
+    layoutConfig = {
+      displayRows: LAYOUTS.WIDE.ROWS,
+      cardsInRow: LAYOUTS.WIDE.ITEMS,
+      layout: LAYOUTS.WIDE.DESCRIPTION
+    };
     layoutConfig.initialAmount = layoutConfig.displayRows * layoutConfig.cardsInRow;
   }
 
   if (width > 540 && width < 768) {
-    layoutConfig = { displayRows: 4, cardsInRow: 2, layout: 'medium' };
+    layoutConfig = {
+      displayRows: LAYOUTS.MEDIUM.ROWS,
+      cardsInRow: LAYOUTS.MEDIUM.ITEMS,
+      layout: LAYOUTS.MEDIUM.DESCRIPTION
+    };
     layoutConfig.initialAmount = layoutConfig.displayRows * layoutConfig.cardsInRow;
   }
   if (width <= 540) {
-    layoutConfig = { displayRows: 5, cardsInRow: 2, layout: 'narrow' };
+    layoutConfig = {
+      displayRows: LAYOUTS.NARROW.ROWS,
+      cardsInRow: LAYOUTS.NARROW.ITEMS,
+      layout: LAYOUTS.NARROW.DESCRIPTION
+    };
     layoutConfig.initialAmount = layoutConfig.displayRows;
   }
   return layoutConfig;

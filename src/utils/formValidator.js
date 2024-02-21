@@ -1,4 +1,4 @@
-import { nameRegexp, emailRegExp } from '../variables/variables';
+import { NAME_REGEXP, EMAIL_REGEXP } from '../variables/variables';
 import { VALIDATION_ERRORS } from '../variables/messages';
 
 const nameValidator = name => {
@@ -6,7 +6,7 @@ const nameValidator = name => {
     return { isValid: false, errorMessage: VALIDATION_ERRORS.NAME_EMPTY };
   }
 
-  if (!name.match(nameRegexp)) {
+  if (!name.match(NAME_REGEXP)) {
     return { isValid: false, errorMessage: VALIDATION_ERRORS.NAME_INVALID };
   }
 
@@ -26,7 +26,7 @@ const emailValidator = email => {
     return { isValid: false, errorMessage: VALIDATION_ERRORS.EMAIL_EMPTY };
   }
 
-  if (!email.match(emailRegExp)) {
+  if (!email.match(EMAIL_REGEXP)) {
     return { isValid: false, errorMessage: VALIDATION_ERRORS.EMAIL_INVALID };
   }
 

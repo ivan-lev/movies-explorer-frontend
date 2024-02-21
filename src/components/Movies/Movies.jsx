@@ -13,7 +13,7 @@ import Button from '../Button/Button';
 
 // utils and variables
 import { movieApi } from '../../utils/MovieApi';
-import { shortMeterDuration } from '../../variables/variables';
+import { SHORTMETER_DURATION } from '../../variables/variables';
 import { filterMovies } from '../../utils/utils';
 import { layoutConfig } from '../../utils/utils.js';
 import { SEARCH_MESSAGES } from '../../variables/messages.js';
@@ -77,7 +77,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
 
   const handleMoviesToDisplay = () => {
     if (isShortMeter) {
-      const shortMoviesList = searchResults.filter(movie => movie.duration < shortMeterDuration);
+      const shortMoviesList = searchResults.filter(movie => movie.duration < SHORTMETER_DURATION);
       shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
       setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
     } else {

@@ -1,7 +1,7 @@
-import { movieListUrl, movieImageUrl } from '../variables/variables';
+import { MOVIES_URL, IMAGE_URL } from '../variables/variables';
 
 const getMovies = () => {
-  return fetch(movieListUrl, {
+  return fetch(MOVIES_URL, {
     method: 'GET'
   })
     .then(res => checkResponseStatus(res))
@@ -13,7 +13,7 @@ const getMovies = () => {
 
 const makeAbsoluteImagePaths = moviesList => {
   moviesList.forEach(movie => {
-    const absoluteImagePath = `${movieImageUrl}${movie.image.url}`;
+    const absoluteImagePath = `${IMAGE_URL}${movie.image.url}`;
     movie.image = absoluteImagePath;
   });
 };

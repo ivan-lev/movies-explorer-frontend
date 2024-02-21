@@ -1,9 +1,9 @@
-import { baseUrl } from '../variables/variables';
+import { BASE_URL } from '../variables/variables';
 
 const token = JSON.parse(localStorage.getItem('token'));
 
 const createUser = (name, email, password) => {
-  return fetch(`${baseUrl}/signup`, {
+  return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -13,7 +13,7 @@ const createUser = (name, email, password) => {
 };
 
 const authorize = (email, password) => {
-  return fetch(`${baseUrl}/signin`, {
+  return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ const authorize = (email, password) => {
 };
 
 const checkToken = token => {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ const checkToken = token => {
 };
 
 const setUserInfo = (name, email, token) => {
-  return fetch(`${baseUrl}/users/me`, {
+  return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const saveMovie = card => {
     nameEN
   } = card;
   const movieId = id;
-  return fetch(`${baseUrl}/movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ const saveMovie = card => {
 };
 
 const deleteMovie = id => {
-  return fetch(`${baseUrl}/movies/${id}`, {
+  return fetch(`${BASE_URL}/movies/${id}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const deleteMovie = id => {
 };
 
 const getMovies = token => {
-  return fetch(`${baseUrl}/movies`, {
+  return fetch(`${BASE_URL}/movies`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
