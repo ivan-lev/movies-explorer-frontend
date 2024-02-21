@@ -47,7 +47,7 @@ export default function Movies({
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
   const [isShortMeter, setIsShortMeter] = useLocalStorageState('isShortMeter', false);
   const [isShortMeterClicked, setIsShortMeterClicked] = useState(false);
-
+  const [isNothingFound, setIsNothingFound] = useState(false);
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
   const [searchError, setSearchError] = useState(false);
   const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false);
@@ -72,13 +72,18 @@ export default function Movies({
   const handleSearchMovies = () => {
     setDisplayedMoviesCount(config.initialAmount);
     setIsSearchInputDisabled(true);
+    setIsNothingFound(false);
     setIsPreloaderShown(true);
     setSearchError(false);
 
     // if all movies list is not empty - seach there
     // else download fresh movies list, search there, and save it
     if (allMovies.length !== 0) {
-      setSearchResults(filterMovies(searchQuery, allMovies, isShortMeter));
+      const filteredResults = filterMovies(searchQuery, allMovies, isShortMeter);
+      setSearchResults(filteredResults);
+      if (filteredResults.length === 0) {
+        setIsNothingFound(true);
+      }
       setIsPreloaderShown(false);
     } else {
       movieApi
@@ -97,7 +102,11 @@ export default function Movies({
             return { ...movie, isSaved, _id };
           });
           setAllMovies(allMoviesList);
-          setSearchResults(filterMovies(searchQuery, allMoviesList));
+          const filteredResults = filterMovies(searchQuery, allMoviesList, isShortMeter);
+          setSearchResults(filteredResults);
+          if (filteredResults.length === 0) {
+            setIsNothingFound(true);
+          }
           setIsPreloaderShown(false);
         })
         .catch(error => {
@@ -124,7 +133,7 @@ export default function Movies({
           <Preloader />
         ) : (
           <>
-            {searchResults.length === 0 && (
+            {isNothingFound && (
               <p className="movies__nothing-found">{SEARCH_MESSAGES.NOTHING_FOUND}</p>
             )}
             {searchError && <p className="movies__search-error">{SEARCH_MESSAGES.REQUEST_ERROR}</p>}
