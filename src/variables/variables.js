@@ -24,6 +24,6 @@ export const LAYOUTS = {
   NARROW: {
     DESCRIPTION: 'narrow',
     ROWS: 5,
-    ITEMS: 1
+    ITEMS: 2
   }
 };
