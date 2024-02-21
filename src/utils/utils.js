@@ -1,6 +1,6 @@
-import { LAYOUTS } from '../variables/variables';
+import { SHORTMETER_DURATION, LAYOUTS } from '../variables/variables';
 
-const cleanString = string => {
+const cleanQuery = string => {
   return (
     string
       .replace(/\s\s+/g, ' ') // replace multiple spaces with singl ones
@@ -8,15 +8,25 @@ const cleanString = string => {
       .toLowerCase() // lowercase the phrase
       .split(' ') // split string to array of words
       // remove empty elements and words shorter than 2 letters
-      .filter(word => word.length > 2)
+      .filter(word => word.length !== 0)
   );
 };
 
-export const filterMovies = (searchQuery, movieList) => {
-  const filteredByQueryMovies = movieList.filter(movie => {
-    const searchQueryWords = cleanString(searchQuery);
-    const movieTitleWords = [...cleanString(movie.nameRU), ...cleanString(movie.nameEN)];
-    return movieTitleWords.some(word => searchQueryWords.includes(word));
+export const filterMovies = (searchQuery, movieList, isShortMeter) => {
+  let newList;
+  if (isShortMeter) {
+    newList = movieList.filter(movie => movie.duration < SHORTMETER_DURATION);
+  } else {
+    newList = movieList;
+  }
+  const queryWordsArray = cleanQuery(searchQuery);
+  const filteredByQueryMovies = newList.filter(movie => {
+    return queryWordsArray.some(word => {
+      return (
+        movie.nameRU.toLowerCase().indexOf(word) !== -1 ||
+        movie.nameEN.toLowerCase().indexOf(word) !== -1
+      );
+    });
   });
   return filteredByQueryMovies;
 };
