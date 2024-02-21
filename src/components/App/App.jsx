@@ -120,6 +120,7 @@ function App() {
     setCurrentUser({});
     setSearchResults([]);
     setIsLoggedIn(false);
+    setAllMovies([]);
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('searchResults');
     localStorage.removeItem('isShortMeter');
@@ -130,6 +131,7 @@ function App() {
   };
 
   // MOVIES LOGIC
+  const [allMovies, setAllMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useStorage('savedMovies', []);
   const [searchResults, setSearchResults] = useStorage('searchResults', []);
 
@@ -161,7 +163,7 @@ function App() {
       .then(result => {
         // if the movies was saved - update it's 'isSaved' state to false in searchResults
         const newSearchResults = searchResults.map(searchedMovie => {
-          if (searchedMovie.id === movie.id) {
+          if (searchedMovie.id === movie.id || searchedMovie.id === movie.movieId) {
             searchedMovie.isSaved = false;
           }
           return searchedMovie;
@@ -210,6 +212,8 @@ function App() {
                 </Header>
                 <Main>
                   <Movies
+                    allMovies={allMovies}
+                    setAllMovies={setAllMovies}
                     searchResults={searchResults}
                     setSearchResults={setSearchResults}
                     savedMovies={savedMovies}
@@ -231,7 +235,12 @@ function App() {
                   <UserButtons isLoggedIn={isLoggedIn} />
                 </Header>
                 <Main>
-                  <SavedMovies savedMovies={savedMovies} onDelete={deleteMovie} />
+                  <SavedMovies
+                    searchResults={searchResults}
+                    setSearchResults={setSearchResults}
+                    savedMovies={savedMovies}
+                    onDelete={deleteMovie}
+                  />
                 </Main>
                 <Footer />
               </ProtectedRoute>

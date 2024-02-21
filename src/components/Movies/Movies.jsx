@@ -13,12 +13,19 @@ import Button from '../Button/Button';
 
 // utils and variables
 import { movieApi } from '../../utils/MovieApi';
-import { SHORTMETER_DURATION } from '../../variables/variables';
 import { filterMovies } from '../../utils/utils';
 import { layoutConfig } from '../../utils/utils.js';
 import { SEARCH_MESSAGES } from '../../variables/messages.js';
 
-export default function Movies({ searchResults, setSearchResults, savedMovies, onSave, onDelete }) {
+export default function Movies({
+  allMovies,
+  setAllMovies,
+  searchResults,
+  setSearchResults,
+  savedMovies,
+  onSave,
+  onDelete
+}) {
   // logic for displaying movies count
   const width = useWindowSize();
   const config = layoutConfig(width);
@@ -38,85 +45,67 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
   // end of logic for displaying movies count
 
   const [searchQuery, setSearchQuery] = useLocalStorageState('searchQuery', '');
-  const [moviesToDisplay, setMoviesToDisplay] = useState([]);
   const [isShortMeter, setIsShortMeter] = useLocalStorageState('isShortMeter', false);
+  const [isShortMeterClicked, setIsShortMeterClicked] = useState(false);
 
   const [isPreloaderShown, setIsPreloaderShown] = useState(false);
-  const [isNothingFound, setIsNothingFound] = useState(false);
   const [searchError, setSearchError] = useState(false);
   const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false);
 
   const toggleIsShortMeter = event => {
     event.preventDefault();
     setIsShortMeter(!isShortMeter);
+    setIsShortMeterClicked(true);
   };
 
   const handleShowMore = () => {
     setDisplayedMoviesCount(displayedMoviesCount + cardsInRow);
   };
 
-  // on mount check if some stored results was added to saved films
-  // and fulfill them with _id fileds and thruthy 'isSaved' states
   useEffect(() => {
-    const updatedSearchResults = searchResults.map(movie => {
-      savedMovies.forEach(savedMovie => {
-        if (savedMovie.movieId === movie.id) {
-          movie.isSaved = true;
-          movie._id = savedMovie._id;
-        }
-      });
-      return movie;
-    });
-    setSearchResults(updatedSearchResults);
-  }, []);
-
-  // check if something ready to be displayed in searchResults
-  // after search or shortmeter or More button clicked
-  useEffect(() => {
-    handleMoviesToDisplay();
-  }, [searchResults, isShortMeter, displayedMoviesCount]);
-
-  const handleMoviesToDisplay = () => {
-    if (isShortMeter) {
-      const shortMoviesList = searchResults.filter(movie => movie.duration < SHORTMETER_DURATION);
-      shortMoviesList.length === 0 ? setIsNothingFound(true) : setIsNothingFound(false);
-      setMoviesToDisplay(shortMoviesList.slice(0, displayedMoviesCount));
-    } else {
-      setMoviesToDisplay(searchResults.slice(0, displayedMoviesCount));
-      searchResults.length !== 0 && setIsNothingFound(false);
+    if (isShortMeterClicked) {
+      handleSearchMovies();
+      setIsShortMeterClicked(false);
     }
-  };
+  }, [isShortMeterClicked]);
 
-  const handleSearchMovie = () => {
+  const handleSearchMovies = () => {
+    setDisplayedMoviesCount(config.initialAmount);
     setIsSearchInputDisabled(true);
-    setIsNothingFound(false);
     setIsPreloaderShown(true);
     setSearchError(false);
-    movieApi
-      .getMovies()
-      // find movies, compare them with saved, and fullfill with _id's and isSaved properties
-      .then(result => {
-        const allMoviesList = result.map(movie => {
-          let isSaved = false;
-          let _id = null;
-          savedMovies.forEach(savedMovie => {
-            if (savedMovie.movieId === movie.id) {
-              isSaved = true;
-              _id = savedMovie._id;
-            }
+
+    // if all movies list is not empty - seach there
+    // else download fresh movies list, search there, and save it
+    if (allMovies.length !== 0) {
+      setSearchResults(filterMovies(searchQuery, allMovies, isShortMeter));
+      setIsPreloaderShown(false);
+    } else {
+      movieApi
+        .getMovies()
+        // find movies, compare them with saved, and fullfill with _id's and isSaved properties
+        .then(result => {
+          const allMoviesList = result.map(movie => {
+            let isSaved = false;
+            let _id = null;
+            savedMovies.forEach(savedMovie => {
+              if (savedMovie.movieId === movie.id) {
+                isSaved = true;
+                _id = savedMovie._id;
+              }
+            });
+            return { ...movie, isSaved, _id };
           });
-          return { ...movie, isSaved, _id };
+          setAllMovies(allMoviesList);
+          setSearchResults(filterMovies(searchQuery, allMoviesList));
+          setIsPreloaderShown(false);
+        })
+        .catch(error => {
+          console.log(error);
+          setSearchError(true);
+          setIsPreloaderShown(false);
         });
-        const searchMoviesResults = filterMovies(searchQuery, allMoviesList);
-        setSearchResults(searchMoviesResults);
-        setIsPreloaderShown(false);
-        searchMoviesResults.length === 0 && setIsNothingFound(true);
-      })
-      .catch(error => {
-        console.log(error);
-        setSearchError(true);
-        setIsPreloaderShown(false);
-      });
+    }
     setIsSearchInputDisabled(false);
   };
 
@@ -125,7 +114,7 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
       <SearchForm
         inputValue={searchQuery}
         onType={setSearchQuery}
-        onSearch={handleSearchMovie}
+        onSearch={handleSearchMovies}
         isShortMeter={isShortMeter}
         toggleIsShortMeter={toggleIsShortMeter}
         isSearchInputDisabled={isSearchInputDisabled}
@@ -135,16 +124,18 @@ export default function Movies({ searchResults, setSearchResults, savedMovies, o
           <Preloader />
         ) : (
           <>
-            {isNothingFound && (
+            {searchResults.length === 0 && (
               <p className="movies__nothing-found">{SEARCH_MESSAGES.NOTHING_FOUND}</p>
             )}
             {searchError && <p className="movies__search-error">{SEARCH_MESSAGES.REQUEST_ERROR}</p>}
-            {moviesToDisplay.length > 0 && (
+            {searchResults.length > 0 && (
               <MoviesCardList
-                moviesList={moviesToDisplay}
+                moviesList={searchResults.slice(0, displayedMoviesCount)}
                 keyFieldName="id"
                 onSave={onSave}
                 onDelete={onDelete}
+                searchResults={searchResults}
+                setSearchResults={setSearchResults}
               />
             )}
           </>

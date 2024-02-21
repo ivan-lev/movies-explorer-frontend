@@ -8,7 +8,7 @@ import { useMatch } from 'react-router-dom';
 // utils
 import { mainApi } from '../../utils/MainApi';
 
-export default function MovieCard({ movie, onSave, onDelete }) {
+export default function MovieCard({ movie, onSave, onDelete, searchResults, setSearchResults }) {
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
   const [isSaved, setIsSaved] = useState(movie.isSaved);
   const hours = Math.trunc(movie.duration / 60);
@@ -24,6 +24,15 @@ export default function MovieCard({ movie, onSave, onDelete }) {
         setIsSaved(true);
         movie._id = savedCard._id;
         onSave({ ...savedCard });
+
+        // update state of card in searchResults
+        const updatedResultsList = searchResults.map(movieInResults => {
+          if (movie.id === movieInResults.id) {
+            movieInResults.isSaved = true;
+          }
+          return movieInResults;
+        });
+        setSearchResults(updatedResultsList);
       })
       .catch(error => console.log(error));
   };
@@ -31,6 +40,16 @@ export default function MovieCard({ movie, onSave, onDelete }) {
   const handleDeleteMovie = () => {
     setIsSaved(false);
     onDelete(movie);
+    // // update state of card in searchResults
+    // const updatedResultsList = searchResults.map(movieInResults => {
+    //   if (movie.movieId === movieInResults.id) {
+    //     console.log('удалить!!!', movieInResults.nameRU);
+    //     movieInResults.isSaved = false;
+    //   }
+    //   return movieInResults;
+    // });
+    // console.log(updatedResultsList);
+    // setSearchResults(updatedResultsList);
   };
 
   //buttons

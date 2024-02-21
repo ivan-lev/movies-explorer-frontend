@@ -13,7 +13,7 @@ import { filterMovies } from '../../utils/utils';
 import { SHORTMETER_DURATION } from '../../variables/variables';
 import { SEARCH_MESSAGES } from '../../variables/messages';
 
-export default function SavedMovies({ savedMovies, onDelete }) {
+export default function SavedMovies({ savedMovies, onDelete, searchResults, setSearchResults }) {
   const currentUser = useContext(CurrentUserContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [isNothingFound, setIsNothingFound] = useState(false);
@@ -42,7 +42,7 @@ export default function SavedMovies({ savedMovies, onDelete }) {
   const handleSearchMovie = () => {
     setIsSearchInputDisabled(true);
     setIsNothingFound(false);
-    const filteredByQueryMovies = filterMovies(searchQuery, savedMovies);
+    const filteredByQueryMovies = filterMovies(searchQuery, savedMovies, isShortMeter);
     setFilteredSavedMovies(filteredByQueryMovies);
     setIsSearchInputDisabled(false);
   };
@@ -88,6 +88,8 @@ export default function SavedMovies({ savedMovies, onDelete }) {
             userId={currentUser._id}
             keyFieldName="movieId"
             onDelete={onDelete}
+            searchResults={searchResults}
+            setSearchResults={setSearchResults}
           />
         )}
       </section>
