@@ -95,6 +95,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
       .then(response => {
         setCurrentUser(response);
         setIsUserDataUpdating(false);
+        setIsValuesDiffers(false);
         setIsSubmitSuccessful(true);
       })
       .catch(error => {
