@@ -1,7 +1,5 @@
 import { BASE_URL } from '../variables/variables';
 
-const token = JSON.parse(localStorage.getItem('token'));
-
 const createUser = (name, email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -43,7 +41,7 @@ const setUserInfo = (name, email, token) => {
   }).then(response => checkResponseStatus(response));
 };
 
-const saveMovie = card => {
+const saveMovie = (card, token) => {
   const {
     country,
     director,
@@ -82,7 +80,7 @@ const saveMovie = card => {
   }).then(response => checkResponseStatus(response));
 };
 
-const deleteMovie = id => {
+const deleteMovie = (id, token) => {
   return fetch(`${BASE_URL}/movies/${id}`, {
     method: 'DELETE',
     headers: {

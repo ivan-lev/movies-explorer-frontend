@@ -162,7 +162,7 @@ function App() {
 
   const deleteMovie = movie => {
     mainApi
-      .deleteMovie(movie._id)
+      .deleteMovie(movie._id, token)
       .then(result => {
         // if the movies was saved - update it's 'isSaved' state to false in searchResults
         const newSearchResults = searchResults.map(searchedMovie => {
@@ -222,6 +222,7 @@ function App() {
                     savedMovies={savedMovies}
                     onSave={saveMovie}
                     onDelete={deleteMovie}
+                    token={token}
                   />
                 </Main>
                 <Footer />

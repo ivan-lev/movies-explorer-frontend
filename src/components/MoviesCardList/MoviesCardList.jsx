@@ -10,7 +10,8 @@ export default function MoviesCardList({
   onSave,
   onDelete,
   searchResults,
-  setSearchResults
+  setSearchResults,
+  token
 }) {
   return (
     <>
@@ -23,6 +24,7 @@ export default function MoviesCardList({
               onDelete={onDelete}
               searchResults={searchResults}
               setSearchResults={setSearchResults}
+              token={token}
             />
           </li>
         ))}
