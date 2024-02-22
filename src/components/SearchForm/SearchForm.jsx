@@ -44,7 +44,14 @@ export default function SearchForm({
             disabled={isSearchInputDisabled}
             autoFocus
           ></input>
-          <button type="submit" className="search-form__button" onClick={handleSearch}></button>
+          <button
+            type="submit"
+            className={`search-form__button ${
+              isSearchInputDisabled ? 'search-form__button_disabled' : ''
+            }`}
+            onClick={handleSearch}
+            disabled={isSearchInputDisabled}
+          ></button>
         </div>
         <FilterCheckBox isShortMeter={isShortMeter} toggleIsShortMeter={toggleIsShortMeter} />
       </form>

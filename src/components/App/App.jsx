@@ -60,8 +60,10 @@ function App() {
             setRegisterError(REGISTER_MESSAGES.COULD_NOT_REGISTER);
         }
         return error.status;
+      })
+      .finally(() => {
+        setIsInputsDisabled(false);
       });
-    setIsInputsDisabled(false);
   };
 
   // if email and password are correct,
@@ -85,8 +87,10 @@ function App() {
             setRegisterError(LOGIN_MESSAGES.LOGIN_ERROR);
         }
         return error.status;
+      })
+      .finally(() => {
+        setIsInputsDisabled(false);
       });
-    setIsInputsDisabled(false);
   };
 
   // when token is received - it checked on server

@@ -29,7 +29,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
   const [isValuesDiffers, setIsValuesDiffers] = useState(true);
   const [profileUpdateError, setProfileUpdateError] = useState('');
   const [isSubmitSuccessful, setIsSubmitSuccessful] = useState(false);
-  const [isSearchInputDisabled, setIsSearchInputDisabled] = useState(false);
+  const [isInputsDisabled, setIsInputsDisabled] = useState(false);
 
   // set current user input values and make them valid as they valid
   useEffect(() => {
@@ -69,24 +69,24 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
     event.preventDefault();
     setIsSubmitSuccessful(false);
     setProfileUpdateError(false);
-    setIsSearchInputDisabled(false);
+    setIsInputsDisabled(false);
     if (!isUserDataUpdating) {
       setIsUserDataUpdating(true);
     }
   };
 
   const handleSubmitUserInfo = () => {
-    setIsSearchInputDisabled(true);
+    setIsInputsDisabled(true);
     const { name, email } = values;
     // if data in inputs is the same - do nothing
     if (!isValuesDiffers) {
       setIsUserDataUpdating(false);
-      setIsSearchInputDisabled(false);
+      setIsInputsDisabled(false);
       return;
     }
     // check if all inputs filled and valid
     if (!isValid || Object.values(values).some(value => value.length === 0)) {
-      setIsSearchInputDisabled(false);
+      setIsInputsDisabled(false);
       return;
     }
 
@@ -108,8 +108,10 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
           case 500:
             setProfileUpdateError(PROFILE_MESSAGES.UPDATE_ERROR);
         }
+      })
+      .finally(() => {
+        setIsInputsDisabled(false);
       });
-    setIsSearchInputDisabled(false);
   };
 
   const handleHideErrorOnType = event => {
@@ -148,7 +150,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 value={values?.name || ''}
                 onChange={handleHideErrorOnType}
                 required
-                disabled={isSearchInputDisabled}
+                disabled={isInputsDisabled}
                 autoFocus
               ></input>
             </div>
@@ -163,7 +165,7 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 value={values?.email || ''}
                 onChange={handleHideErrorOnType}
                 required
-                disabled={isSearchInputDisabled}
+                disabled={isInputsDisabled}
               ></input>
             </div>
 
@@ -186,9 +188,12 @@ export default function Profile({ token, setCurrentUser, onLogout }) {
                 <p className="profile__updating-error">{profileUpdateError}</p>
               </div>
               <Button
-                type={`transparent button_bigger-font ${!isValid ? 'button_text-crimson' : ''}`}
+                type={`transparent button_bigger-font ${
+                  !isValid || isInputsDisabled ? 'button_text-crimson' : ''
+                }`}
                 text={isValuesDiffers ? 'Сохранить' : 'Закрыть'}
                 onClick={handleSubmitUserInfo}
+                disabled={isInputsDisabled}
               />
             </>
           )}

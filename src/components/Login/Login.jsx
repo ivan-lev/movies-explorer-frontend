@@ -90,9 +90,10 @@ export default function Login({ onLogin, error, setError, isInputsDisabled }) {
         <div className="login__bottom">
           <span className="login__request-error">{error}</span>
           <Button
-            type={`blue ${!isValid ? 'button_disabled' : ''}`}
+            type={`blue ${!isValid || isInputsDisabled ? 'button_disabled' : ''}`}
             text="Войти"
             onClick={handleLogin}
+            disabled={isInputsDisabled}
           />
           <div className="login__not-registered-wrapper">
             <span className="login__not-registered-text">Ещё не зарегистрированы?</span>

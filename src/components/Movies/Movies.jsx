@@ -85,6 +85,7 @@ export default function Movies({
         setIsNothingFound(true);
       }
       setIsPreloaderShown(false);
+      setIsSearchInputDisabled(false);
     } else {
       movieApi
         .getMovies()
@@ -113,9 +114,11 @@ export default function Movies({
           console.log(error);
           setSearchError(true);
           setIsPreloaderShown(false);
+        })
+        .finally(() => {
+          setIsSearchInputDisabled(false);
         });
     }
-    setIsSearchInputDisabled(false);
   };
 
   return (
