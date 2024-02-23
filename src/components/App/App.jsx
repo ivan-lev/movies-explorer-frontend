@@ -59,10 +59,8 @@ function App() {
           case 500:
             setRegisterError(REGISTER_MESSAGES.COULD_NOT_REGISTER);
         }
-        return error.status;
-      })
-      .finally(() => {
         setIsInputsDisabled(false);
+        return error.status;
       });
   };
 
@@ -86,10 +84,8 @@ function App() {
           case 500:
             setRegisterError(LOGIN_MESSAGES.LOGIN_ERROR);
         }
-        return error.status;
-      })
-      .finally(() => {
         setIsInputsDisabled(false);
+        return error.status;
       });
   };
 
