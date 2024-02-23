@@ -4,7 +4,7 @@ const cleanQuery = string => {
   return (
     string
       .replace(/\s\s+/g, ' ') // replace multiple spaces with singl ones
-      .replace(/[^a-zA-Zа-яА-Я' ]/g, '') // clear words from special characters
+      .replace(/[^1-9a-zA-Zа-яА-Я' ]/g, '') // clear words from special characters
       .toLowerCase() // lowercase the phrase
       .split(' ') // split string to array of words
       // remove empty elements and words shorter than 2 letters
