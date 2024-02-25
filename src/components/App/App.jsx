@@ -120,6 +120,7 @@ function App() {
     setSearchResults([]);
     setIsLoggedIn(false);
     setAllMovies([]);
+    setIsInputsDisabled(false);
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('searchResults');
     localStorage.removeItem('isShortMeter');
