@@ -1,9 +1,12 @@
 import './MovieCard.css';
+import spinner from '../../images/spinner.gif';
+import pixel from '../../images/transparent-pixel.png';
 
 // React and hooks
 import React from 'react';
 import { useState } from 'react';
 import { useMatch } from 'react-router-dom';
+import { useImageLoaded } from '../../hooks/useImageLoaded';
 
 // utils
 import { mainApi } from '../../utils/MainApi';
@@ -16,6 +19,7 @@ export default function MovieCard({
   setSearchResults,
   token
 }) {
+  const [ref, loaded, onLoad] = useImageLoaded();
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
   const [isSaved, setIsSaved] = useState(movie.isSaved);
   const hours = Math.trunc(movie.duration / 60);
@@ -47,16 +51,6 @@ export default function MovieCard({
   const handleDeleteMovie = () => {
     setIsSaved(false);
     onDelete(movie);
-    // // update state of card in searchResults
-    // const updatedResultsList = searchResults.map(movieInResults => {
-    //   if (movie.movieId === movieInResults.id) {
-    //     console.log('удалить!!!', movieInResults.nameRU);
-    //     movieInResults.isSaved = false;
-    //   }
-    //   return movieInResults;
-    // });
-    // console.log(updatedResultsList);
-    // setSearchResults(updatedResultsList);
   };
 
   //buttons
@@ -90,14 +84,23 @@ export default function MovieCard({
   };
 
   return (
+    // card is waiting for image to be loaded, unless it has hidden property
+
     <div className="movie-card">
-      <a href={movie.trailerLink} target="_blank" rel="noreferrer">
+      <a
+        className="movie-card__cover-link"
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noreferrer"
+      >
         <img
           className="movie-card__cover"
-          src={movie.image}
+          src={!loaded ? pixel : movie.image}
           alt={`${movie.nameRU} movie cover`}
           onMouseEnter={() => setIsSaveButtonShown(true)}
           onMouseLeave={() => setIsSaveButtonShown(false)}
+          ref={ref}
+          onLoad={onLoad}
         />
       </a>
 
