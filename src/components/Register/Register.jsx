@@ -1,16 +1,18 @@
 import './Register.css';
 
 // React and hooks
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 //components
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import ButtonShowPassword from '../ButtonShowPassword/ButtonShowPassword';
 
 export default function Register({ register, error, setError, isInputsDisabled }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
+  const [isPasswordShowed, setIsPasswordShowed] = useState(false);
 
   // set values validity to false as we have blank inputs at start
   useEffect(() => {
@@ -86,11 +88,11 @@ export default function Register({ register, error, setError, isInputsDisabled }
           </fieldset>
 
           <fieldset className="register__fieldset">
-            <label className="register__input-label">
+            <label className="register__input-label register__password-label">
               Пароль
               <input
                 className="register__input"
-                type="password"
+                type={!isPasswordShowed ? 'password' : 'text'}
                 name="password"
                 id="password"
                 placeholder="Введите пароль"
@@ -103,6 +105,7 @@ export default function Register({ register, error, setError, isInputsDisabled }
                 }}
                 disabled={isInputsDisabled}
               />
+              <ButtonShowPassword currentState={isPasswordShowed} onChange={setIsPasswordShowed} />
             </label>
           </fieldset>
 

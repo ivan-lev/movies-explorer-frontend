@@ -1,16 +1,18 @@
 import './Login.css';
 
 // React and hooks
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
 // components
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import ButtonShowPassword from '../ButtonShowPassword/ButtonShowPassword';
 
 export default function Login({ onLogin, error, setError, isInputsDisabled }) {
   const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
+  const [isPasswordShowed, setIsPasswordShowed] = useState(false);
 
   // set values validity to false as we have blank inputs at start
   useEffect(() => {
@@ -62,11 +64,11 @@ export default function Login({ onLogin, error, setError, isInputsDisabled }) {
           </fieldset>
 
           <fieldset className="login__fieldset">
-            <label className="login__input-label">
+            <label className="login__input-label login__password-label">
               Пароль
               <input
                 className="login__input"
-                type="password"
+                type={!isPasswordShowed ? 'password' : 'text'}
                 name="password"
                 id="password"
                 placeholder="Введите пароль"
@@ -79,6 +81,7 @@ export default function Login({ onLogin, error, setError, isInputsDisabled }) {
                 }}
                 disabled={isInputsDisabled}
               />
+              <ButtonShowPassword currentState={isPasswordShowed} onChange={setIsPasswordShowed} />
             </label>
           </fieldset>
 
