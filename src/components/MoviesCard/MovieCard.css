@@ -17,11 +17,27 @@
   }
 }
 
+.movie-card_hidden {
+  visibility: hidden;
+}
+
+.movie-card__cover-link {
+  height: 201px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .movie-card__cover {
   height: 201px;
   width: 100%;
   object-fit: cover;
   border-radius: 6px;
+  background-image: url(../../images/spinner.gif);
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
 
   @media screen and (max-width: 768px) {
     height: 190px;

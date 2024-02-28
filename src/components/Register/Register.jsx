@@ -1,25 +1,36 @@
 import './Register.css';
 
-import React, { useState } from 'react';
+// React and hooks
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-import { useForm } from '../../hooks/useForm';
-import { validateRegistration } from '../../utils/formValidator';
-
+//components
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import ButtonShowPassword from '../ButtonShowPassword/ButtonShowPassword';
 
-export default function Register({ onSubmit }) {
-  const { values, setValues, handleChange } = useForm({ name: '', email: '', password: '' });
-  const [errorMessage, setErrorMessage] = useState('Что-то пошло не так...');
+export default function Register({ register, error, setError, isInputsDisabled }) {
+  const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
+  const [isPasswordShowed, setIsPasswordShowed] = useState(false);
+
+  // set values validity to false as we have blank inputs at start
+  useEffect(() => {
+    setValuesValidity({ name: false, email: false, password: false });
+  }, []);
 
   const handleSubmit = () => {
-    const { name, email, password } = values;
-    const isDataValid = validateRegistration(name, email, password, setErrorMessage);
-    if (isDataValid) {
-      alert('Регистрируем юзера: ' + name + ', ' + email + ', ' + password);
-      setValues({ name: '', email: '', password: '' });
+    // check if all inputs filled and valid
+    if (!isValid || Object.values(values).some(value => value.length === 0)) {
+      return;
     }
+    const { name, email, password } = values;
+    register(name, email, password);
+  };
+
+  const handleHideErrorOnType = event => {
+    error !== '' && setError('');
+    handleChange(event);
   };
 
   return (
@@ -44,11 +55,13 @@ export default function Register({ onSubmit }) {
                 placeholder="Введите имя"
                 autoComplete="on"
                 required
-                value={values.name}
-                onChange={handleChange}
+                value={values?.name || ''}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                disabled={isInputsDisabled}
+                autoFocus
               />
             </label>
           </fieldset>
@@ -64,42 +77,51 @@ export default function Register({ onSubmit }) {
                 placeholder="Введите email"
                 autoComplete="on"
                 required
-                value={values.email}
-                onChange={handleChange}
+                value={values?.email || ''}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                disabled={isInputsDisabled}
               />
             </label>
           </fieldset>
 
           <fieldset className="register__fieldset">
-            <label className="register__input-label">
+            <label className="register__input-label register__password-label">
               Пароль
               <input
                 className="register__input"
-                type="password"
+                type={!isPasswordShowed ? 'password' : 'text'}
                 name="password"
                 id="password"
                 placeholder="Введите пароль"
                 autoComplete="on"
                 required
-                value={values.password}
-                onChange={handleChange}
+                value={values?.password || ''}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
                   event.key === 'Enter' && handleSubmit();
                 }}
+                disabled={isInputsDisabled}
               />
+              <ButtonShowPassword currentState={isPasswordShowed} onChange={setIsPasswordShowed} />
             </label>
           </fieldset>
 
-          <div className="register__error-wrapper">
-            <span className="register__error register__error_shown">{errorMessage}</span>
+          <div className="register__validation-error-wrapper">
+            <span className="register__validation-error">{errorToShow}</span>
           </div>
         </form>
 
         <div className="register__bottom">
-          <Button type="blue" text="Зарегистрироваться" onClick={handleSubmit} />
+          <span className="register__registration-error">{error}</span>
+          <Button
+            type={`blue ${!isValid || isInputsDisabled ? 'button_disabled' : ''}`}
+            text="Зарегистрироваться"
+            onClick={handleSubmit}
+            disabled={isInputsDisabled}
+          />
           <div className="register__already-registered-wrapper">
             <span className="register__already-registered-text">Уже зарегистрированы?</span>
             <Link className="register__login-link" to="/signin">

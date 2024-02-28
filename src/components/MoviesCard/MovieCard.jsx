@@ -1,30 +1,57 @@
 import './MovieCard.css';
+import spinner from '../../images/spinner.gif';
+import pixel from '../../images/transparent-pixel.png';
 
+// React and hooks
 import React from 'react';
 import { useState } from 'react';
 import { useMatch } from 'react-router-dom';
+import { useImageLoaded } from '../../hooks/useImageLoaded';
+
+// utils
+import { mainApi } from '../../utils/MainApi';
 
 export default function MovieCard({
-  country,
-  director,
-  duration,
-  year,
-  description,
-  image,
-  trailerLink,
-  thumbnail,
-  owner,
-  movieId,
-  nameRU,
-  nameEN,
-  userId
+  movie,
+  onSave,
+  onDelete,
+  searchResults,
+  setSearchResults,
+  token
 }) {
+  const [ref, loaded, onLoad] = useImageLoaded();
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
-  const [isMovieSaved, setIsMovieSaved] = useState(userId === owner);
-  const hours = Math.trunc(duration / 60);
-  const minutes = duration % 60;
+  const [isSaved, setIsSaved] = useState(movie.isSaved);
+  const hours = Math.trunc(movie.duration / 60);
+  const minutes = movie.duration % 60;
 
   const pathMatchedMovies = useMatch('/movies');
+
+  const handleSaveMovie = () => {
+    mainApi
+      .saveMovie(movie, token)
+      .then(savedCard => {
+        savedCard.isSaved = true;
+        setIsSaved(true);
+        movie._id = savedCard._id;
+        onSave({ ...savedCard });
+
+        // update state of card in searchResults
+        const updatedResultsList = searchResults.map(movieInResults => {
+          if (movie.id === movieInResults.id) {
+            movieInResults.isSaved = true;
+          }
+          return movieInResults;
+        });
+        setSearchResults(updatedResultsList);
+      })
+      .catch(error => console.log(error));
+  };
+
+  const handleDeleteMovie = () => {
+    setIsSaved(false);
+    onDelete(movie);
+  };
 
   //buttons
   const saveButton = () => {
@@ -32,7 +59,7 @@ export default function MovieCard({
       <button
         className="movie-card__button movie-card__button_save"
         onMouseEnter={() => setIsSaveButtonShown(true)}
-        onClick={handleAddToSavedMovies}
+        onClick={handleSaveMovie}
       >
         Сохранить
       </button>
@@ -42,7 +69,7 @@ export default function MovieCard({
     return (
       <button
         className="movie-card__button movie-card__button_crimson"
-        onClick={handleRemoveFromSavedMovies}
+        onClick={handleDeleteMovie}
       ></button>
     );
   };
@@ -51,33 +78,35 @@ export default function MovieCard({
       <button
         className="movie-card__button movie-card__button_gray"
         onMouseEnter={() => setIsSaveButtonShown(true)}
-        onClick={handleRemoveFromSavedMovies}
+        onClick={handleDeleteMovie}
       ></button>
     );
   };
 
-  const handleAddToSavedMovies = () => {
-    alert('Добавить фильм в сохранённые');
-    setIsMovieSaved(true);
-  };
-
-  const handleRemoveFromSavedMovies = () => {
-    alert('Удалить фильм из сохранённых');
-    setIsMovieSaved(false);
-  };
-
   return (
+    // card is waiting for image to be loaded, unless it has hidden property
+
     <div className="movie-card">
-      <img
-        className="movie-card__cover"
-        src={`/movie-covers/${thumbnail}`}
-        alt={`${nameRU} movie cover`}
-        onMouseEnter={() => setIsSaveButtonShown(true)}
-        onMouseLeave={() => setIsSaveButtonShown(false)}
-      />
+      <a
+        className="movie-card__cover-link"
+        href={movie.trailerLink}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <img
+          className="movie-card__cover"
+          src={!loaded ? pixel : movie.image}
+          alt={`${movie.nameRU} movie cover`}
+          onMouseEnter={() => setIsSaveButtonShown(true)}
+          onMouseLeave={() => setIsSaveButtonShown(false)}
+          ref={ref}
+          onLoad={onLoad}
+        />
+      </a>
+
       {
         // below are one of the save/unsave buttons rendered
-        !isMovieSaved
+        !isSaved
           ? // if the movie is not saved - show button for saving film
             // when mouse enter the preview image
             isSaveButtonShown && saveButton()
@@ -89,7 +118,7 @@ export default function MovieCard({
       }
 
       <div className="movie-card__info">
-        <span className="movie-card__title">{nameRU}</span>
+        <span className="movie-card__title">{movie.nameRU}</span>
         <span className="movie-card__duration">{`${hours ? hours + 'ч' : ''} ${minutes}м`}</span>
       </div>
     </div>

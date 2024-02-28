@@ -1,25 +1,38 @@
 import './Login.css';
 
-import React, { useState } from 'react';
+// React and hooks
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useFormWithValidation } from '../../hooks/useFormWithValidation';
 
-import { useForm } from '../../hooks/useForm';
-import { validateLogin } from '../../utils/formValidator';
-
+// components
 import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
+import ButtonShowPassword from '../ButtonShowPassword/ButtonShowPassword';
 
-export default function Login({ onSubmit }) {
-  const { values, setValues, handleChange } = useForm({ email: '', password: '' });
-  const [errorMessage, setErrorMessage] = useState('Ошибка логина...');
+export default function Login({ onLogin, error, setError, isInputsDisabled }) {
+  const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
+  const [isPasswordShowed, setIsPasswordShowed] = useState(false);
 
-  const handleSubmit = () => {
-    const { email, password } = values;
-    const isDataValid = validateLogin(email, password, setErrorMessage);
-    if (isDataValid) {
-      alert('Отправляем форму с параметрами: ' + email + ', ' + password);
-      setValues({ email: '', password: '' });
+  // set values validity to false as we have blank inputs at start
+  useEffect(() => {
+    setValuesValidity({ email: false, password: false });
+  }, []);
+
+  const handleLogin = () => {
+    // check if all inputs filled and valid
+    if (!isValid || Object.values(values).some(value => value.length === 0)) {
+      return;
     }
+    const { email, password } = values;
+    if (isValid) {
+      onLogin(email, password);
+    }
+  };
+
+  const handleHideErrorOnType = event => {
+    error !== '' && setError('');
+    handleChange(event);
   };
 
   return (
@@ -27,7 +40,7 @@ export default function Login({ onSubmit }) {
       <section className="login">
         <Logo />
         <h1 className="login__title">Рады видеть!</h1>
-        <form id="login__form" name="login__form" className="login__form" onSubmit={handleSubmit}>
+        <form id="login__form" name="login__form" className="login__form" onSubmit={handleLogin}>
           <fieldset className="login__fieldset">
             <label className="login__input-label">
               Email
@@ -39,42 +52,52 @@ export default function Login({ onSubmit }) {
                 placeholder="Введите email"
                 autoComplete="on"
                 required
-                value={values.email}
-                onChange={handleChange}
+                value={values?.email || ''}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
-                  event.key === 'Enter' && handleSubmit();
+                  event.key === 'Enter' && handleLogin();
                 }}
+                disabled={isInputsDisabled}
+                autoFocus
               />
             </label>
           </fieldset>
 
           <fieldset className="login__fieldset">
-            <label className="login__input-label">
+            <label className="login__input-label login__password-label">
               Пароль
               <input
                 className="login__input"
-                type="password"
+                type={!isPasswordShowed ? 'password' : 'text'}
                 name="password"
                 id="password"
                 placeholder="Введите пароль"
                 autoComplete="on"
                 required
-                value={values.password}
-                onChange={handleChange}
+                value={values?.password || ''}
+                onChange={handleHideErrorOnType}
                 onKeyDown={event => {
-                  event.key === 'Enter' && handleSubmit();
+                  event.key === 'Enter' && handleLogin();
                 }}
+                disabled={isInputsDisabled}
               />
+              <ButtonShowPassword currentState={isPasswordShowed} onChange={setIsPasswordShowed} />
             </label>
           </fieldset>
 
-          <div className="login__error-wrapper">
-            <span className="login__error login__error_shown">{errorMessage}</span>
+          <div className="login__validation-error-wrapper">
+            <span className="login__validation-error">{errorToShow}</span>
           </div>
         </form>
 
         <div className="login__bottom">
-          <Button type="blue" text="Войти" onClick={handleSubmit} />
+          <span className="login__request-error">{error}</span>
+          <Button
+            type={`blue ${!isValid || isInputsDisabled ? 'button_disabled' : ''}`}
+            text="Войти"
+            onClick={handleLogin}
+            disabled={isInputsDisabled}
+          />
           <div className="login__not-registered-wrapper">
             <span className="login__not-registered-text">Ещё не зарегистрированы?</span>
             <Link className="login__register-link" to="/signup">

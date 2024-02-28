@@ -87,6 +87,31 @@
   background-color: var(--color-separator);
 }
 
+.profile__validation-error-wrapper {
+  height: 10px;
+  margin-bottom: auto;
+  margin-top: 0;
+  padding: 0;
+  line-height: 0;
+}
+
+.profile__validation-error {
+  color: var(--bg-button-crimson);
+  font-size: 10px;
+  line-height: 10px;
+  text-transform: lowercase;
+  display: block;
+}
+
+.profile__validation-error::first-letter {
+  text-transform: uppercase;
+}
+
+.profile__data_updated {
+  color: var(--bg-button-blue);
+  font-size: 10px;
+}
+
 .profile__buttons-wrapper {
   display: flex;
   flex-direction: column;
@@ -104,4 +129,12 @@
   color: var(--bg-button-crimson);
   font-size: 11px;
   line-height: 11px;
+  text-transform: lowercase;
+  display: block;
+  text-align: center;
+  text-wrap: balance;
+}
+
+.profile__updating-error::first-letter {
+  text-transform: uppercase;
 }

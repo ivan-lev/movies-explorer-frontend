@@ -1,126 +1,57 @@
-import { nameRegexp, emailRegExp } from '../variables/variables';
+import { NAME_REGEXP, EMAIL_REGEXP } from '../variables/variables';
+import { VALIDATION_ERRORS } from '../variables/messages';
 
 const nameValidator = name => {
   if (!name) {
-    return 'Необходимо заполнить имя';
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.NAME_EMPTY };
   }
 
-  if (!name.match(nameRegexp)) {
-    return 'Поле имя содержит недопустимые символы';
+  if (!name.match(NAME_REGEXP)) {
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.NAME_INVALID };
   }
 
   if (name.length < 2) {
-    return 'Имя слишком короткое';
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.NAME_SHORT };
   }
 
   if (!name.length > 30) {
-    return 'Имя слишком длинное';
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.NAME_LONG };
   }
 
-  return '';
+  return { isValid: true, errorMessage: '' };
 };
 
 const emailValidator = email => {
   if (!email) {
-    return 'Необходимо заполнить почту';
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.EMAIL_EMPTY };
   }
 
-  if (!email.match(emailRegExp)) {
-    return 'Почта заполнена неправильно';
+  if (!email.match(EMAIL_REGEXP)) {
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.EMAIL_INVALID };
   }
 
-  return '';
+  return { isValid: true, errorMessage: '' };
 };
 
 const passwordValidator = password => {
   if (!password) {
-    return 'Необходимо заполнить поле с паролем';
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.PASSWORD_EMPTY };
   }
 
-  return '';
-};
-
-export const validateProfileUpdate = (name, email, setMessage) => {
-  const validateName = nameValidator(name);
-  const validateEmail = emailValidator(email);
-
-  if (!name || !email) {
-    setMessage('Необходимо заполнить все поля');
-    return false;
-  }
-
-  if (validateName) {
-    setMessage(validateName);
-    return false;
-  }
-
-  if (validateEmail) {
-    setMessage(validateEmail);
-    return false;
-  }
-
-  setMessage('');
-  return true;
-};
-
-export const validateLogin = (email, password, setMessage) => {
-  const validateEmail = emailValidator(email);
-  const validatePassword = passwordValidator(password);
-
-  if (!email && !password) {
-    setMessage('Необходимо заполнить все поля');
-    return false;
-  }
-
-  if (validateEmail) {
-    setMessage(validateEmail);
-    return false;
-  }
-
-  if (validatePassword) {
-    setMessage(validatePassword);
-    return false;
-  }
-
-  setMessage('');
-  return true;
-};
-
-export const validateRegistration = (name, email, password, setMessage) => {
-  const validateName = nameValidator(name);
-  const validateEmail = emailValidator(email);
-  const validatePassword = passwordValidator(password);
-
-  if (!name && !email && !password) {
-    setMessage('Необходимо заполнить все поля');
-    return false;
-  }
-
-  if (validateName) {
-    setMessage(validateName);
-    return false;
-  }
-
-  if (validateEmail) {
-    setMessage(validateEmail);
-    return false;
-  }
-
-  if (validatePassword) {
-    setMessage(validatePassword);
-    return false;
-  }
-
-  setMessage('');
-  return true;
+  return { isValid: true, errorMessage: '' };
 };
 
 export const validateSearch = (value, setMessage) => {
   if (!value) {
-    setMessage('Нужно что-то написать...');
+    setMessage(VALIDATION_ERRORS.MOVIE_QUERY_EMPTY);
     return false;
   }
 
-  setMessage('Фильм');
   return true;
+};
+
+export const validators = {
+  nameValidator,
+  emailValidator,
+  passwordValidator
 };

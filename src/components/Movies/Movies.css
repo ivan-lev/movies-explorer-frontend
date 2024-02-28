@@ -1,5 +1,8 @@
 .movies {
   padding-top: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   @media screen and (max-width: 768px) {
     padding-left: 30px;
@@ -11,4 +14,11 @@
     padding-right: 10px;
     padding-top: 40px;
   }
+}
+
+.movies__nothing-found,
+.movies__search-error {
+  text-align: center;
+  text-wrap: balance;
+  max-width: 500px;
 }

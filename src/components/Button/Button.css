@@ -93,6 +93,12 @@
   width: 100%;
 }
 
+.button_disabled {
+  color: var(--color-submit-disabled);
+  background: var(--bg-submit-disabled);
+  cursor: default;
+}
+
 .button_errored {
   color: var(--color-submit-error);
   background-color: var(--bg-submit-error);
