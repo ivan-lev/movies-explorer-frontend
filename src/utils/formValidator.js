@@ -41,6 +41,14 @@ const passwordValidator = password => {
   return { isValid: true, errorMessage: '' };
 };
 
+const secondPasswordValidator = password => {
+  if (!password) {
+    return { isValid: false, errorMessage: VALIDATION_ERRORS.SECOND_PASSWORD_EMPTY };
+  }
+
+  return { isValid: true, errorMessage: '' };
+};
+
 export const validateSearch = (value, setMessage) => {
   if (!value) {
     setMessage(VALIDATION_ERRORS.MOVIE_QUERY_EMPTY);
@@ -53,5 +61,6 @@ export const validateSearch = (value, setMessage) => {
 export const validators = {
   nameValidator,
   emailValidator,
-  passwordValidator
+  passwordValidator,
+  secondPasswordValidator
 };
