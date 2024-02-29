@@ -11,7 +11,8 @@ export default function MoviesCardList({
   onDelete,
   searchResults,
   setSearchResults,
-  token
+  token,
+  handleShowTrailer
 }) {
   return (
     <>
@@ -25,6 +26,7 @@ export default function MoviesCardList({
               searchResults={searchResults}
               setSearchResults={setSearchResults}
               token={token}
+              handleShowTrailer={handleShowTrailer}
             />
           </li>
         ))}

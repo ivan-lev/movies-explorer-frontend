@@ -1,0 +1,32 @@
+.custom-iframe {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.custom-iframe__video {
+  max-width: 1280px;
+  width: 80%;
+  aspect-ratio: 16 / 9;
+
+  @media screen and (max-width: 1024px) {
+    width: 100%;
+    padding: 0 70px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 30px;
+  }
+
+  @media screen and (max-width: 540px) {
+    padding: 0;
+  }
+}

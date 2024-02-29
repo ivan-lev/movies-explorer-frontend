@@ -24,6 +24,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import NotFound from '../NotFound/NotFound';
+import CustomIframe from '../CustomIframe/CustomIframe.jsx';
 
 //utils and variables
 import CurrentUserContext from '../../contexts/currentUserContext.js';
@@ -177,6 +178,16 @@ function App() {
       .catch(error => console.error(error));
   };
 
+  //iframe with movie logic
+  const [isIframeShowed, setIsIframeShowed] = useState(false);
+  const [movieLink, setMovieLink] = useState('');
+
+  const handleShowTrailer = link => {
+    document.body.style.overflow = 'hidden';
+    setMovieLink(link);
+    setIsIframeShowed(!isIframeShowed);
+  };
+
   return (
     <div className="App">
       <CurrentUserContext.Provider value={currentUser}>
@@ -220,9 +231,16 @@ function App() {
                     onSave={saveMovie}
                     onDelete={deleteMovie}
                     token={token}
+                    handleShowTrailer={handleShowTrailer}
                   />
                 </Main>
                 <Footer />
+                <CustomIframe
+                  isIframeShowed={isIframeShowed}
+                  setIsIframeShowed={setIsIframeShowed}
+                  movieLink={movieLink}
+                  setMovieLink={setMovieLink}
+                />
               </ProtectedRoute>
             }
           />
@@ -241,9 +259,16 @@ function App() {
                     setSearchResults={setSearchResults}
                     savedMovies={savedMovies}
                     onDelete={deleteMovie}
+                    handleShowTrailer={handleShowTrailer}
                   />
                 </Main>
                 <Footer />
+                <CustomIframe
+                  isIframeShowed={isIframeShowed}
+                  setIsIframeShowed={setIsIframeShowed}
+                  movieLink={movieLink}
+                  setMovieLink={setMovieLink}
+                />
               </ProtectedRoute>
             }
           />
