@@ -26,17 +26,20 @@ export default function CustomIframe({
 
   return isIframeShowed ? (
     <div className="custom-iframe" onClick={hideIframe}>
-      <iframe
-        className="custom-iframe__video"
-        src={`https://www.youtube.com/embed/${id}`}
-        frameBorder="0"
-        allow="autoplay; encrypted-media"
-        allowFullScreen
-        title="video"
-        onClick={e => {
-          e.stopPropagation();
-        }}
-      ></iframe>
+      <div className="custom-iframe__wrapper">
+        <iframe
+          className="custom-iframe__video"
+          src={`https://www.youtube.com/embed/${id}`}
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          title="video"
+          onClick={e => {
+            e.stopPropagation();
+          }}
+        ></iframe>
+        <button className="custom-iframe__close-button"></button>
+      </div>
     </div>
   ) : null;
 }
