@@ -13,7 +13,13 @@ import { filterMovies } from '../../utils/utils';
 import { SHORTMETER_DURATION } from '../../variables/variables';
 import { SEARCH_MESSAGES } from '../../variables/messages';
 
-export default function SavedMovies({ savedMovies, onDelete, searchResults, setSearchResults }) {
+export default function SavedMovies({
+  savedMovies,
+  onDelete,
+  searchResults,
+  setSearchResults,
+  handleShowTrailer
+}) {
   const currentUser = useContext(CurrentUserContext);
   const [searchQuery, setSearchQuery] = useState('');
   const [isNothingFound, setIsNothingFound] = useState(false);
@@ -90,6 +96,7 @@ export default function SavedMovies({ savedMovies, onDelete, searchResults, setS
             onDelete={onDelete}
             searchResults={searchResults}
             setSearchResults={setSearchResults}
+            handleShowTrailer={handleShowTrailer}
           />
         )}
       </section>

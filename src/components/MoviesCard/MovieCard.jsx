@@ -1,5 +1,4 @@
 import './MovieCard.css';
-import spinner from '../../images/spinner.gif';
 import pixel from '../../images/transparent-pixel.png';
 
 // React and hooks
@@ -17,7 +16,8 @@ export default function MovieCard({
   onDelete,
   searchResults,
   setSearchResults,
-  token
+  token,
+  handleShowTrailer
 }) {
   const [ref, loaded, onLoad] = useImageLoaded();
   const [isSaveButtonShown, setIsSaveButtonShown] = useState(false);
@@ -83,26 +83,24 @@ export default function MovieCard({
     );
   };
 
+  const putLinkInIframe = () => {
+    handleShowTrailer(movie.trailerLink);
+  };
+
   return (
     // card is waiting for image to be loaded, unless it has hidden property
 
     <div className="movie-card">
-      <a
-        className="movie-card__cover-link"
-        href={movie.trailerLink}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <img
-          className="movie-card__cover"
-          src={!loaded ? pixel : movie.image}
-          alt={`${movie.nameRU} movie cover`}
-          onMouseEnter={() => setIsSaveButtonShown(true)}
-          onMouseLeave={() => setIsSaveButtonShown(false)}
-          ref={ref}
-          onLoad={onLoad}
-        />
-      </a>
+      <img
+        className="movie-card__cover"
+        src={!loaded ? pixel : movie.image}
+        alt={`${movie.nameRU} movie cover`}
+        onMouseEnter={() => setIsSaveButtonShown(true)}
+        onMouseLeave={() => setIsSaveButtonShown(false)}
+        ref={ref}
+        onLoad={onLoad}
+        onClick={putLinkInIframe}
+      />
 
       {
         // below are one of the save/unsave buttons rendered

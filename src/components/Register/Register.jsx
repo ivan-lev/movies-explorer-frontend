@@ -10,18 +10,28 @@ import Logo from '../Logo/Logo';
 import Button from '../Button/Button';
 import ButtonShowPassword from '../ButtonShowPassword/ButtonShowPassword';
 
+// variables
+import { VALIDATION_ERRORS } from '../../variables/messages';
+
 export default function Register({ register, error, setError, isInputsDisabled }) {
-  const { values, setValuesValidity, errorToShow, handleChange, isValid } = useFormWithValidation();
+  const { values, setValuesValidity, errorToShow, handleChange, isValid, setErrorToShow } =
+    useFormWithValidation();
   const [isPasswordShowed, setIsPasswordShowed] = useState(false);
 
   // set values validity to false as we have blank inputs at start
   useEffect(() => {
-    setValuesValidity({ name: false, email: false, password: false });
+    setValuesValidity({ name: false, email: false, password: false, secondPassword: false });
   }, []);
 
   const handleSubmit = () => {
     // check if all inputs filled and valid
     if (!isValid || Object.values(values).some(value => value.length === 0)) {
+      return;
+    }
+
+    // check if passwords compare
+    if (values.password !== values.secondPassword) {
+      setErrorToShow(VALIDATION_ERRORS.PASSWORDS_DIFFERS);
       return;
     }
     const { name, email, password } = values;
@@ -96,7 +106,7 @@ export default function Register({ register, error, setError, isInputsDisabled }
                 name="password"
                 id="password"
                 placeholder="Введите пароль"
-                autoComplete="on"
+                autoComplete="off"
                 required
                 value={values?.password || ''}
                 onChange={handleHideErrorOnType}
@@ -106,6 +116,27 @@ export default function Register({ register, error, setError, isInputsDisabled }
                 disabled={isInputsDisabled}
               />
               <ButtonShowPassword currentState={isPasswordShowed} onChange={setIsPasswordShowed} />
+            </label>
+          </fieldset>
+
+          <fieldset className="register__fieldset">
+            <label className="register__input-label">
+              Повторите пароль
+              <input
+                className="register__input"
+                type={!isPasswordShowed ? 'password' : 'text'}
+                name="secondPassword"
+                id="secondPassword"
+                placeholder="Повторите пароль для проверки"
+                autoComplete="off"
+                required
+                value={values?.secondPassword || ''}
+                onChange={handleHideErrorOnType}
+                onKeyDown={event => {
+                  event.key === 'Enter' && handleSubmit();
+                }}
+                disabled={isInputsDisabled}
+              />
             </label>
           </fieldset>
 
@@ -120,7 +151,7 @@ export default function Register({ register, error, setError, isInputsDisabled }
             type={`blue ${!isValid || isInputsDisabled ? 'button_disabled' : ''}`}
             text="Зарегистрироваться"
             onClick={handleSubmit}
-            disabled={isInputsDisabled}
+            disabled={!isValid || isInputsDisabled}
           />
           <div className="register__already-registered-wrapper">
             <span className="register__already-registered-text">Уже зарегистрированы?</span>

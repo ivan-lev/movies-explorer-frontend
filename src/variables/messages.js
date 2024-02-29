@@ -34,5 +34,7 @@ export const VALIDATION_ERRORS = {
   EMAIL_EMPTY: 'Необходимо заполнить почту',
   EMAIL_INVALID: 'Почта заполнена неправильно',
   PASSWORD_EMPTY: 'Необходимо заполнить поле с паролем',
+  SECOND_PASSWORD_EMPTY: 'Необходимо повторить пароль',
+  PASSWORDS_DIFFERS: 'Пароли не совпадают',
   MOVIE_QUERY_EMPTY: 'Нужно ввести ключевое слово'
 };

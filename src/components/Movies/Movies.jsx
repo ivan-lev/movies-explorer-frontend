@@ -25,7 +25,8 @@ export default function Movies({
   savedMovies,
   onSave,
   onDelete,
-  token
+  token,
+  handleShowTrailer
 }) {
   // logic for displaying movies count
   const width = useWindowSize();
@@ -150,6 +151,7 @@ export default function Movies({
                 searchResults={searchResults}
                 setSearchResults={setSearchResults}
                 token={token}
+                handleShowTrailer={handleShowTrailer}
               />
             )}
           </>
