@@ -99,6 +99,13 @@
   cursor: default;
 }
 
+.button_in-progress {
+  background-image: url('../../images/spinner.gif');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .button_errored {
   color: var(--color-submit-error);
   background-color: var(--bg-submit-error);

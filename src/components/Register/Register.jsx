@@ -148,8 +148,10 @@ export default function Register({ register, error, setError, isInputsDisabled }
         <div className="register__bottom">
           <span className="register__registration-error">{error}</span>
           <Button
-            type={`blue ${!isValid || isInputsDisabled ? 'button_disabled' : ''}`}
-            text="Зарегистрироваться"
+            type={`blue ${!isValid ? 'button_disabled' : ''} ${
+              isInputsDisabled ? 'button_disabled button_in-progress' : ''
+            }`}
+            text={isInputsDisabled ? '' : 'Зарегистрироваться'}
             onClick={handleSubmit}
             disabled={!isValid || isInputsDisabled}
           />
